@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { Services } from './pages/Services';
@@ -13,6 +13,7 @@ import { KVKK } from './pages/KVKK';
 import { CookiePolicy } from './pages/CookiePolicy';
 import { Careers } from './pages/Careers';
 import { Volunteering } from './pages/Volunteering';
+import { NotFound } from './pages/NotFound';
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -49,9 +50,10 @@ const App: React.FC = () => {
           <Route path="/cerez-politikasi" element={<CookiePolicy />} />
           <Route path="/bize-katil" element={<Careers />} />
           <Route path="/gonulluluk" element={<Volunteering />} />
-          
+
           {/* Placeholders */}
           <Route path="/kariyer" element={<Careers />} /> {/* Redirect duplicate to same comp */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
     </Router>
