@@ -53,7 +53,7 @@ export const Contact: React.FC = () => {
       email: formData.email,
       phone: formData.phone,
       company: formData.company,
-      service: formData.subject,
+      subject: formData.subject, // UPDATED: Key changed from 'service' to 'subject' to match DB column
       message: formData.message,
       kvkkConsent: formData.kvkkConsent
     };
@@ -90,9 +90,9 @@ export const Contact: React.FC = () => {
               <div className="flex items-start gap-4 p-6 bg-slate-50 rounded-xl border border-slate-100">
                 <MapPin className="text-brand-600 mt-1 shrink-0" size={24} />
                 <div>
-                  <h3 className="font-bold text-slate-900 mb-1">Ofis</h3>
+                  <h3 className="font-bold text-slate-900 mb-1">Konum</h3>
                   <p className="text-slate-600 text-sm leading-relaxed">
-                    Teknopark Malatya, No: 44<br/>Battalgazi / Malatya
+                    Yeşilyurt / Malatya
                   </p>
                 </div>
               </div>

@@ -34,7 +34,7 @@ export const KVKK: React.FC = () => {
               1. Veri Sorumlusu
             </h3>
             <p>
-              Kişisel verileriniz, veri sorumlusu sıfatıyla Teknopark Malatya adresinde mukim <strong>APRICODI Yazılım A.Ş.</strong> tarafından, aşağıda açıklanan kapsamda işlenmektedir.
+              Kişisel verileriniz, veri sorumlusu sıfatıyla <strong>Yeşilyurt / Malatya</strong> adresinde mukim <strong>APRICODI Yazılım A.Ş.</strong> tarafından, aşağıda açıklanan kapsamda işlenmektedir.
             </p>
 
             <h3 className="text-xl font-bold text-slate-900 mt-8 mb-4 flex items-center gap-2">

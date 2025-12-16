@@ -3,13 +3,43 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronRight, MapPin, Mail, Phone, ExternalLink } from 'lucide-react';
 import { Button, Badge } from './ui';
 import { CookieBanner } from './CookieBanner';
+import { ChatBot } from './ChatBot';
 
-const ApricodiLogo = ({ className = "h-8 w-auto" }: { className?: string }) => (
-  <svg viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    {/* Corporate interlocked rings symbol */}
-    <circle cx="16" cy="16" r="10" stroke="#f97316" strokeWidth="5" />
-    <circle cx="32" cy="16" r="10" stroke="currentColor" strokeWidth="5" />
-    <path d="M26 16A10 10 0 0 1 16 26" stroke="#f97316" strokeWidth="5" />
+const ApricodiLogo = ({ className = "h-10 w-auto" }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <defs>
+      <linearGradient id="brandGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#fb923c" />
+        <stop offset="1" stopColor="#ea580c" />
+      </linearGradient>
+    </defs>
+    
+    {/* Leaves */}
+    <path d="M50 30 C35 10 35 2 50 2 C65 2 65 10 50 30" stroke="url(#brandGrad)" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="50" cy="2" r="3" fill="#ea580c" />
+
+    {/* Left Body Circuit */}
+    <path d="M42 30 C20 30 8 48 8 65 C8 88 30 98 48 98" stroke="url(#brandGrad)" strokeWidth="5" strokeLinecap="round"/>
+    <circle cx="48" cy="98" r="3" fill="#ea580c" />
+    <circle cx="42" cy="30" r="3" fill="#fb923c" />
+    {/* Circuit trace left */}
+    <path d="M8 65 H18" stroke="url(#brandGrad)" strokeWidth="3" />
+    <circle cx="18" cy="65" r="2" fill="#ea580c" />
+
+    {/* Right Body Circuit */}
+    <path d="M58 30 C80 30 92 48 92 65 C92 88 70 98 52 98" stroke="url(#brandGrad)" strokeWidth="5" strokeLinecap="round"/>
+    <circle cx="52" cy="98" r="3" fill="#ea580c" />
+    <circle cx="58" cy="30" r="3" fill="#fb923c" />
+    {/* Circuit trace right */}
+    <path d="M92 65 H82" stroke="url(#brandGrad)" strokeWidth="3" />
+    <circle cx="82" cy="65" r="2" fill="#ea580c" />
+
+    {/* Center Code Symbol */}
+    <g transform="translate(0, 5)">
+      <path d="M36 55 L28 62 L36 69" stroke="#334155" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M64 55 L72 62 L64 69" stroke="#334155" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M46 72 L54 52" stroke="#334155" strokeWidth="5" strokeLinecap="round"/>
+    </g>
   </svg>
 );
 
@@ -68,7 +98,7 @@ export const Navbar: React.FC = () => {
           <div className="flex justify-between items-center h-12">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group relative z-50">
-              <ApricodiLogo className="h-8 w-auto text-slate-900" />
+              <ApricodiLogo className="h-10 w-auto text-slate-900" />
               <span className="font-extrabold text-2xl tracking-tighter text-slate-900">
                 APRICODI
               </span>
@@ -150,7 +180,7 @@ export const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="lg:pr-8">
             <div className="flex items-center gap-2 mb-6">
-              <ApricodiLogo className="h-8 w-auto text-white" />
+              <ApricodiLogo className="h-10 w-auto text-white" />
               <span className="font-bold text-2xl text-white tracking-tight">APRICODI</span>
             </div>
             <p className="text-slate-400 mb-8 leading-relaxed text-sm">
@@ -211,7 +241,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3">
                 <MapPin className="text-brand-500 mt-0.5 shrink-0" size={18} />
-                <span className="text-slate-400 leading-relaxed">Teknopark Malatya, No: 44<br/>Malatya, Türkiye</span>
+                <span className="text-slate-400 leading-relaxed">Yeşilyurt / Malatya</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="text-brand-500 shrink-0" size={18} />
@@ -248,6 +278,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       </main>
       <Footer />
       <CookieBanner />
+      <ChatBot />
     </div>
   );
 };

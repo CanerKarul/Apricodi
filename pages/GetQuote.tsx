@@ -52,7 +52,7 @@ export const GetQuote: React.FC = () => {
       company: formData.company,
       email: formData.email,
       phone: formData.phone,
-      service: formData.serviceType,
+      serviceType: formData.serviceType, // UPDATED: Key changed from 'service' to 'serviceType' to become 'service_type'
       budget: formData.budget,
       message: formData.message,
       kvkkConsent: formData.kvkkConsent
