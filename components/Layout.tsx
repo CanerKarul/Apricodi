@@ -123,7 +123,7 @@ export const Navbar: React.FC = () => {
               ))}
               <div className="pl-4 border-l border-slate-200">
                 <Link to="/teklif-al">
-                  <Button size="sm" variant="secondary" className="bg-slate-900 text-white hover:bg-brand-600 shadow-none rounded-md px-5">
+                  <Button size="sm" variant="primary" className="shadow-none rounded-md px-5">
                     Teklif Al
                   </Button>
                 </Link>

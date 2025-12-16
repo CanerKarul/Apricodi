@@ -56,7 +56,7 @@ export const ProjectDetail: React.FC = () => {
 
           {project.liveUrl && (
             <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-              <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100 border-none">
+              <Button size="lg" variant="primary" className="border-none shadow-brand-500/20">
                 Siteyi Ziyaret Et <ExternalLink size={18} className="ml-2" />
               </Button>
             </a>
