@@ -81,3 +81,16 @@ export interface JobPosition {
   summary: string;
   tags: string[];
 }
+
+export interface ContentItem {
+  id: string;
+  title: string;
+  type: 'Blog' | 'Sayfa' | 'E-posta' | 'Sosyal';
+  owner: string;
+  status: 'Planlama' | 'Yazım' | 'Revizyon' | 'Yayında';
+  dueDate: string;
+  channel: 'Web' | 'LinkedIn' | 'Instagram' | 'E-posta' | 'YouTube';
+  priority: 'Yüksek' | 'Orta' | 'Düşük';
+  tags: string[];
+  lastUpdate: string;
+}

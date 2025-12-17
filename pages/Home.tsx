@@ -3,10 +3,28 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Zap, ShieldCheck, Clock, Lock, Layers, MousePointer2 } from 'lucide-react';
 import { Button, SectionHeader } from '../components/ui';
+import { ProjectIllustration } from '../components/ProjectIllustration';
 import { services, projects, testimonials } from '../data';
 
 // --- Custom Animated Hero Illustration (The "Gemini" Drawing) ---
 const HeroIllustration = () => {
+  const [msgIndex, setMsgIndex] = React.useState(0);
+  
+  const messages = [
+    { title: "Deployment", status: "Success (100%)" },
+    { title: "Unit Tests", status: "Passed (142/142)" },
+    { title: "Security Scan", status: "No Risks Found" },
+    { title: "Server Response", status: "24ms (Ultra Fast)" },
+    { title: "Database Sync", status: "Completed" }
+  ];
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setMsgIndex((prev) => (prev + 1) % messages.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="relative w-full h-[500px] md:h-[600px] perspective-1000">
       {/* Background Gradient Blob */}
@@ -93,15 +111,32 @@ const HeroIllustration = () => {
           <rect x="520" y="250" width="160" height="100" rx="12" fill="white" stroke="#e2e8f0" strokeWidth="2" filter="drop-shadow(0px 10px 20px rgba(0,0,0,0.1))" />
           <rect x="535" y="270" width="30" height="30" rx="8" fill="#ecfdf5" />
           <path d="M542 285 L548 291 L558 281" stroke="#059669" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-          <text x="575" y="285" fontFamily="Inter, sans-serif" fontSize="12" fontWeight="bold" fill="#0f172a">Deployment</text>
-          <text x="575" y="300" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="500" fill="#059669">Success (100%)</text>
+          
+          {/* Animated Text */}
+          <motion.text 
+            key={`title-${msgIndex}`}
+            x="575" y="285" fontFamily="Inter, sans-serif" fontSize="12" fontWeight="bold" fill="#0f172a"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}
+          >
+            {messages[msgIndex].title}
+          </motion.text>
+          
+          <motion.text 
+            key={`status-${msgIndex}`}
+            x="575" y="300" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="500" fill="#059669"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}
+          >
+            {messages[msgIndex].status}
+          </motion.text>
+          
           {/* Progress Bar */}
           <rect x="535" y="320" width="130" height="6" rx="3" fill="#f1f5f9" />
           <motion.rect 
+            key={msgIndex}
             x="535" y="320" height="6" rx="3" fill="#10b981"
             initial={{ width: 0 }}
             animate={{ width: 130 }}
-            transition={{ duration: 1.5, delay: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
           />
         </motion.g>
 
@@ -333,13 +368,10 @@ export const Home: React.FC = () => {
               >
                 <Link to={`/projeler/${project.slug}`} className="group block h-full">
                   <div className="relative overflow-hidden rounded-xl bg-slate-100 mb-6 aspect-[4/3] shadow-md group-hover:shadow-xl transition-all duration-300">
-                    <img 
-                      src={project.imageUrl} 
-                      alt={project.title} 
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/20 transition-colors duration-300" />
-                    <div className="absolute top-4 left-4">
+                    <ProjectIllustration projectId={project.id} className="transform group-hover:scale-105 transition-transform duration-700" />
+                    
+                    <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors duration-300 pointer-events-none" />
+                    <div className="absolute top-4 left-4 z-20">
                       <span className="bg-white/95 backdrop-blur text-slate-900 text-xs font-bold px-3 py-1 uppercase tracking-wide rounded shadow-sm border border-white/50">
                         {project.industry}
                       </span>

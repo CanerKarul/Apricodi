@@ -1,4 +1,4 @@
-import { Service, Project, BlogPost, Testimonial, FAQItem, JobPosition } from './types';
+import { Service, Project, BlogPost, Testimonial, FAQItem, JobPosition, ContentItem } from './types';
 
 export const services: Service[] = [
   {
@@ -252,5 +252,68 @@ export const jobPositions: JobPosition[] = [
     location: 'Malatya',
     summary: 'Teknopark ofisimizde gerçek projelerde deneyim kazanmak isteyen, öğrenmeye aç, 3. veya 4. sınıf bilgisayar/yazılım mühendisliği öğrencileri.',
     tags: ['Staj', 'Mentorship', 'Fullstack']
+  }
+];
+
+export const contentItems: ContentItem[] = [
+  {
+    id: 'CNT-024',
+    title: 'Kurumsal Dijital Dönüşüm Yol Haritası (Longform)',
+    type: 'Blog',
+    owner: 'Ece Karaca',
+    status: 'Yayında',
+    dueDate: '12 Şubat 2025',
+    channel: 'Web',
+    priority: 'Orta',
+    tags: ['Strateji', 'Dijitalleşme'],
+    lastUpdate: '10 Şubat 2025'
+  },
+  {
+    id: 'CNT-027',
+    title: 'SaaS Landing Page revizyonu – Pazaryeri entegrasyonları',
+    type: 'Sayfa',
+    owner: 'Mert Yılmaz',
+    status: 'Revizyon',
+    dueDate: '18 Şubat 2025',
+    channel: 'Web',
+    priority: 'Yüksek',
+    tags: ['SEO', 'UI/UX'],
+    lastUpdate: '14 Şubat 2025'
+  },
+  {
+    id: 'CNT-031',
+    title: 'LinkedIn Carousel: Apricodi CMS başarı hikayesi',
+    type: 'Sosyal',
+    owner: 'Selin Demir',
+    status: 'Yazım',
+    dueDate: '16 Şubat 2025',
+    channel: 'LinkedIn',
+    priority: 'Orta',
+    tags: ['Case Study', 'B2B'],
+    lastUpdate: '13 Şubat 2025'
+  },
+  {
+    id: 'CNT-034',
+    title: 'E-posta Bülteni: Şubat ürün iyileştirmeleri',
+    type: 'E-posta',
+    owner: 'Okan Sarı',
+    status: 'Planlama',
+    dueDate: '20 Şubat 2025',
+    channel: 'E-posta',
+    priority: 'Orta',
+    tags: ['Bülten', 'Changelog'],
+    lastUpdate: '12 Şubat 2025'
+  },
+  {
+    id: 'CNT-036',
+    title: 'YouTube video: Headless CMS entegrasyon süreci',
+    type: 'Sosyal',
+    owner: 'Ece Karaca',
+    status: 'Planlama',
+    dueDate: '22 Şubat 2025',
+    channel: 'YouTube',
+    priority: 'Düşük',
+    tags: ['Video', 'Teknik'],
+    lastUpdate: '11 Şubat 2025'
   }
 ];

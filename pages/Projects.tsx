@@ -4,6 +4,7 @@ import { SectionHeader, Card, Badge, Button, Input } from '../components/ui';
 import { projects } from '../data';
 import { ExternalLink, Search, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { ProjectIllustration } from '../components/ProjectIllustration';
 
 export const Projects: React.FC = () => {
   const [filter, setFilter] = useState('All');
@@ -78,12 +79,9 @@ export const Projects: React.FC = () => {
               >
                 <Card className="overflow-hidden group h-full flex flex-col hover:shadow-xl transition-all duration-300">
                   <Link to={`/projeler/${project.slug}`} className="block relative overflow-hidden h-56">
-                    <img 
-                      src={project.imageUrl} 
-                      alt={project.title} 
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                    <ProjectIllustration projectId={project.id} className="transform group-hover:scale-105 transition-transform duration-700" />
+                    
+                    <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px] z-20">
                       <Button variant="primary" size="sm" className="rounded-full">
                         İncele
                       </Button>

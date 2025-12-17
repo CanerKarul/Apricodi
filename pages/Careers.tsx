@@ -108,10 +108,20 @@ export const Careers: React.FC = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-             <Button size="lg" onClick={handleScrollToList} className="bg-white text-slate-900 hover:bg-slate-100 border-none">
+             <Button 
+               size="lg" 
+               variant="ghost"
+               onClick={handleScrollToList} 
+               className="bg-white text-slate-900 hover:bg-slate-100 hover:text-slate-900 border-none shadow-lg shadow-white/10"
+             >
                Açık Pozisyonlar
              </Button>
-             <Button size="lg" variant="outline" onClick={handleScrollToForm} className="text-white border-slate-600 hover:bg-slate-800 hover:text-white hover:border-slate-500">
+             <Button 
+               size="lg" 
+               variant="ghost" 
+               onClick={handleScrollToForm} 
+               className="text-white border-2 border-slate-500 hover:bg-slate-800 hover:text-white hover:border-slate-400"
+             >
                Genel Başvuru
              </Button>
           </div>

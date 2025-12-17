@@ -4,6 +4,7 @@ import { projects } from '../data';
 import { Badge, Button, SectionHeader, Card } from '../components/ui';
 import { ArrowLeft, ExternalLink, CheckCircle2, Server, Layout, ShieldCheck, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { ProjectGalleryIllustration } from '../components/ProjectGalleryIllustration';
 
 export const ProjectDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -198,22 +199,16 @@ export const ProjectDetail: React.FC = () => {
           </div>
         )}
 
-        {/* Gallery */}
+        {/* Visual Gallery - Replaced with Animated Illustrations */}
         <div className="mb-20">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">Proje Görselleri</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {project.gallery.map((img, i) => (
-              <motion.div 
-                key={i} 
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="rounded-2xl overflow-hidden shadow-lg border border-slate-100"
-              >
-                <img src={img} alt={`Screenshot ${i+1}`} className="w-full h-auto hover:scale-105 transition-transform duration-500" />
-              </motion.div>
-            ))}
+          <h2 className="text-2xl font-bold text-slate-900 mb-6">Proje Detayları & Görseller</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-auto">
+             {/* We force 2 detailed illustrations per project regardless of the old data gallery length */}
+             {[0, 1].map((index) => (
+                <div key={index} className="aspect-[4/3] w-full">
+                  <ProjectGalleryIllustration projectId={project.id} index={index} />
+                </div>
+             ))}
           </div>
         </div>
 

@@ -13,6 +13,7 @@ import { KVKK } from './pages/KVKK';
 import { CookiePolicy } from './pages/CookiePolicy';
 import { Careers } from './pages/Careers';
 import { Volunteering } from './pages/Volunteering';
+import { CMS } from './pages/CMS';
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -49,6 +50,7 @@ const App: React.FC = () => {
           <Route path="/cerez-politikasi" element={<CookiePolicy />} />
           <Route path="/bize-katil" element={<Careers />} />
           <Route path="/gonulluluk" element={<Volunteering />} />
+          <Route path="/cms" element={<CMS />} />
           
           {/* Placeholders */}
           <Route path="/kariyer" element={<Careers />} /> {/* Redirect duplicate to same comp */}
