@@ -45,9 +45,6 @@ export const ChatBot: React.FC = () => {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  
-  // API Key check from process.env.API_KEY
-  const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : undefined;
 
   useEffect(() => {
     if (isOpen) {
@@ -56,13 +53,17 @@ export const ChatBot: React.FC = () => {
   }, [messages, isOpen]);
 
   const handleSend = async () => {
-    // Re-check key directly from process.env to avoid stale state in long-lived components
+    // API Key kontrolü mesaj gönderim anında yapılır
     const currentApiKey = process.env.API_KEY;
     
-    if (!input.trim() || !currentApiKey) {
-      if (!currentApiKey) {
-        console.error("ChatBot: API_KEY is missing. Please ensure it is set in Vercel environment variables.");
-      }
+    if (!input.trim()) return;
+
+    if (!currentApiKey) {
+      setMessages(prev => [...prev, 
+        { id: Date.now().toString(), role: 'user', text: input },
+        { id: (Date.now()+1).toString(), role: 'model', text: 'Hata: API_KEY tanımlanmamış. Lütfen Vercel ayarlarından değişkeni ekleyip Redeploy yapın.' }
+      ]);
+      setInput('');
       return;
     }
 
@@ -72,7 +73,6 @@ export const ChatBot: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Always initialize new instance to ensure latest key/config
       const ai = new GoogleGenAI({ apiKey: currentApiKey });
       const response: GenerateContentResponse = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
@@ -103,17 +103,12 @@ export const ChatBot: React.FC = () => {
       setMessages(prev => [...prev, { 
         id: Date.now().toString(), 
         role: 'model', 
-        text: 'Teknik bir aksaklık oluştu. Lütfen doğrudan iletişim formumuzu kullanın.' 
+        text: 'Teknik bir aksaklık oluştu veya API anahtarı geçersiz. Lütfen ayarlarınızı kontrol edin.' 
       }]);
     } finally {
       setIsLoading(false);
     }
   };
-
-  // If no API key is present, we don't render the chatbot to prevent confusion
-  if (!apiKey) {
-    return null;
-  }
 
   return (
     <>
