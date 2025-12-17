@@ -46,8 +46,9 @@ export const ChatBot: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   
-  // API Key kontrolü - process.env.API_KEY kullanımı zorunludur.
-  const apiKey = process.env.API_KEY;
+  // API Key kontrolü - process.env.API_KEY kullanımı. 
+  // typeof kontrolü tarayıcıda "process is not defined" hatasını önler.
+  const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : undefined;
 
   useEffect(() => {
     if (isOpen) {
@@ -64,10 +65,10 @@ export const ChatBot: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Her istekte yeni instance oluşturulması tavsiye edilir (Context güncelliği için)
+      // Her istekte yeni bir instance oluşturulması tavsiye edilir.
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.0-flash-exp', // Veya 'gemini-3-flash-preview'
+      const response: GenerateContentResponse = await ai.models.generateContent({
+        model: 'gemini-3-flash-preview',
         contents: userMsg.text,
         config: {
           systemInstruction: constructSystemPrompt(),
@@ -104,7 +105,10 @@ export const ChatBot: React.FC = () => {
   };
 
   // Eğer API KEY yoksa butonu hiç gösterme (Vercel'de tanımlanana kadar gizli kalır)
-  if (!apiKey) return null;
+  if (!apiKey) {
+    console.warn("ChatBot: API_KEY bulunamadı. Lütfen Vercel veya .env üzerinden tanımlayın.");
+    return null;
+  }
 
   return (
     <>
