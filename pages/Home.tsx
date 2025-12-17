@@ -1,15 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Zap, ShieldCheck, Clock, Lock, Layers, MousePointer2 } from 'lucide-react';
+import { ArrowRight, Zap, ShieldCheck, Clock, Lock, Layers } from 'lucide-react';
 import { Button, SectionHeader, Card } from '../components/ui';
-import { ProjectIllustration } from '../components/ProjectIllustration';
-import { services, projects, testimonials } from '../data';
+import { SEO } from '../components/SEO';
+import { services, testimonials } from '../data';
 
-// --- Custom Animated Hero Illustration (The "Flowing" Tech Illustration) ---
 const HeroIllustration = () => {
   const [msgIndex, setMsgIndex] = React.useState(0);
-  
   const messages = [
     { title: "Deployment", status: "Success (100%)" },
     { title: "Unit Tests", status: "Passed (142/142)" },
@@ -27,9 +25,7 @@ const HeroIllustration = () => {
 
   return (
     <div className="relative w-full h-[500px] md:h-[600px] perspective-1000 flex items-center justify-center">
-      {/* Background Gradient Blob */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-brand-100/40 via-white to-blue-50/40 blur-3xl rounded-full -z-10 opacity-60" />
-
       <svg viewBox="0 0 800 600" className="w-full h-full drop-shadow-2xl overflow-visible" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
@@ -41,145 +37,23 @@ const HeroIllustration = () => {
             <stop offset="100%" stopColor="#ea580c" />
           </linearGradient>
         </defs>
-
-        {/* --- Main Base Platform (Isometric) --- */}
-        <motion.path
-          d="M150 400 L400 520 L650 400 L400 280 Z"
-          fill="#f8fafc"
-          stroke="#e2e8f0"
-          strokeWidth="2"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        />
-        <motion.path
-          d="M150 400 L400 520 L400 540 L150 420 Z"
-          fill="#cbd5e1"
-        />
-        <motion.path
-          d="M400 520 L650 400 L650 420 L400 540 Z"
-          fill="#94a3b8"
-        />
-
-        {/* --- Floating Code Interface (Main Screen) --- */}
-        <motion.g
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
-        >
-          {/* Screen Body */}
+        <motion.path d="M150 400 L400 520 L650 400 L400 280 Z" fill="#f8fafc" stroke="#e2e8f0" strokeWidth="2" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }} />
+        <motion.g initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: 0.2 }}>
           <rect x="220" y="150" width="360" height="240" rx="12" fill="url(#screenGrad)" stroke="#334155" strokeWidth="4" />
-          
-          {/* Header Bar */}
           <rect x="222" y="152" width="356" height="30" rx="10" fill="#334155" />
-          <div className="flex gap-2 px-4 py-2">
-            <circle cx="240" cy="167" r="4" fill="#ef4444" />
-            <circle cx="255" cy="167" r="4" fill="#fbbf24" />
-            <circle cx="270" cy="167" r="4" fill="#22c55e" />
-          </div>
-
-          {/* Code Lines Animation (Flowing) */}
           <motion.g>
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <motion.rect
-                key={i}
-                x="250"
-                y={200 + i * 25}
-                height="8"
-                rx="4"
-                fill={i === 3 ? "#fb923c" : "#475569"}
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ 
-                  width: [100, 250, 180],
-                  opacity: 1
-                }}
-                transition={{ 
-                  duration: 2, 
-                  delay: 0.5 + (i * 0.15), 
-                  repeat: Infinity, 
-                  repeatType: "reverse", 
-                  ease: "easeInOut" 
-                }}
-              />
+              <motion.rect key={i} x="250" y={200 + i * 25} height="8" rx="4" fill={i === 3 ? "#fb923c" : "#475569"} initial={{ width: 0, opacity: 0 }} animate={{ width: [100, 250, 180], opacity: 1 }} transition={{ duration: 2, delay: 0.5 + (i * 0.15), repeat: Infinity, repeatType: "reverse" }} />
             ))}
           </motion.g>
         </motion.g>
-
-        {/* --- Floating "Success" Card (Right) --- */}
-        <motion.g
-          initial={{ x: 50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1, y: [0, -10, 0] }}
-          transition={{ 
-            x: { duration: 0.8, delay: 0.6 },
-            y: { duration: 4, repeat: Infinity, ease: "easeInOut" }
-          }}
-        >
+        <motion.g initial={{ x: 50, opacity: 0 }} animate={{ x: 0, opacity: 1, y: [0, -10, 0] }} transition={{ x: { duration: 0.8, delay: 0.6 }, y: { duration: 4, repeat: Infinity } }}>
           <rect x="520" y="250" width="160" height="100" rx="12" fill="white" stroke="#e2e8f0" strokeWidth="2" filter="drop-shadow(0px 10px 20px rgba(0,0,0,0.1))" />
-          <rect x="535" y="270" width="30" height="30" rx="8" fill="#ecfdf5" />
-          <path d="M542 285 L548 291 L558 281" stroke="#059669" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-          
-          <motion.text 
-            key={`title-${msgIndex}`}
-            x="575" y="285" fontFamily="Inter, sans-serif" fontSize="12" fontWeight="bold" fill="#0f172a"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}
-          >
-            {messages[msgIndex].title}
-          </motion.text>
-          
-          <motion.text 
-            key={`status-${msgIndex}`}
-            x="575" y="300" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="500" fill="#059669"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}
-          >
-            {messages[msgIndex].status}
-          </motion.text>
-          
-          {/* Progress Bar */}
+          <motion.text key={`title-${msgIndex}`} x="575" y="285" fontFamily="Inter, sans-serif" fontSize="12" fontWeight="bold" fill="#0f172a" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>{messages[msgIndex].title}</motion.text>
+          <motion.text key={`status-${msgIndex}`} x="575" y="300" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="500" fill="#059669" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>{messages[msgIndex].status}</motion.text>
           <rect x="535" y="320" width="130" height="6" rx="3" fill="#f1f5f9" />
-          <motion.rect 
-            key={msgIndex}
-            x="535" y="320" height="6" rx="3" fill="#10b981"
-            initial={{ width: 0 }}
-            animate={{ width: 130 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-          />
+          <motion.rect key={msgIndex} x="535" y="320" height="6" rx="3" fill="#10b981" initial={{ width: 0 }} animate={{ width: 130 }} transition={{ duration: 1.5 }} />
         </motion.g>
-
-        {/* --- Floating "Analytics" Card (Left) --- */}
-        <motion.g
-          initial={{ x: -50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1, y: [0, 8, 0] }}
-          transition={{ 
-            x: { duration: 0.8, delay: 0.8 },
-            y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }
-          }}
-        >
-          <rect x="100" y="320" width="140" height="110" rx="12" fill="white" stroke="#e2e8f0" strokeWidth="2" filter="drop-shadow(0px 10px 20px rgba(0,0,0,0.1))" />
-          <rect x="120" y="380" width="15" height="30" rx="2" fill="#cbd5e1" />
-          <rect x="145" y="360" width="15" height="50" rx="2" fill="#cbd5e1" />
-          <rect x="170" y="340" width="15" height="70" rx="2" fill="url(#accentGrad)" />
-          <rect x="195" y="370" width="15" height="40" rx="2" fill="#cbd5e1" />
-        </motion.g>
-
-        {/* Connecting Lines */}
-        <motion.path 
-          d="M400 270 L520 250" 
-          stroke="#e2e8f0" 
-          strokeWidth="2" 
-          strokeDasharray="5,5"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 2, delay: 1 }}
-        />
-         <motion.path 
-          d="M220 270 L170 320" 
-          stroke="#e2e8f0" 
-          strokeWidth="2" 
-          strokeDasharray="5,5"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 2, delay: 1.2 }}
-        />
       </svg>
     </div>
   );
@@ -196,9 +70,9 @@ const ClientLogos = () => {
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700 mb-20 px-4">
+    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center opacity-40 grayscale hover:opacity-100 transition-all duration-700 mb-20 px-4">
       {logos.map((logo, i) => (
-        <div key={i} className="h-20 border border-white/5 rounded-xl flex items-center justify-center bg-white/[0.02] hover:bg-white/[0.05] transition-all group">
+        <div key={i} className="h-20 border border-white/5 rounded-xl flex items-center justify-center bg-white/[0.02] hover:bg-white/[0.05] group">
           <div className="text-white group-hover:text-brand-500 transition-colors">{logo}</div>
         </div>
       ))}
@@ -209,6 +83,12 @@ const ClientLogos = () => {
 export const Home: React.FC = () => {
   return (
     <div className="overflow-hidden bg-white">
+      <SEO 
+        title="Kurumsal Yazılım, Mobil Uygulama ve Web Tasarım" 
+        description="APRICODI: Malatya merkezli, global standartlarda kurumsal web yazılım, iOS & Android mobil uygulama ve kullanıcı dostu UI/UX tasarım hizmetleri sunar."
+        keywords="yazılım şirketi, mobil uygulama yaptırmak, kurumsal web sitesi fiyatları, malatya yazılım ajansı, seo uyumlu web tasarım, react mobil uygulama"
+      />
+
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center bg-slate-50/50 overflow-hidden pt-24 md:pt-12">
         <div className="absolute top-0 right-0 w-[50%] h-full bg-slate-50 skew-x-12 translate-x-1/4 -z-10" />
@@ -216,54 +96,44 @@ export const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             
-            <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="max-w-2xl"
-            >
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="mb-6"
-              >
+            <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="max-w-2xl">
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mb-6">
                 <span className="inline-flex items-center py-1.5 px-4 rounded-full bg-white border border-brand-100 text-brand-600 text-xs font-bold uppercase tracking-widest shadow-sm">
                   <span className="w-2 h-2 rounded-full bg-brand-500 mr-2 animate-pulse"></span>
-                  Kurumsal Çözüm Ortağı
+                  Kurumsal Yazılım ve Mobil Uygulama Çözümleri
                 </span>
               </motion.div>
               
               <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 mb-8 leading-[1.05] tracking-tight">
-                Kurumsal Yazılımda <br/>
+                İşletmeniz İçin <br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-600">
-                  Çözüm Ortağınız
+                  Profesyonel Yazılım
                 </span>
               </h1>
               
               <p className="text-lg md:text-xl text-slate-600 mb-10 leading-relaxed max-w-lg font-normal">
-                Performans ve güvenlik odaklı dijital ürünlerle işletmenizi büyütüyoruz.
+                APRICODI ile yüksek performanslı mobil uygulamalar ve SEO uyumlu kurumsal web siteleriyle dijital dünyada fark yaratın.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-5 mb-16">
                 <Link to="/teklif-al">
                   <Button size="lg" className="px-10 py-5 text-lg font-semibold shadow-xl shadow-brand-500/20 hover:shadow-brand-500/30 transition-all transform hover:-translate-y-1">
-                    Teklif Al <ArrowRight className="ml-2 w-5 h-5" />
+                    Ücretsiz Teklif Al <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 </Link>
                 <Link to="/projeler">
                   <Button variant="outline" size="lg" className="px-10 py-5 text-lg font-semibold bg-white border-slate-200 hover:border-slate-800 hover:text-slate-900 transition-all">
-                    Projeler
+                    Referanslarımız
                   </Button>
                 </Link>
               </div>
 
               <div className="border-t border-slate-200 pt-8 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-4">
                  {[
-                   { label: "Yüksek Performans", icon: Zap },
-                   { label: "Kurumsal Güvenlik", icon: Lock },
-                   { label: "Hızlı Teslimat", icon: Clock },
-                   { label: "SLA Desteği", icon: ShieldCheck }
+                   { label: "Mobil Geliştirme", icon: Zap },
+                   { label: "Kurumsal SEO", icon: Lock },
+                   { label: "Web Tasarım", icon: Clock },
+                   { label: "Teknik Destek", icon: ShieldCheck }
                  ].map((item, i) => (
                    <div key={i} className="flex items-center gap-3 text-slate-700 group cursor-default">
                       <div className="p-1.5 rounded-md bg-slate-100 text-brand-600 group-hover:bg-brand-50 transition-colors">
@@ -275,38 +145,38 @@ export const Home: React.FC = () => {
               </div>
             </motion.div>
 
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="relative hidden lg:block"
-            >
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.2 }} className="relative hidden lg:block">
               <HeroIllustration />
             </motion.div>
           </div>
         </div>
       </section>
 
+      {/* Services Section */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4">
-          <SectionHeader title="Uzmanlık Alanlarımız" subtitle="Modern teknoloji çözümleri." />
+          <SectionHeader title="Uzman Yazılım Hizmetleri" subtitle="Projenize değer katan teknoloji çözümlerimiz." />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.slice(0, 3).map((service) => (
               <Card key={service.id} className="p-10 flex flex-col h-full hover:shadow-2xl transition-all">
                 <div className="w-16 h-16 bg-brand-50 rounded-xl flex items-center justify-center text-brand-600 mb-8"><Layers size={32} /></div>
                 <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
                 <p className="text-slate-600 mb-8">{service.description}</p>
+                <Link to="/hizmetler" className="mt-auto text-brand-600 font-bold flex items-center gap-2 hover:gap-3 transition-all">
+                  Detayları Gör <ArrowRight size={16} />
+                </Link>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Testimonials */}
       <section className="py-20 bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto px-4">
            <div className="text-center mb-16">
-             <h2 className="text-3xl font-bold mb-4">Müşterilerimiz</h2>
-             <p className="text-slate-400">Güvenle çalıştığımız markalar.</p>
+             <h2 className="text-3xl font-bold mb-4">Müşteri Yorumları</h2>
+             <p className="text-slate-400">Yazılım ve tasarımda bize güvenenlerin görüşleri.</p>
            </div>
            <ClientLogos />
            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -314,6 +184,10 @@ export const Home: React.FC = () => {
                <div key={t.id} className="bg-slate-800 p-8 rounded-2xl border border-slate-700">
                   <div className="flex text-brand-500 mb-6">★★★★★</div>
                   <p className="text-slate-300 italic text-lg">"{t.quote}"</p>
+                  <div className="mt-6">
+                    <p className="font-bold">{t.name}</p>
+                    <p className="text-sm text-slate-500">{t.role}, {t.company}</p>
+                  </div>
                </div>
              ))}
            </div>
