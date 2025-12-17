@@ -52,16 +52,29 @@ export const ChatBot: React.FC = () => {
     }
   }, [messages, isOpen]);
 
+  // Güvenli API Key erişimi
+  const getSafeApiKey = () => {
+    try {
+      // @ts-ignore
+      return typeof process !== 'undefined' ? process.env.API_KEY : undefined;
+    } catch (e) {
+      return undefined;
+    }
+  };
+
   const handleSend = async () => {
-    // API Key kontrolü mesaj gönderim anında yapılır
-    const currentApiKey = process.env.API_KEY;
+    const currentApiKey = getSafeApiKey();
     
     if (!input.trim()) return;
 
     if (!currentApiKey) {
       setMessages(prev => [...prev, 
         { id: Date.now().toString(), role: 'user', text: input },
-        { id: (Date.now()+1).toString(), role: 'model', text: 'Hata: API_KEY tanımlanmamış. Lütfen Vercel ayarlarından değişkeni ekleyip Redeploy yapın.' }
+        { 
+          id: (Date.now()+1).toString(), 
+          role: 'model', 
+          text: 'Üzgünüm, şu an bağlantı kuramıyorum. Lütfen sistem yöneticisine API anahtarının Vercel üzerinde doğru tanımlandığını ve projenin "Redeploy" edildiğini bildirin.' 
+        }
       ]);
       setInput('');
       return;
@@ -73,6 +86,7 @@ export const ChatBot: React.FC = () => {
     setIsLoading(true);
 
     try {
+      // Sistem kuralı: new GoogleGenAI({ apiKey: process.env.API_KEY })
       const ai = new GoogleGenAI({ apiKey: currentApiKey });
       const response: GenerateContentResponse = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
@@ -98,12 +112,18 @@ export const ChatBot: React.FC = () => {
       };
 
       setMessages(prev => [...prev, modelMsg]);
-    } catch (error) {
+    } catch (error: any) {
       console.error("AI Error:", error);
+      let errorText = 'Teknik bir aksaklık oluştu. Lütfen doğrudan iletişim formumuzu kullanın.';
+      
+      if (error?.message?.includes('API key not valid')) {
+        errorText = 'Hata: Tanımlanan API anahtarı geçersiz. Lütfen anahtarın doğruluğunu kontrol edin.';
+      }
+
       setMessages(prev => [...prev, { 
         id: Date.now().toString(), 
         role: 'model', 
-        text: 'Teknik bir aksaklık oluştu veya API anahtarı geçersiz. Lütfen ayarlarınızı kontrol edin.' 
+        text: errorText
       }]);
     } finally {
       setIsLoading(false);
