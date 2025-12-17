@@ -46,8 +46,7 @@ export const ChatBot: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   
-  // API Key kontrolü - process.env.API_KEY kullanımı. 
-  // typeof kontrolü tarayıcıda "process is not defined" hatasını önler.
+  // API Key check from process.env.API_KEY
   const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : undefined;
 
   useEffect(() => {
@@ -57,7 +56,15 @@ export const ChatBot: React.FC = () => {
   }, [messages, isOpen]);
 
   const handleSend = async () => {
-    if (!input.trim() || !apiKey) return;
+    // Re-check key directly from process.env to avoid stale state in long-lived components
+    const currentApiKey = process.env.API_KEY;
+    
+    if (!input.trim() || !currentApiKey) {
+      if (!currentApiKey) {
+        console.error("ChatBot: API_KEY is missing. Please ensure it is set in Vercel environment variables.");
+      }
+      return;
+    }
 
     const userMsg: Message = { id: Date.now().toString(), role: 'user', text: input };
     setMessages(prev => [...prev, userMsg]);
@@ -65,8 +72,8 @@ export const ChatBot: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Her istekte yeni bir instance oluşturulması tavsiye edilir.
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      // Always initialize new instance to ensure latest key/config
+      const ai = new GoogleGenAI({ apiKey: currentApiKey });
       const response: GenerateContentResponse = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: userMsg.text,
@@ -79,7 +86,6 @@ export const ChatBot: React.FC = () => {
       let cleanText = response.text || 'Üzgünüm, şu an yanıt veremiyorum.';
       let actionLink = '';
 
-      // Aksiyon yönlendirmelerini temizle ve linke dönüştür
       if (cleanText.includes('[GOTO:TEKLIF]')) { actionLink = '/teklif-al'; cleanText = cleanText.replace('[GOTO:TEKLIF]', ''); }
       else if (cleanText.includes('[GOTO:ILETISIM]')) { actionLink = '/iletisim'; cleanText = cleanText.replace('[GOTO:ILETISIM]', ''); }
       else if (cleanText.includes('[GOTO:KARIYER]')) { actionLink = '/bize-katil'; cleanText = cleanText.replace('[GOTO:KARIYER]', ''); }
@@ -104,9 +110,8 @@ export const ChatBot: React.FC = () => {
     }
   };
 
-  // Eğer API KEY yoksa butonu hiç gösterme (Vercel'de tanımlanana kadar gizli kalır)
+  // If no API key is present, we don't render the chatbot to prevent confusion
   if (!apiKey) {
-    console.warn("ChatBot: API_KEY bulunamadı. Lütfen Vercel veya .env üzerinden tanımlayın.");
     return null;
   }
 
@@ -120,7 +125,6 @@ export const ChatBot: React.FC = () => {
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             className="fixed bottom-24 right-4 md:right-8 w-[90vw] md:w-[380px] h-[550px] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col z-50 overflow-hidden"
           >
-            {/* Header */}
             <div className="bg-slate-900 text-white p-4 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center relative shadow-lg shadow-brand-500/20">
@@ -137,7 +141,6 @@ export const ChatBot: React.FC = () => {
               </button>
             </div>
 
-            {/* Chat Area */}
             <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-slate-50">
               {messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -168,7 +171,6 @@ export const ChatBot: React.FC = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Area */}
             <div className="p-4 bg-white border-t border-slate-100">
               <div className="flex items-center gap-2">
                 <input 
@@ -192,7 +194,6 @@ export const ChatBot: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Floating Trigger Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)} 
         className="fixed bottom-6 right-4 md:right-8 z-50 w-14 h-14 md:w-16 md:h-16 rounded-full bg-brand-600 text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform active:scale-95 group"
@@ -201,7 +202,6 @@ export const ChatBot: React.FC = () => {
           {isOpen ? <X size={24} /> : <MessageSquare size={28} />}
           {!isOpen && <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-brand-600 animate-bounce"></span>}
         </div>
-        {/* Tooltip */}
         {!isOpen && (
           <span className="absolute right-full mr-4 bg-slate-900 text-white text-xs py-2 px-3 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-xl">
             Sorunuz mu var? Yardımcı olalım!
