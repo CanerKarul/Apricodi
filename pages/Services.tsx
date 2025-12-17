@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { SectionHeader, Button, Badge } from '../components/ui';
@@ -10,11 +11,11 @@ const ServiceIllustration: React.FC<{ id: string }> = ({ id }) => {
   // Responsive container: Less padding on mobile (p-6) to let illustration fill space, more on desktop (md:p-10)
   const containerClass = "w-full h-full bg-gradient-to-br from-slate-50 to-slate-100 relative overflow-hidden flex items-center justify-center p-6 md:p-10";
 
-  // Common floating animation
+  // Common floating animation - fixed ease type with 'as const' and changed key to 'floating'
   const floating = {
-    animate: {
+    floating: {
       y: [0, -10, 0],
-      transition: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+      transition: { duration: 4, repeat: Infinity, ease: "easeInOut" as const }
     }
   };
 
@@ -62,8 +63,8 @@ const ServiceIllustration: React.FC<{ id: string }> = ({ id }) => {
             </div>
           </motion.div>
 
-          {/* Floating Elements */}
-          <motion.div variants={floating} animate="animate" className="absolute top-6 right-6 md:top-10 md:right-10 p-2 md:p-3 bg-white rounded-lg shadow-lg border border-slate-100 z-20">
+          {/* Floating Elements - updated animate prop */}
+          <motion.div variants={floating} animate="floating" className="absolute top-6 right-6 md:top-10 md:right-10 p-2 md:p-3 bg-white rounded-lg shadow-lg border border-slate-100 z-20">
              <div className="text-[10px] md:text-xs font-bold text-brand-600">React / Next.js</div>
           </motion.div>
         </div>
@@ -107,10 +108,10 @@ const ServiceIllustration: React.FC<{ id: string }> = ({ id }) => {
              </div>
           </motion.div>
           
-          {/* Floating Badge */}
+          {/* Floating Badge - updated animate prop */}
           <motion.div 
             className="absolute bottom-12 sm:bottom-20 left-4 sm:left-10 bg-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-lg border border-slate-100 flex items-center gap-2 z-20"
-            variants={floating} animate="animate"
+            variants={floating} animate="floating"
           >
             <Smartphone size={14} className="text-brand-500 sm:w-4 sm:h-4" />
             <span className="text-[10px] sm:text-xs font-bold text-slate-800">iOS & Android</span>
@@ -210,10 +211,10 @@ const ServiceIllustration: React.FC<{ id: string }> = ({ id }) => {
                  </div>
               </motion.div>
               
-              {/* Floating Product Card */}
+              {/* Floating Product Card - updated animate prop */}
               <motion.div 
                 className="absolute -right-2 sm:-right-4 -bottom-4 w-24 sm:w-28 bg-white p-2 rounded-xl shadow-lg border border-slate-100 z-20"
-                variants={floating} animate="animate"
+                variants={floating} animate="floating"
               >
                  <div className="w-full h-16 sm:h-20 bg-slate-100 rounded-lg mb-2 flex items-center justify-center text-xl sm:text-2xl">👟</div>
                  <div className="h-1.5 sm:h-2 w-12 sm:w-16 bg-slate-800 rounded-full mb-1"></div>

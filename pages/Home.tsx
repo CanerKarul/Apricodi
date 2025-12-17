@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Zap, ShieldCheck, Clock, Lock, Layers, MousePointer2 } from 'lucide-react';
-import { Button, SectionHeader } from '../components/ui';
+import { Button, SectionHeader, Card } from '../components/ui';
 import { ProjectIllustration } from '../components/ProjectIllustration';
 import { services, projects, testimonials } from '../data';
 
@@ -40,10 +40,6 @@ const HeroIllustration = () => {
             <stop offset="0%" stopColor="#fb923c" />
             <stop offset="100%" stopColor="#ea580c" />
           </linearGradient>
-          <filter id="glass" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
-            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
-          </filter>
         </defs>
 
         {/* --- Main Base Platform (Isometric) --- */}
@@ -180,23 +176,35 @@ const HeroIllustration = () => {
           animate={{ pathLength: 1 }}
           transition={{ duration: 2, delay: 1.2 }}
         />
-
       </svg>
     </div>
   );
 };
 
-export const Home: React.FC = () => {
-  const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.6, ease: "easeOut" }
-  };
+const ClientLogos = () => {
+  const logos = [
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" /><path d="M12 13V15" /><path d="M12 9V10" /></svg>,
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8"><circle cx="12" cy="12" r="10" /><path d="M2 12h20" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>,
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" /></svg>,
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>,
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M9 3v18" /><path d="M15 3v18" /><path d="M3 9h18" /><path d="M3 15h18" /></svg>,
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></svg>
+  ];
 
   return (
+    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700 mb-20 px-4">
+      {logos.map((logo, i) => (
+        <div key={i} className="h-20 border border-white/5 rounded-xl flex items-center justify-center bg-white/[0.02] hover:bg-white/[0.05] transition-all group">
+          <div className="text-white group-hover:text-brand-500 transition-colors">{logo}</div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export const Home: React.FC = () => {
+  return (
     <div className="overflow-hidden bg-white">
-      
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center bg-slate-50/50 overflow-hidden pt-24 md:pt-12">
         {/* Abstract Background Elements */}
@@ -224,16 +232,15 @@ export const Home: React.FC = () => {
                 </span>
               </motion.div>
               
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 mb-8 leading-[1.05] tracking-tight">
-                Kurumsal <br/>
-                Yazılım ve Tasarımda <br/>
+              <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 mb-8 leading-[1.05] tracking-tight">
+                Kurumsal Yazılımda <br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-600">
-                  Güvenilir Ortağınız
+                  Çözüm Ortağınız
                 </span>
               </h1>
               
               <p className="text-lg md:text-xl text-slate-600 mb-10 leading-relaxed max-w-lg font-normal">
-                Performans, güvenlik ve sürdürülebilirlik odaklı dijital ürünlerle işletmenizin büyüme hedeflerini destekliyoruz.
+                Performans ve güvenlik odaklı dijital ürünlerle işletmenizi büyütüyoruz.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-5 mb-16">
@@ -244,7 +251,7 @@ export const Home: React.FC = () => {
                 </Link>
                 <Link to="/projeler">
                   <Button variant="outline" size="lg" className="px-10 py-5 text-lg font-semibold bg-white border-slate-200 hover:border-slate-800 hover:text-slate-900 transition-all">
-                    Projeleri İncele
+                    Projeler
                   </Button>
                 </Link>
               </div>
@@ -280,167 +287,38 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Services Section - Corporate Cards */}
-      <section className="py-24 bg-white relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader 
-            title="Uzmanlık Alanlarımız" 
-            subtitle="İhtiyacınıza özel, ölçeklenebilir ve modern teknoloji çözümleri." 
-          />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.slice(0, 3).map((service, idx) => (
-              <motion.div key={service.id} {...fadeInUp} transition={{ delay: idx * 0.1 }}>
-                <Link to="/hizmetler" className="group block h-full">
-                  <div className="h-full bg-white border border-slate-200 p-10 rounded-2xl hover:shadow-2xl hover:shadow-slate-200/50 hover:border-brand-200 transition-all duration-300 flex flex-col relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-brand-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110" />
-                    
-                    <div className="w-16 h-16 bg-slate-50 rounded-xl flex items-center justify-center text-slate-900 mb-8 group-hover:bg-brand-600 group-hover:text-white transition-colors duration-300 relative z-10">
-                      <Layers size={32} />
-                    </div>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-4">{service.title}</h3>
-                    <p className="text-slate-600 mb-8 leading-relaxed font-light">{service.description}</p>
-                    <div className="mt-auto flex items-center text-brand-600 font-bold text-sm">
-                      Detayları İncele <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-          
-          <div className="text-center mt-16">
-            <Link to="/hizmetler">
-              <Button variant="secondary" size="lg" className="px-10">Tüm Hizmetleri Görüntüle</Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* "Why Apricodi" - Trust Section */}
-      <section className="py-24 bg-slate-50 border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-             <div>
-               <h2 className="text-4xl font-extrabold text-slate-900 mb-6">Neden APRICODI?</h2>
-               <p className="text-xl text-slate-600 leading-relaxed mb-8 font-light">
-                 Sadece bir ajans değil, dijital dönüşüm yolculuğunuzda stratejik ortağınız olarak çalışıyoruz. Şeffaflık ve kalite, standartımızdır.
-               </p>
-               <Link to="/iletisim">
-                 <Button className="bg-slate-900 text-white hover:bg-slate-800">Bizimle Tanışın</Button>
-               </Link>
-             </div>
-             
-             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {[
-                  { title: "Şeffaf Süreç", desc: "Sürpriz yok. Projenin her aşamasında net raporlama ve iletişim.", icon: MousePointer2 },
-                  { title: "Ölçeklenebilir Mimari", desc: "Bugünü değil, geleceği tasarlıyoruz. Büyüyen trafiği kaldıran altyapılar.", icon: Layers },
-                  { title: "Performans Odaklı", desc: "Hız, SEO ve kullanıcı deneyimi metriklerinde yüksek standartlar.", icon: Zap },
-                  { title: "Güvenlik & SLA", desc: "Verileriniz güvende. Düzenli bakım ve güvenlik güncellemeleri.", icon: ShieldCheck },
-                ].map((item, i) => (
-                  <div key={i} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                    <item.icon className="w-8 h-8 text-brand-500 mb-4" />
-                    <h4 className="font-bold text-slate-900 mb-2">{item.title}</h4>
-                    <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
-                  </div>
-                ))}
-             </div>
-           </div>
-        </div>
-      </section>
-
-      {/* Featured Projects */}
       <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader 
-            title="Başarı Hikayeleri" 
-            subtitle="Farklı sektörlerde geliştirdiğimiz değer odaklı projeler." 
-          />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {projects.slice(0, 3).map((project, idx) => (
-              <motion.div 
-                key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-              >
-                <Link to={`/projeler/${project.slug}`} className="group block h-full">
-                  <div className="relative overflow-hidden rounded-xl bg-slate-100 mb-6 aspect-[4/3] shadow-md group-hover:shadow-xl transition-all duration-300">
-                    <ProjectIllustration projectId={project.id} className="transform group-hover:scale-105 transition-transform duration-700" />
-                    
-                    <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors duration-300 pointer-events-none" />
-                    <div className="absolute top-4 left-4 z-20">
-                      <span className="bg-white/95 backdrop-blur text-slate-900 text-xs font-bold px-3 py-1 uppercase tracking-wide rounded shadow-sm border border-white/50">
-                        {project.industry}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-brand-600 transition-colors">{project.title}</h3>
-                    <p className="text-slate-600 line-clamp-2 mb-4 font-light text-base">{project.summary}</p>
-                    <span className="inline-flex items-center text-sm font-bold text-brand-600 border-b-2 border-transparent group-hover:border-brand-600 transition-all pb-0.5">
-                      Vaka İncelemesi <ArrowRight size={14} className="ml-1" />
-                    </span>
-                  </div>
-                </Link>
-              </motion.div>
+        <div className="max-w-7xl mx-auto px-4">
+          <SectionHeader title="Uzmanlık Alanlarımız" subtitle="Modern teknoloji çözümleri." />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {services.slice(0, 3).map((service) => (
+              <Card key={service.id} className="p-10 flex flex-col h-full hover:shadow-2xl transition-all">
+                <div className="w-16 h-16 bg-brand-50 rounded-xl flex items-center justify-center text-brand-600 mb-8"><Layers size={32} /></div>
+                <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
+                <p className="text-slate-600 mb-8">{service.description}</p>
+              </Card>
             ))}
-          </div>
-
-          <div className="text-center mt-16 border-t border-slate-100 pt-12">
-            <h3 className="text-2xl font-bold text-slate-900 mb-6">Sizin projenizi de konuşalım mı?</h3>
-            <Link to="/iletisim">
-              <Button size="lg" className="px-12 py-4 text-lg">Hemen Başlayın</Button>
-            </Link>
           </div>
         </div>
       </section>
 
-      {/* References / Testimonials */}
-      <section className="py-20 bg-slate-900 text-white relative overflow-hidden">
-        {/* Background circuit pattern */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <section className="py-20 bg-slate-900 text-white">
+        <div className="max-w-7xl mx-auto px-4">
            <div className="text-center mb-16">
              <h2 className="text-3xl font-bold mb-4">Müşterilerimiz</h2>
-             <p className="text-slate-400">Türkiye genelinde ve globalde hizmet verdiğimiz markalar.</p>
+             <p className="text-slate-400">Güvenle çalıştığımız markalar.</p>
            </div>
-           
-           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500 mb-20">
-              {[1,2,3,4,5,6].map((i) => (
-                <div key={i} className="h-16 border border-white/10 rounded-lg flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors">
-                  <span className="text-xs text-white/50 font-bold uppercase tracking-widest">Logo {i}</span>
-                </div>
-              ))}
-           </div>
-
+           <ClientLogos />
            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
              {testimonials.map((t) => (
-               <div key={t.id} className="bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-brand-500/30 transition-colors relative">
-                  <div className="absolute top-8 right-8 text-6xl text-brand-500/10 font-serif leading-none">"</div>
-                  <div className="flex text-brand-500 mb-6">
-                    {[1,2,3,4,5].map(s => <span key={s} className="text-lg">★</span>)}
-                  </div>
-                  <p className="text-slate-300 italic mb-8 leading-relaxed relative z-10 text-lg font-light">"{t.quote}"</p>
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold">
-                      {t.name.charAt(0)}
-                    </div>
-                    <div>
-                      <div className="font-bold text-white">{t.name}</div>
-                      <div className="text-xs text-slate-500 uppercase tracking-wide">{t.role}, {t.company}</div>
-                    </div>
-                  </div>
+               <div key={t.id} className="bg-slate-800 p-8 rounded-2xl border border-slate-700">
+                  <div className="flex text-brand-500 mb-6">★★★★★</div>
+                  <p className="text-slate-300 italic text-lg">"{t.quote}"</p>
                </div>
              ))}
            </div>
         </div>
       </section>
-
     </div>
   );
 };

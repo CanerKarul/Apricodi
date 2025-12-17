@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Shield, Smartphone, Globe, Coffee, Heart, Code, Search } from 'lucide-react';
@@ -10,19 +11,19 @@ interface ProjectIllustrationProps {
 export const ProjectIllustration: React.FC<ProjectIllustrationProps> = ({ projectId, className = '' }) => {
   const containerClass = `w-full h-full relative overflow-hidden flex items-center justify-center ${className}`;
 
-  // Common animation variants
+  // Common animation variants - fixed ease type and key names
   const float = {
-    animate: {
+    floating: {
       y: [0, -8, 0],
-      transition: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+      transition: { duration: 4, repeat: Infinity, ease: "easeInOut" as const }
     }
   };
 
   const pulse = {
-    animate: {
+    pulsing: {
       scale: [1, 1.05, 1],
       opacity: [0.8, 1, 0.8],
-      transition: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+      transition: { duration: 3, repeat: Infinity, ease: "easeInOut" as const }
     }
   };
 
@@ -53,10 +54,10 @@ export const ProjectIllustration: React.FC<ProjectIllustrationProps> = ({ projec
                 <div className="w-24 h-2 bg-stone-100 rounded-full mb-2"></div>
                 <div className="w-16 h-2 bg-stone-100 rounded-full"></div>
                 
-                {/* Floating Elements */}
+                {/* Floating Elements - updated animate prop */}
                 <motion.div 
                   className="absolute -right-6 top-12 bg-white p-3 rounded-lg shadow-lg border border-stone-50"
-                  variants={float} animate="animate"
+                  variants={float} animate="floating"
                 >
                    <Heart size={16} className="text-rose-400 fill-rose-400" />
                 </motion.div>
@@ -110,7 +111,7 @@ export const ProjectIllustration: React.FC<ProjectIllustrationProps> = ({ projec
               </div>
            </motion.div>
 
-           {/* Connected Nodes */}
+           {/* Connected Nodes - updated animate prop */}
            {[1, 2, 3, 4].map((i) => (
              <motion.div
                key={i}
@@ -120,7 +121,7 @@ export const ProjectIllustration: React.FC<ProjectIllustrationProps> = ({ projec
                  left: `${50 + Math.cos(i * 1.5) * 35}%`,
                }}
                variants={pulse}
-               animate="animate"
+               animate="pulsing"
              />
            ))}
            
@@ -166,10 +167,10 @@ export const ProjectIllustration: React.FC<ProjectIllustrationProps> = ({ projec
                 <div className="mt-auto m-3 h-8 bg-slate-800 rounded-lg"></div>
              </motion.div>
 
-             {/* Floating Coffee Cup */}
+             {/* Floating Coffee Cup - updated animate prop */}
              <motion.div 
                className="absolute -right-10 bottom-8 w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center border border-orange-100"
-               variants={float} animate="animate"
+               variants={float} animate="floating"
              >
                 <Coffee size={32} className="text-brand-600" />
                 {/* Steam */}
