@@ -6,7 +6,7 @@ import { Button, SectionHeader, Card } from '../components/ui';
 import { ProjectIllustration } from '../components/ProjectIllustration';
 import { services, projects, testimonials } from '../data';
 
-// --- Custom Animated Hero Illustration (The "Gemini" Drawing) ---
+// --- Custom Animated Hero Illustration (The "Flowing" Tech Illustration) ---
 const HeroIllustration = () => {
   const [msgIndex, setMsgIndex] = React.useState(0);
   
@@ -26,11 +26,11 @@ const HeroIllustration = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-[500px] md:h-[600px] perspective-1000">
+    <div className="relative w-full h-[500px] md:h-[600px] perspective-1000 flex items-center justify-center">
       {/* Background Gradient Blob */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-brand-100/50 via-white to-blue-50/50 blur-3xl rounded-full -z-10 opacity-60" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-brand-100/40 via-white to-blue-50/40 blur-3xl rounded-full -z-10 opacity-60" />
 
-      <svg viewBox="0 0 800 600" className="w-full h-full drop-shadow-2xl" preserveAspectRatio="xMidYMid meet">
+      <svg viewBox="0 0 800 600" className="w-full h-full drop-shadow-2xl overflow-visible" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#1e293b" />
@@ -72,24 +72,34 @@ const HeroIllustration = () => {
           
           {/* Header Bar */}
           <rect x="222" y="152" width="356" height="30" rx="10" fill="#334155" />
-          <circle cx="240" cy="167" r="4" fill="#ef4444" />
-          <circle cx="255" cy="167" r="4" fill="#fbbf24" />
-          <circle cx="270" cy="167" r="4" fill="#22c55e" />
+          <div className="flex gap-2 px-4 py-2">
+            <circle cx="240" cy="167" r="4" fill="#ef4444" />
+            <circle cx="255" cy="167" r="4" fill="#fbbf24" />
+            <circle cx="270" cy="167" r="4" fill="#22c55e" />
+          </div>
 
-          {/* Code Lines Animation */}
+          {/* Code Lines Animation (Flowing) */}
           <motion.g>
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <motion.rect
                 key={i}
                 x="250"
                 y={200 + i * 25}
-                width={100 + Math.random() * 150}
                 height="8"
                 rx="4"
-                fill={i === 3 ? "#fb923c" : "#475569"} // Orange accent line
-                initial={{ width: 0 }}
-                animate={{ width: 100 + Math.random() * 150 }}
-                transition={{ duration: 1.5, delay: 0.5 + i * 0.1, repeat: Infinity, repeatType: "reverse", repeatDelay: 2 }}
+                fill={i === 3 ? "#fb923c" : "#475569"}
+                initial={{ width: 0, opacity: 0 }}
+                animate={{ 
+                  width: [100, 250, 180],
+                  opacity: 1
+                }}
+                transition={{ 
+                  duration: 2, 
+                  delay: 0.5 + (i * 0.15), 
+                  repeat: Infinity, 
+                  repeatType: "reverse", 
+                  ease: "easeInOut" 
+                }}
               />
             ))}
           </motion.g>
@@ -108,7 +118,6 @@ const HeroIllustration = () => {
           <rect x="535" y="270" width="30" height="30" rx="8" fill="#ecfdf5" />
           <path d="M542 285 L548 291 L558 281" stroke="#059669" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
           
-          {/* Animated Text */}
           <motion.text 
             key={`title-${msgIndex}`}
             x="575" y="285" fontFamily="Inter, sans-serif" fontSize="12" fontWeight="bold" fill="#0f172a"
@@ -146,17 +155,12 @@ const HeroIllustration = () => {
           }}
         >
           <rect x="100" y="320" width="140" height="110" rx="12" fill="white" stroke="#e2e8f0" strokeWidth="2" filter="drop-shadow(0px 10px 20px rgba(0,0,0,0.1))" />
-          {/* Bar Chart */}
           <rect x="120" y="380" width="15" height="30" rx="2" fill="#cbd5e1" />
           <rect x="145" y="360" width="15" height="50" rx="2" fill="#cbd5e1" />
           <rect x="170" y="340" width="15" height="70" rx="2" fill="url(#accentGrad)" />
           <rect x="195" y="370" width="15" height="40" rx="2" fill="#cbd5e1" />
         </motion.g>
 
-        {/* --- Decorative Elements (Orbs & Lines) --- */}
-        <circle cx="650" cy="150" r="40" fill="url(#accentGrad)" opacity="0.1" />
-        <circle cx="100" cy="500" r="20" fill="#3b82f6" opacity="0.1" />
-        
         {/* Connecting Lines */}
         <motion.path 
           d="M400 270 L520 250" 
@@ -207,13 +211,11 @@ export const Home: React.FC = () => {
     <div className="overflow-hidden bg-white">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center bg-slate-50/50 overflow-hidden pt-24 md:pt-12">
-        {/* Abstract Background Elements */}
         <div className="absolute top-0 right-0 w-[50%] h-full bg-slate-50 skew-x-12 translate-x-1/4 -z-10" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             
-            {/* Left Content */}
             <motion.div 
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -256,7 +258,6 @@ export const Home: React.FC = () => {
                 </Link>
               </div>
 
-              {/* Trust Strip */}
               <div className="border-t border-slate-200 pt-8 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-4">
                  {[
                    { label: "Yüksek Performans", icon: Zap },
@@ -274,7 +275,6 @@ export const Home: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* Right Visual - Custom Gemini SVG Illustration */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}

@@ -99,9 +99,9 @@ export const CookiePolicy: React.FC = () => {
             </p>
             <p className="mt-4 text-sm font-semibold text-slate-900">Popüler tarayıcılarda çerez yönetimi:</p>
             <ul className="list-disc pl-6 space-y-2 mt-2 text-sm">
-              <li><strong>Google Chrome:</strong> Ayarlar > Gizlilik ve Güvenlik > Çerezler</li>
-              <li><strong>Mozilla Firefox:</strong> Seçenekler > Gizlilik ve Güvenlik > Geçmiş</li>
-              <li><strong>Safari:</strong> Tercihler > Gizlilik</li>
+              <li><strong>Google Chrome:</strong> Ayarlar &gt; Gizlilik ve Güvenlik &gt; Çerezler</li>
+              <li><strong>Mozilla Firefox:</strong> Seçenekler &gt; Gizlilik ve Güvenlik &gt; Geçmiş</li>
+              <li><strong>Safari:</strong> Tercihler &gt; Gizlilik</li>
             </ul>
             <p className="mt-4">
               Ayrıca sitemizi ilk ziyaretinizde karşınıza çıkan çerez uyarı banner'ı üzerinden tercihlerinizi yönetebilirsiniz.
@@ -131,7 +131,7 @@ export const CookiePolicy: React.FC = () => {
 
         {/* Note */}
         <div className="mt-8 text-center px-4 flex items-center justify-center gap-2 text-slate-400">
-          <Info size={16} />
+          <BarChart3 size={16} />
           <p className="text-xs">
             APRICODI bu politikayı dilediği zaman güncelleme hakkını saklı tutar. Güncellemeler bu sayfada yayınlanır.
           </p>
