@@ -1,13 +1,14 @@
+
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquare, X, Send, Minus, Bot, ArrowRight } from 'lucide-react';
+import { MessageSquare, X, Send, Minus, Bot, ArrowRight, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { GoogleGenAI } from "@google/genai";
 
 interface Option {
   label: string;
   value: string;
   action?: () => void;
-  link?: string;
 }
 
 interface Message {
@@ -15,31 +16,63 @@ interface Message {
   role: 'bot' | 'user';
   text: string;
   options?: Option[];
+  isLoading?: boolean;
 }
+
+const SYSTEM_INSTRUCTION = `
+Sen APRICODI Yazılım A.Ş.'nin resmi yapay zeka asistanısın. Görevin, kullanıcıların APRICODI, hizmetlerimiz, projelerimiz ve kariyer fırsatları hakkındaki sorularını profesyonel, yardımsever ve marka diline uygun bir şekilde yanıtlamaktır.
+
+KAPSAM VE BİLGİLER:
+1. HİZMETLERİMİZ: 
+   - Kurumsal Web Yazılım (React, Next.js, SEO uyumlu mimari).
+   - Mobil Uygulama Geliştirme (iOS & Android, React Native, Flutter).
+   - UI/UX Tasarım (Modern, kullanıcı odaklı, Design System).
+   - E-Ticaret Çözümleri (B2B, B2C, ödeme sistemleri).
+   - Bakım & SLA Destek (7/24 izleme, güvenlik güncellemeleri).
+
+2. EKİBİMİZ: 
+   - Caner Karul (Kurucu, Frontend, Otomasyon).
+   - Nisa Üstündağ (Fullstack, LLM, İletişim).
+   - Hatice Arslan (Backend, Siber Güvenlik).
+
+3. LOKASYON: Malatya Teknopark, Yeşilyurt, Malatya.
+
+4. DEĞERLER: Şeffaflık, sürdürülebilir mimari, güvenlik, sürekli öğrenme.
+
+5. ÜCRETLENDİRME: Projeye özeldir. Kullanıcıyı "Teklif Al" formuna yönlendir.
+
+6. KARİYER: Staj ve Junior pozisyonlar önceliklidir. "Bize Katıl" sayfasından başvuru alınır.
+
+KRİTİK KURALLAR:
+- SADECE APRICODI ile ilgili konulara cevap ver. 
+- Eğer kullanıcı APRICODI dışı bir konu (yemek tarifi, genel kültür, başka şirketler, siyaset vb.) sorarsa şu cevabı ver: "Ben sadece APRICODI ve hizmetlerimiz hakkında bilgi verebilen bir asistanım. Size projeniz, hizmetlerimiz veya kariyer fırsatlarımız hakkında nasıl yardımcı olabilirim?"
+- Cevapların kısa, net ve profesyonel olsun.
+- "Selam", "Merhaba" gibi selamlamalara sıcak ve kurumsal bir karşılık ver.
+- Markdown formatını kullanabilirsin (kalın yazı, liste vb.).
+`;
 
 export const ChatBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  // Ana Menü Seçenekleri
   const mainOptions: Option[] = [
-    { label: '🚀 Yeni Proje Başlat', value: 'new_project' },
-    { label: '🛠 Hizmetleri İncele', value: 'services' },
-    { label: '👨‍💻 Bize Katıl (Kariyer)', value: 'career' },
-    { label: '📞 İletişime Geç', value: 'contact' },
+    { label: '🚀 Yeni Proje Başlat', value: 'new_project', action: () => navigate('/teklif-al') },
+    { label: '🛠 Hizmetleri İncele', value: 'services', action: () => navigate('/hizmetler') },
+    { label: '👨‍💻 Bize Katıl (Kariyer)', value: 'career', action: () => navigate('/bize-katil') },
+    { label: '📞 İletişime Geç', value: 'contact', action: () => navigate('/iletisim') },
   ];
 
-  // İlk mesajı yükle
   useEffect(() => {
     if (messages.length === 0) {
       setMessages([
         {
           id: 'welcome',
           role: 'bot',
-          text: 'Merhaba! Ben Apricodi Asistan. Size nasıl yardımcı olabilirim? Aşağıdaki seçeneklerden birini seçebilir veya sorunuzu yazabilirsiniz.',
+          text: 'Merhaba! Ben Apricodi Asistan. Size nasıl yardımcı olabilirim? Projeniz hakkında konuşabiliriz veya merak ettiklerinizi sorabilirsiniz.',
           options: mainOptions,
         },
       ]);
@@ -48,146 +81,64 @@ export const ChatBot: React.FC = () => {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isOpen]);
+  }, [messages, isOpen, isTyping]);
+
+  const callGemini = async (userText: string) => {
+    setIsTyping(true);
+    try {
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const response = await ai.models.generateContent({
+        model: "gemini-3-pro-preview",
+        contents: userText,
+        config: {
+          systemInstruction: SYSTEM_INSTRUCTION,
+          temperature: 0.7,
+        },
+      });
+
+      const botText = response.text || "Üzgünüm, şu an yanıt veremiyorum. Lütfen biraz sonra tekrar deneyin.";
+      
+      const botMsg: Message = {
+        id: Date.now().toString(),
+        role: 'bot',
+        text: botText,
+        options: botText.length < 150 ? mainOptions : [{ label: 'Ana Menüye Dön', value: 'main' }]
+      };
+      
+      setMessages(prev => [...prev, botMsg]);
+    } catch (error) {
+      console.error("ChatBot Error:", error);
+      setMessages(prev => [...prev, {
+        id: Date.now().toString(),
+        role: 'bot',
+        text: "Bağlantıda bir sorun oluştu. Bize doğrudan iletişim sayfamızdan ulaşabilirsiniz.",
+        options: [{ label: 'İletişime Geç', value: 'contact', action: () => navigate('/iletisim') }]
+      }]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  const handleSend = () => {
+    if (!input.trim() || isTyping) return;
+    
+    const userMsg: Message = { id: Date.now().toString(), role: 'user', text: input };
+    setMessages(prev => [...prev, userMsg]);
+    const currentInput = input;
+    setInput('');
+    
+    callGemini(currentInput);
+  };
 
   const handleOptionClick = (option: Option) => {
     const userMsg: Message = { id: Date.now().toString(), role: 'user', text: option.label };
     setMessages(prev => [...prev, userMsg]);
-
-    setTimeout(() => {
-      let botResponse: Message;
-
-      switch (option.value) {
-        case 'new_project':
-          botResponse = {
-            id: (Date.now() + 1).toString(),
-            role: 'bot',
-            text: 'Harika bir fikir! APRICODI olarak kurumsal web siteleri, mobil uygulamalar ve özel yazılım çözümleri geliştiriyoruz. Projenizi detaylandırmak ve teklif almak için formumuza yönelebilirsiniz.',
-            options: [
-              { label: 'Teklif Formuna Git', value: 'go_quote', action: () => navigate('/teklif-al') },
-              { label: 'Ana Menüye Dön', value: 'main' }
-            ]
-          };
-          break;
-        case 'services':
-          botResponse = {
-            id: (Date.now() + 1).toString(),
-            role: 'bot',
-            text: 'Kurumsal Web Yazılım, Mobil Uygulama, UI/UX Tasarım ve E-Ticaret çözümleri sunuyoruz. Tüm hizmetlerimizi detaylıca incelemek ister misiniz?',
-            options: [
-              { label: 'Tüm Hizmetleri Gör', value: 'go_services', action: () => navigate('/hizmetler') },
-              { label: 'Özel Yazılım Detayları', value: 'main' }, // Placeholder for deep dive if needed
-              { label: 'Ana Menü', value: 'main' }
-            ]
-          };
-          break;
-        case 'career':
-          botResponse = {
-            id: (Date.now() + 1).toString(),
-            role: 'bot',
-            text: 'APRICODI ekibi her zaman yetenekli ve öğrenmeye açık yeni takım arkadaşları arıyor. Güncel açık pozisyonlarımızı görebilir veya genel başvuru yapabilirsiniz.',
-            options: [
-              { label: 'Açık Pozisyonlar', value: 'go_careers', action: () => navigate('/bize-katil') },
-              { label: 'Gönüllülük Programı', value: 'go_volunteer', action: () => navigate('/gonulluluk') },
-              { label: 'Ana Menü', value: 'main' }
-            ]
-          };
-          break;
-        case 'contact':
-          botResponse = {
-            id: (Date.now() + 1).toString(),
-            role: 'bot',
-            text: 'Bize Malatya ofisimizden ulaşabilir veya info@apricodi.com üzerinden yazabilirsiniz. İletişim sayfamızda tüm detaylı bilgiler yer alıyor.',
-            options: [
-              { label: 'İletişim Bilgileri', value: 'go_contact', action: () => navigate('/iletisim') },
-              { label: 'Haritada Gör', value: 'main' },
-              { label: 'Ana Menü', value: 'main' }
-            ]
-          };
-          break;
-        case 'main':
-          botResponse = {
-            id: (Date.now() + 1).toString(),
-            role: 'bot',
-            text: 'Tabii, size başka nasıl yardımcı olabilirim?',
-            options: mainOptions
-          };
-          break;
-        default:
-          botResponse = {
-            id: (Date.now() + 1).toString(),
-            role: 'bot',
-            text: 'Sizi ilgili sayfaya yönlendiriyorum. Başka bir sorunuz olursa buradayım.',
-            options: [{ label: 'Ana Menü', value: 'main' }]
-          };
-      }
-      setMessages(prev => [...prev, botResponse]);
-    }, 600);
-  };
-
-  const handleSend = () => {
-    const userInput = input.trim().toLowerCase();
-    if (!userInput) return;
     
-    const userMsg: Message = { id: Date.now().toString(), role: 'user', text: input };
-    setMessages(prev => [...prev, userMsg]);
-    setInput('');
-
-    setTimeout(() => {
-      let botText = '';
-      let botOptions: Option[] = mainOptions;
-
-      // Keyword Detection
-      const isPriceQuery = userInput.includes('fiyat') || userInput.includes('kaç lira') || userInput.includes('maliyet') || userInput.includes('ücret') || userInput.includes('ne kadar');
-      const isProjectRequest = userInput.includes('site yaptırmak') || userInput.includes('web sitesi') || userInput.includes('proje') || userInput.includes('yaptırmak istiyorum');
-      const isCareerQuery = userInput.includes('iş') || userInput.includes('ilan') || userInput.includes('kariyer') || userInput.includes('çalışmak') || userInput.includes('staj');
-      const isServicesQuery = userInput.includes('hizmet') || userInput.includes('neler yapıyorsunuz') || userInput.includes('ne iş yaparsınız');
-      const isContactQuery = userInput.includes('iletişim') || userInput.includes('adres') || userInput.includes('telefon') || userInput.includes('mail') || userInput.includes('ulaşım');
-
-      if (isPriceQuery) {
-        botText = 'Web sitesi ve yazılım projelerimizde fiyatlandırma; projenin kapsamına ve ihtiyaç duyulan teknik özelliklere göre belirlenir. Size özel bir fiyat çalışması için teklif formumuzu doldurabilirsiniz.';
-        botOptions = [
-          { label: 'Teklif Al', value: 'go_quote', action: () => navigate('/teklif-al') },
-          { label: 'Ana Menü', value: 'main' }
-        ];
-      } else if (isProjectRequest) {
-        botText = 'APRICODI olarak kurumsal web siteleri ve özel yazılımlar konusunda uzmanız. Projenizden bahsederseniz size en uygun yol haritasını hazırlayabiliriz.';
-        botOptions = [
-          { label: 'Proje Formuna Git', value: 'go_quote', action: () => navigate('/teklif-al') },
-          { label: 'Referansları Gör', value: 'projects', link: '/projeler' },
-          { label: 'Ana Menü', value: 'main' }
-        ];
-      } else if (isCareerQuery) {
-        botText = 'Yazılım dünyasına bizimle adım atmak ister misiniz? Açık pozisyonlarımızı ve staj imkanlarımızı kariyer sayfamızdan takip edebilirsiniz.';
-        botOptions = [
-          { label: 'İş İlanlarını Gör', value: 'go_careers', action: () => navigate('/bize-katil') },
-          { label: 'Genel Başvuru Yap', value: 'go_careers', action: () => navigate('/bize-katil') },
-          { label: 'Ana Menü', value: 'main' }
-        ];
-      } else if (isServicesQuery) {
-        botText = 'Web, mobil, tasarım ve e-ticaret alanlarında profesyonel çözümler sunuyoruz. Detaylı hizmet listemize göz atmak ister misiniz?';
-        botOptions = [
-          { label: 'Hizmetlerimizi İncele', value: 'go_services', action: () => navigate('/hizmetler') },
-          { label: 'Ana Menü', value: 'main' }
-        ];
-      } else if (isContactQuery) {
-        botText = 'Bizimle her zaman iletişime geçebilirsiniz. Malatya Teknopark ofisimizde veya dijital kanallarımızda sizi bekliyoruz.';
-        botOptions = [
-          { label: 'İletişim Sayfası', value: 'go_contact', action: () => navigate('/iletisim') },
-          { label: 'Ana Menü', value: 'main' }
-        ];
-      } else {
-        botText = `"${input}" hakkındaki mesajınızı aldım. Size daha iyi yardımcı olabilmem için ana menüdeki kategorilerden seçim yapabilirsiniz:`;
-      }
-
-      const botMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'bot',
-        text: botText,
-        options: botOptions
-      };
-      setMessages(prev => [...prev, botMsg]);
-    }, 800);
+    if (option.action) {
+      setTimeout(() => option.action!(), 500);
+    } else {
+      callGemini(option.label);
+    }
   };
 
   return (
@@ -198,7 +149,7 @@ export const ChatBot: React.FC = () => {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-24 right-4 md:right-8 w-[90vw] md:w-[400px] h-[600px] bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col z-50 overflow-hidden"
+            className="fixed bottom-24 right-4 md:right-8 w-[90vw] md:w-[420px] h-[650px] bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col z-50 overflow-hidden"
           >
             {/* Header */}
             <div className="bg-slate-900 text-white p-5 flex items-center justify-between shrink-0">
@@ -210,7 +161,7 @@ export const ChatBot: React.FC = () => {
                   <h3 className="font-bold text-sm">Apricodi Asistan</h3>
                   <div className="flex items-center gap-1.5">
                     <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    <p className="text-[10px] text-slate-400 font-medium">Size yardım için hazır</p>
+                    <p className="text-[10px] text-slate-400 font-medium">Yapay Zeka (Gemini 3 Pro)</p>
                   </div>
                 </div>
               </div>
@@ -231,21 +182,12 @@ export const ChatBot: React.FC = () => {
                     {msg.text}
                   </div>
                   
-                  {/* Bot Options (Buttons) */}
-                  {msg.role === 'bot' && msg.options && (
+                  {msg.role === 'bot' && msg.options && !isTyping && (
                     <div className="flex flex-wrap gap-2 mt-3 w-full">
                       {msg.options.map((opt, idx) => (
                         <button
                           key={idx}
-                          onClick={() => {
-                            if (opt.value === 'main') {
-                              handleOptionClick({ label: 'Ana Menüye Dön', value: 'main' });
-                            } else if (opt.action) {
-                              opt.action();
-                            } else {
-                              handleOptionClick(opt);
-                            }
-                          }}
+                          onClick={() => handleOptionClick(opt)}
                           className="bg-white hover:bg-brand-50 text-slate-700 border border-slate-200 hover:border-brand-300 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 group"
                         >
                           {opt.label}
@@ -256,6 +198,15 @@ export const ChatBot: React.FC = () => {
                   )}
                 </div>
               ))}
+              
+              {isTyping && (
+                <div className="flex items-start gap-2">
+                  <div className="bg-white text-slate-400 border border-slate-200 rounded-2xl rounded-bl-none p-4 shadow-sm flex items-center gap-2">
+                    <Loader2 size={16} className="animate-spin text-brand-500" />
+                    <span className="text-xs font-medium">Apricodi düşünüyor...</span>
+                  </div>
+                </div>
+              )}
               <div ref={messagesEndRef} />
             </div>
 
@@ -267,19 +218,20 @@ export const ChatBot: React.FC = () => {
                   value={input} 
                   onChange={(e) => setInput(e.target.value)} 
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()} 
-                  placeholder="Bir şeyler yazın..." 
-                  className="flex-grow px-4 py-3 bg-slate-100 border-none rounded-2xl text-sm focus:ring-2 focus:ring-brand-500 outline-none transition-all"
+                  placeholder="Mesajınızı yazın..." 
+                  disabled={isTyping}
+                  className="flex-grow px-4 py-3 bg-slate-100 border-none rounded-2xl text-sm focus:ring-2 focus:ring-brand-500 outline-none transition-all disabled:opacity-50"
                 />
                 <button 
                   onClick={handleSend} 
-                  disabled={!input.trim()} 
+                  disabled={!input.trim() || isTyping} 
                   className="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center disabled:opacity-30 hover:bg-brand-600 transition-all shadow-lg active:scale-95"
                 >
                   <Send size={18} />
                 </button>
               </div>
               <p className="text-[10px] text-center text-slate-400 mt-3 font-medium">
-                Apricodi Guided Assistant v1.0
+                Apricodi AI Assistant v2.0 • Powered by Gemini 3 Pro
               </p>
             </div>
           </motion.div>

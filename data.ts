@@ -1,3 +1,4 @@
+
 import { Service, Project, BlogPost, Testimonial, FAQItem, JobPosition, ContentItem } from './types';
 
 export const services: Service[] = [
@@ -212,12 +213,47 @@ export const testimonials: Testimonial[] = [
     company: 'ModaZen',
     quote: 'E-ticaret altyapımızın yenilenmesi sürecinde gösterdikleri profesyonellik, satışlarımıza doğrudan olumlu yansıdı.'
   },
-   {
+  {
     id: 't3',
     name: 'Caner Öztürk',
     role: 'Kurucu Ortak',
     company: 'LojistikPro',
     quote: 'Teknik yetkinliklerinin yanı sıra iletişim dilleri ve çözüm odaklı yaklaşımları sayesinde projemizi zamanında hayata geçirdik.'
+  },
+  {
+    id: 't4',
+    name: 'Gizli Müşteri 1',
+    role: 'CTO',
+    company: 'DataFlow Inc.',
+    quote: 'Özel yazılım geliştirme sürecindeki çevik yaklaşımları ve kod kalitesi beklentilerimizin üzerindeydi. Gerçek bir teknoloji partneri.'
+  },
+  {
+    id: 't5',
+    name: 'Gizli Müşteri 2',
+    role: 'Ürün Yöneticisi',
+    company: 'Global Retail',
+    quote: 'Mobil uygulama projemizde kullanıcı deneyimi üzerine yaptıkları analizler dönüşüm oranlarımızı %40 artırdı. Teşekkürler Apricodi.'
+  },
+  {
+    id: 't6',
+    name: 'Gizli Müşteri 3',
+    role: 'Kurucu',
+    company: 'EcoStart',
+    quote: 'MVP geliştirme sürecimizde bizi hem teknik hem de stratejik olarak çok iyi yönlendirdiler. Hızlı ve güvenilir bir ekip.'
+  },
+  {
+    id: 't7',
+    name: 'Gizli Müşteri 4',
+    role: 'Dijital Dönüşüm Lideri',
+    company: 'MegaLojistik',
+    quote: 'Karmaşık backend sistemlerimizi modernize ederken gösterdikleri titizlik takdire şayan. Kesintisiz geçiş sağladık.'
+  },
+  {
+    id: 't8',
+    name: 'Gizli Müşteri 5',
+    role: 'Pazarlama Müdürü',
+    company: 'TrendYolculuk',
+    quote: 'SEO odaklı web tasarımı konusundaki uzmanlıkları sayesinde organik trafiğimizde gözle görülür bir artış yakaladık.'
   }
 ];
 

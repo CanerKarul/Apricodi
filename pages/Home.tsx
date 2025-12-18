@@ -1,59 +1,124 @@
-import React from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowRight, Zap, ShieldCheck, Clock, Lock, Layers } from 'lucide-react';
-import { Button, SectionHeader, Card } from '../components/ui';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Zap, ShieldCheck, Clock, Lock, Layers, ChevronLeft, ChevronRight, Code, Cpu, Smartphone, Globe, BarChart } from 'lucide-react';
+// Import Badge from ui components
+import { Button, SectionHeader, Card, Badge } from '../components/ui';
 import { SEO } from '../components/SEO';
 import { services, testimonials } from '../data';
 
 const HeroIllustration = () => {
-  const [msgIndex, setMsgIndex] = React.useState(0);
-  const messages = [
-    { title: "Deployment", status: "Success (100%)" },
-    { title: "Unit Tests", status: "Passed (142/142)" },
-    { title: "Security Scan", status: "No Risks Found" },
-    { title: "Server Response", status: "24ms (Ultra Fast)" },
-    { title: "Database Sync", status: "Completed" }
-  ];
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setMsgIndex((prev) => (prev + 1) % messages.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
-    <div className="relative w-full h-[500px] md:h-[600px] perspective-1000 flex items-center justify-center">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-brand-100/40 via-white to-blue-50/40 blur-3xl rounded-full -z-10 opacity-60" />
+    <div className="relative w-full h-[500px] md:h-[600px] flex items-center justify-center">
+      {/* Background Glows */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-gradient-to-tr from-brand-500/10 via-blue-500/5 to-transparent blur-[120px] rounded-full -z-10" />
+      
       <svg viewBox="0 0 800 600" className="w-full h-full drop-shadow-2xl overflow-visible" preserveAspectRatio="xMidYMid meet">
         <defs>
-          <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
+          <filter id="glass" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
+          </filter>
+          <linearGradient id="apricodiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#f97316" />
+            <stop offset="100%" stopColor="#ea580c" />
+          </linearGradient>
+          <linearGradient id="techGrad" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#1e293b" />
             <stop offset="100%" stopColor="#0f172a" />
           </linearGradient>
-          <linearGradient id="accentGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#fb923c" />
-            <stop offset="100%" stopColor="#ea580c" />
-          </linearGradient>
         </defs>
-        <motion.path d="M150 400 L400 520 L650 400 L400 280 Z" fill="#f8fafc" stroke="#e2e8f0" strokeWidth="2" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }} />
-        <motion.g initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: 0.2 }}>
-          <rect x="220" y="150" width="360" height="240" rx="12" fill="url(#screenGrad)" stroke="#334155" strokeWidth="4" />
-          <rect x="222" y="152" width="356" height="30" rx="10" fill="#334155" />
-          <motion.g>
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <motion.rect key={i} x="250" y={200 + i * 25} height="8" rx="4" fill={i === 3 ? "#fb923c" : "#475569"} initial={{ width: 0, opacity: 0 }} animate={{ width: [100, 250, 180], opacity: 1 }} transition={{ duration: 2, delay: 0.5 + (i * 0.15), repeat: Infinity, repeatType: "reverse" }} />
-            ))}
-          </motion.g>
+
+        {/* Floating Code Snippets */}
+        <motion.g
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 0.4, x: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
+          <rect x="50" y="120" width="180" height="100" rx="12" fill="#f8fafc" stroke="#e2e8f0" strokeWidth="1" />
+          <rect x="65" y="145" width="100" height="6" rx="3" fill="#cbd5e1" />
+          <rect x="65" y="160" width="140" height="6" rx="3" fill="#fb923c" />
+          <rect x="65" y="175" width="80" height="6" rx="3" fill="#cbd5e1" />
         </motion.g>
-        <motion.g initial={{ x: 50, opacity: 0 }} animate={{ x: 0, opacity: 1, y: [0, -10, 0] }} transition={{ x: { duration: 0.8, delay: 0.6 }, y: { duration: 4, repeat: Infinity } }}>
-          <rect x="520" y="250" width="160" height="100" rx="12" fill="white" stroke="#e2e8f0" strokeWidth="2" filter="drop-shadow(0px 10px 20px rgba(0,0,0,0.1))" />
-          <motion.text key={`title-${msgIndex}`} x="575" y="285" fontFamily="Inter, sans-serif" fontSize="12" fontWeight="bold" fill="#0f172a" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>{messages[msgIndex].title}</motion.text>
-          <motion.text key={`status-${msgIndex}`} x="575" y="300" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="500" fill="#059669" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>{messages[msgIndex].status}</motion.text>
-          <rect x="535" y="320" width="130" height="6" rx="3" fill="#f1f5f9" />
-          <motion.rect key={msgIndex} x="535" y="320" height="6" rx="3" fill="#10b981" initial={{ width: 0 }} animate={{ width: 130 }} transition={{ duration: 1.5 }} />
+
+        {/* Main Central Core Node (APRICODI Symbol) */}
+        <motion.g
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          {/* Pulsing rings */}
+          {[1, 1.3, 1.6].map((scale, i) => (
+            <motion.circle
+              key={i}
+              cx="400"
+              cy="300"
+              r="60"
+              fill="none"
+              stroke="url(#apricodiGrad)"
+              strokeWidth="1"
+              initial={{ scale: 1, opacity: 0.3 }}
+              animate={{ scale: scale + 0.5, opacity: 0 }}
+              transition={{ duration: 3, repeat: Infinity, delay: i * 1 }}
+            />
+          ))}
+          
+          <circle cx="400" cy="300" r="70" fill="white" shadow-sm="true" />
+          <g transform="translate(365, 265) scale(0.7)">
+             <path d="M50 30 C35 10 35 2 50 2 C65 2 65 10 50 30" stroke="url(#apricodiGrad)" strokeWidth="6" strokeLinecap="round" />
+             <path d="M42 30 C20 30 8 48 8 65 C8 88 30 98 48 98" stroke="url(#apricodiGrad)" strokeWidth="6" strokeLinecap="round" />
+             <path d="M58 30 C80 30 92 48 92 65 C92 88 70 98 52 98" stroke="url(#apricodiGrad)" strokeWidth="6" strokeLinecap="round" />
+          </g>
         </motion.g>
+
+        {/* Dashboard Element (Web) */}
+        <motion.g
+          animate={{ y: [0, -15, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <rect x="520" y="150" width="220" height="150" rx="16" fill="white" stroke="#f1f5f9" strokeWidth="2" filter="drop-shadow(0 20px 30px rgba(0,0,0,0.08))" />
+          <rect x="540" y="175" width="40" height="40" rx="8" fill="#fff7ed" />
+          <rect x="595" y="175" width="100" height="8" rx="4" fill="#f1f5f9" />
+          <rect x="595" y="195" width="60" height="8" rx="4" fill="#fb923c" />
+          <motion.path 
+            d="M540 260 Q570 230 600 250 T660 220 T720 250" 
+            fill="none" 
+            stroke="#fb923c" 
+            strokeWidth="3" 
+            strokeLinecap="round"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 2, delay: 1 }}
+          />
+        </motion.g>
+
+        {/* Mobile Phone Element */}
+        <motion.g
+          animate={{ y: [0, 15, 0], rotate: [0, 2, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        >
+          <rect x="150" y="320" width="120" height="220" rx="24" fill="#0f172a" />
+          <rect x="155" y="325" width="110" height="210" rx="20" fill="white" />
+          <rect x="190" y="335" width="40" height="10" rx="5" fill="#0f172a" />
+          <circle cx="210" cy="400" r="25" fill="#fff7ed" />
+          <path d="M200 400 L210 410 L220 390" stroke="#f97316" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <rect x="175" y="440" width="70" height="6" rx="3" fill="#f1f5f9" />
+          <rect x="175" y="455" width="50" height="6" rx="3" fill="#f1f5f9" />
+        </motion.g>
+
+        {/* Connection Lines */}
+        <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}>
+           <line x1="400" y1="300" x2="520" y2="225" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="4 4" />
+           <line x1="400" y1="300" x2="270" y2="430" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="4 4" />
+           <line x1="400" y1="300" x2="140" y2="220" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="4 4" />
+        </motion.g>
+
+        {/* Tech Icons Floating */}
+        <g opacity="0.6">
+          <motion.circle cx="140" cy="220" r="25" fill="white" shadow-md="true" animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity }} />
+          <motion.circle cx="650" y="420" r="30" fill="white" shadow-md="true" animate={{ y: [0, 10, 0] }} transition={{ duration: 3, repeat: Infinity }} />
+          <motion.circle cx="580" y="480" r="20" fill="white" shadow-md="true" animate={{ x: [0, 10, 0] }} transition={{ duration: 5, repeat: Infinity }} />
+        </g>
       </svg>
     </div>
   );
@@ -80,6 +145,103 @@ const ClientLogos = () => {
   );
 };
 
+const TestimonialSlider = () => {
+  const [index, setIndex] = useState(0);
+  const [itemsToShow, setItemsToShow] = useState(3);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) setItemsToShow(1);
+      else if (window.innerWidth < 1024) setItemsToShow(2);
+      else setItemsToShow(3);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const next = () => {
+    setIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prev = () => {
+    setIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(next, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Calculate visible items based on circular array
+  const getVisibleItems = () => {
+    const items = [];
+    for (let i = 0; i < itemsToShow; i++) {
+      items.push(testimonials[(index + i) % testimonials.length]);
+    }
+    return items;
+  };
+
+  return (
+    <div className="relative group">
+      <div className="overflow-hidden">
+        <motion.div 
+          className="flex gap-8"
+          initial={false}
+        >
+          <AnimatePresence mode="popLayout" initial={false}>
+            {getVisibleItems().map((t, idx) => (
+              <motion.div
+                key={`${t.id}-${index}`}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+                className="flex-1 min-w-0"
+                style={{ flexBasis: `${100 / itemsToShow}%` }}
+              >
+                <div className="bg-slate-800 p-8 rounded-2xl border border-slate-700 h-full flex flex-col hover:border-brand-500/50 transition-colors">
+                  <div className="flex text-brand-500 mb-6">★★★★★</div>
+                  <p className="text-slate-300 italic text-lg leading-relaxed flex-grow">"{t.quote}"</p>
+                  <div className="mt-8 pt-6 border-t border-slate-700">
+                    <p className="text-sm font-bold text-brand-500 uppercase tracking-widest">{t.company}</p>
+                    <p className="text-xs text-slate-500 mt-1">{t.role}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      </div>
+
+      {/* Navigation Buttons */}
+      <button 
+        onClick={prev}
+        className="absolute -left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-slate-800 border border-slate-700 text-white flex items-center justify-center hover:bg-brand-600 hover:border-brand-600 transition-all opacity-0 group-hover:opacity-100 hidden md:flex"
+      >
+        <ChevronLeft size={24} />
+      </button>
+      <button 
+        onClick={next}
+        className="absolute -right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-slate-800 border border-slate-700 text-white flex items-center justify-center hover:bg-brand-600 hover:border-brand-600 transition-all opacity-0 group-hover:opacity-100 hidden md:flex"
+      >
+        <ChevronRight size={24} />
+      </button>
+
+      {/* Pagination Dots */}
+      <div className="flex justify-center gap-2 mt-10">
+        {testimonials.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIndex(i)}
+            className={`h-1.5 transition-all rounded-full ${i === index ? 'w-8 bg-brand-500' : 'w-2 bg-slate-700'}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export const Home: React.FC = () => {
   return (
     <div className="overflow-hidden bg-white">
@@ -90,8 +252,8 @@ export const Home: React.FC = () => {
       />
 
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center bg-slate-50/50 overflow-hidden pt-24 md:pt-12">
-        <div className="absolute top-0 right-0 w-[50%] h-full bg-slate-50 skew-x-12 translate-x-1/4 -z-10" />
+      <section className="relative min-h-[95vh] flex items-center bg-slate-50/30 overflow-hidden pt-24 md:pt-12">
+        <div className="absolute top-0 right-0 w-[50%] h-full bg-slate-50/50 skew-x-12 translate-x-1/4 -z-10" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -172,25 +334,19 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-slate-900 text-white">
+      <section className="py-24 bg-slate-900 text-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
            <div className="text-center mb-16">
-             <h2 className="text-3xl font-bold mb-4">Müşteri Yorumları</h2>
-             <p className="text-slate-400">Yazılım ve tasarımda bize güvenenlerin görüşleri.</p>
+             <Badge variant="brand">Referanslarımız</Badge>
+             <h2 className="text-3xl md:text-5xl font-extrabold mt-6 mb-4">Müşteri Yorumları</h2>
+             <p className="text-slate-400 max-w-2xl mx-auto leading-relaxed">
+               Yazılım ve tasarımda bize güvenenlerin görüşleri. Birlikte ürettiğimiz başarı hikayeleri.
+             </p>
            </div>
+           
            <ClientLogos />
-           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-             {testimonials.map((t) => (
-               <div key={t.id} className="bg-slate-800 p-8 rounded-2xl border border-slate-700">
-                  <div className="flex text-brand-500 mb-6">★★★★★</div>
-                  <p className="text-slate-300 italic text-lg">"{t.quote}"</p>
-                  <div className="mt-6">
-                    <p className="font-bold">{t.name}</p>
-                    <p className="text-sm text-slate-500">{t.role}, {t.company}</p>
-                  </div>
-               </div>
-             ))}
-           </div>
+           
+           <TestimonialSlider />
         </div>
       </section>
     </div>
