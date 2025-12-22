@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
-import { Card, Input, TextArea, Button, SectionHeader } from '../components/ui';
-// Added missing Cpu icon import to fix line 185 error
-import { CheckCircle2, Star, AlertCircle, Zap, ShieldCheck, Clock, BarChart3, MessageSquare, Target, Cpu } from 'lucide-react';
+import { Card, Input, TextArea, Button } from '../components/ui';
+import { CheckCircle2, AlertCircle, Zap, ShieldCheck, Clock, BarChart3, Target, Cpu, User, Building2 } from 'lucide-react';
 import { submitForm } from '../lib/submitToSheets';
+import { SEO } from '../components/SEO';
 
 export const GetQuote: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -12,11 +12,12 @@ export const GetQuote: React.FC = () => {
 
   const [formData, setFormData] = useState({
     name: '',
+    customerType: 'Bireysel' as 'Bireysel' | 'Kurumsal',
     company: '',
     email: '',
     phone: '',
     serviceType: 'Web Geliştirme',
-    budget: '₺50.000 - ₺100.000',
+    budget: '₺15.000 - ₺30.000',
     message: '',
     kvkkConsent: false,
     companyWebsite: '' // Honeypot
@@ -31,11 +32,14 @@ export const GetQuote: React.FC = () => {
     setFormData(prev => ({ ...prev, [e.target.id]: e.target.checked }));
   };
 
+  const setCustomerType = (type: 'Bireysel' | 'Kurumsal') => {
+    setFormData(prev => ({ ...prev, customerType: type }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
 
-    // Spam Check
     if (formData.companyWebsite) {
       setSubmitted(true);
       return;
@@ -50,7 +54,8 @@ export const GetQuote: React.FC = () => {
 
     const payload = {
       name: formData.name,
-      company: formData.company,
+      customerType: formData.customerType,
+      company: formData.customerType === 'Kurumsal' ? formData.company : '-',
       email: formData.email,
       phone: formData.phone,
       serviceType: formData.serviceType,
@@ -59,7 +64,6 @@ export const GetQuote: React.FC = () => {
       kvkkConsent: formData.kvkkConsent
     };
 
-    // Generic form submission
     const result = await submitForm("quote", payload);
 
     setLoading(false);
@@ -73,90 +77,134 @@ export const GetQuote: React.FC = () => {
 
   return (
     <div className="bg-slate-50 min-h-screen">
-      <div className="bg-slate-900 text-white py-16">
+      <SEO 
+        title="Teklif Al | Projenizi Başlatın" 
+        description="Bireysel veya Kurumsal projeleriniz için APRICODI'den hızlıca fiyat teklifi alın. Yazılım, tasarım ve dijital dönüşüm çözümleri."
+      />
+      
+      <div className="bg-slate-900 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 text-center">
-           <h1 className="text-3xl md:text-5xl font-bold mb-4">Projenizi Başlatalım</h1>
-           <p className="text-slate-400 text-lg max-w-2xl mx-auto">Hayalinizdeki dijital ürünü gerçeğe dönüştürmek için ilk adımı atın.</p>
+           <h1 className="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">Projenizi Başlatalım</h1>
+           <p className="text-slate-400 text-lg max-w-2xl mx-auto font-light">
+             Fikrinizi gerçeğe dönüştürmek için ihtiyacımız olan detayları bizimle paylaşın.
+           </p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 -mt-10 pb-20">
+      <div className="max-w-7xl mx-auto px-4 -mt-12 pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          {/* Form Side */}
           <div className="lg:col-span-2">
-            <Card className="p-8 shadow-xl">
+            <Card className="p-8 md:p-10 shadow-2xl bg-white border-none">
               {submitted ? (
                 <div className="text-center py-16">
                    <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600">
                      <CheckCircle2 size={40} />
                    </div>
-                   <h2 className="text-2xl font-bold text-slate-900 mb-4">Teklif Talebiniz Alındı!</h2>
-                   <p className="text-slate-600 mb-6">
-                     Proje detaylarınızı inceleyip en kısa sürede (genellikle 24 saat içinde) size dönüş yapacağız.
+                   <h2 className="text-3xl font-bold text-slate-900 mb-4">Talebiniz Alındı!</h2>
+                   <p className="text-slate-600 mb-8 max-w-md mx-auto">
+                     Detayları inceleyip en kısa sürede (genellikle 24 saat içinde) sizinle iletişime geçeceğiz.
                    </p>
-                   <Button onClick={() => setSubmitted(false)} variant="outline">Yeni Teklif İste</Button>
+                   <Button onClick={() => setSubmitted(false)} variant="outline">Yeni Bir Teklif Talebi</Button>
                 </div>
               ) : (
                 <>
-                  <h2 className="text-2xl font-bold text-slate-900 mb-6">Proje Detayları</h2>
+                  {/* Customer Type Toggle */}
+                  <div className="mb-10">
+                    <label className="block text-sm font-bold text-slate-900 mb-4 uppercase tracking-widest">Başvuru Türü</label>
+                    <div className="grid grid-cols-2 gap-4">
+                      <button
+                        type="button"
+                        onClick={() => setCustomerType('Bireysel')}
+                        className={`flex items-center justify-center gap-3 p-4 rounded-xl border-2 transition-all ${
+                          formData.customerType === 'Bireysel' 
+                          ? 'border-brand-500 bg-brand-50 text-brand-700' 
+                          : 'border-slate-100 bg-slate-50 text-slate-500 hover:border-slate-200'
+                        }`}
+                      >
+                        <User size={20} />
+                        <span className="font-bold">Bireysel</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setCustomerType('Kurumsal')}
+                        className={`flex items-center justify-center gap-3 p-4 rounded-xl border-2 transition-all ${
+                          formData.customerType === 'Kurumsal' 
+                          ? 'border-brand-500 bg-brand-50 text-brand-700' 
+                          : 'border-slate-100 bg-slate-50 text-slate-500 hover:border-slate-200'
+                        }`}
+                      >
+                        <Building2 size={20} />
+                        <span className="font-bold">Kurumsal</span>
+                      </button>
+                    </div>
+                  </div>
+
                   {errorMsg && (
-                    <div className="bg-red-50 text-red-600 p-3 rounded mb-6 text-sm flex items-center gap-2">
-                      <AlertCircle size={16} /> {errorMsg}
+                    <div className="bg-red-50 text-red-600 p-4 rounded-lg mb-8 text-sm flex items-center gap-2 border border-red-100">
+                      <AlertCircle size={18} /> {errorMsg}
                     </div>
                   )}
+
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <Input name="name" label="Ad Soyad" placeholder="İsim Soyisim" value={formData.name} onChange={handleChange} required />
-                      <Input name="company" label="Şirket" placeholder="Şirket Adı" value={formData.company} onChange={handleChange} />
+                      {formData.customerType === 'Kurumsal' && (
+                        <Input name="company" label="Şirket Adı" placeholder="Firma Ünvanı" value={formData.company} onChange={handleChange} required />
+                      )}
+                      {formData.customerType === 'Bireysel' && (
+                        <Input name="company" label="Şirket / Proje Adı (Opsiyonel)" placeholder="Varsa proje ismi" value={formData.company} onChange={handleChange} />
+                      )}
                     </div>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <Input name="email" label="E-posta" type="email" placeholder="email@adresiniz.com" value={formData.email} onChange={handleChange} required />
-                      <Input name="phone" label="Telefon" placeholder="0555..." value={formData.phone} onChange={handleChange} required />
+                      <Input name="phone" label="Telefon" placeholder="0555 555 55 55" value={formData.phone} onChange={handleChange} required />
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1.5">Hizmet Türü</label>
-                        <select name="serviceType" value={formData.serviceType} onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-slate-200 outline-none bg-white">
+                        <label className="block text-sm font-bold text-slate-900 mb-2">Hizmet Türü</label>
+                        <select name="serviceType" value={formData.serviceType} onChange={handleChange} className="w-full px-4 py-3.5 rounded-lg border border-slate-200 outline-none bg-slate-50 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all">
                           <option>Web Geliştirme</option>
                           <option>Mobil Uygulama</option>
-                          <option>E-ticaret</option>
-                          <option>MVP</option>
+                          <option>E-ticaret Sistemi</option>
+                          <option>MVP / Startup Çözümü</option>
+                          <option>UI/UX Tasarım Revizyonu</option>
                           <option>Diğer</option>
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1.5">Bütçe Aralığı</label>
-                        <select name="budget" value={formData.budget} onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-slate-200 outline-none bg-white">
+                        <label className="block text-sm font-bold text-slate-900 mb-2">Bütçe Aralığı</label>
+                        <select name="budget" value={formData.budget} onChange={handleChange} className="w-full px-4 py-3.5 rounded-lg border border-slate-200 outline-none bg-slate-50 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all">
+                          <option>₺15.000 - ₺30.000</option>
+                          <option>₺30.000 - ₺50.000</option>
                           <option>₺50.000 - ₺100.000</option>
                           <option>₺100.000 - ₺250.000</option>
                           <option>₺250.000+</option>
-                          <option>Belirsiz</option>
                         </select>
                       </div>
                     </div>
 
-                    {/* Honeypot */}
                     <input type="text" name="companyWebsite" value={formData.companyWebsite} onChange={handleChange} className="hidden" tabIndex={-1} autoComplete="off" />
 
-                    <TextArea name="message" label="Proje Özeti" placeholder="Projenizden, hedeflerinizden ve varsa örneklerden bahsedin." value={formData.message} onChange={handleChange} required />
+                    <TextArea name="message" label="Proje Özeti" placeholder="Projenizden, hedeflerinizden ve varsa referans aldığınız örneklerden kısaca bahsedin." value={formData.message} onChange={handleChange} required />
                     
-                    <div className="flex items-center gap-2 mb-4">
+                    <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-lg border border-slate-100">
                       <input 
                         type="checkbox" 
                         id="kvkkConsent" 
                         checked={formData.kvkkConsent} 
                         onChange={handleCheckboxChange} 
-                        className="rounded text-brand-500 focus:ring-brand-500" 
+                        className="mt-1 w-4 h-4 rounded text-brand-600 focus:ring-brand-500" 
                         required 
                       />
-                      <label htmlFor="kvkkConsent" className="text-sm text-slate-600">
-                        KVKK metnini okudum, onaylıyorum.
+                      <label htmlFor="kvkkConsent" className="text-sm text-slate-600 leading-snug">
+                        Kişisel verilerimin işlenmesine dair <a href="/kvkk" target="_blank" className="text-brand-600 font-bold hover:underline">Aydınlatma Metni</a>'ni okudum ve onaylıyorum.
                       </label>
                     </div>
 
-                    <Button fullWidth size="lg" disabled={loading}>
+                    <Button fullWidth size="lg" disabled={loading} className="py-5 text-lg shadow-xl shadow-brand-500/20">
                       {loading ? 'Gönderiliyor...' : 'Teklif İste'}
                     </Button>
                   </form>
@@ -165,42 +213,25 @@ export const GetQuote: React.FC = () => {
             </Card>
           </div>
 
-          {/* Benefits Side - Enhanced & Redesigned */}
           <div className="lg:col-span-1 space-y-6">
-             <Card className="p-8 bg-white border-slate-200 shadow-lg relative overflow-hidden group">
-               <div className="absolute top-0 right-0 w-24 h-24 bg-brand-50 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+             <Card className="p-8 bg-white border-none shadow-xl relative overflow-hidden group">
+               <div className="absolute top-0 right-0 w-24 h-24 bg-brand-50 rounded-bl-full -z-10"></div>
                
                <h3 className="font-extrabold text-xl text-slate-900 mb-6 flex items-center gap-2">
                  <Zap size={24} className="text-brand-500" />
-                 Neler Kazanacaksınız?
+                 Süreç Nasıl İşler?
                </h3>
                
                <div className="space-y-6">
                  {[
-                   { 
-                     icon: Target, 
-                     title: "İhtiyaç Analizi", 
-                     desc: "İş modelinizi inceleyerek size en uygun teknoloji setini belirliyoruz." 
-                   },
-                   { 
-                     icon: Cpu, 
-                     title: "Teknik Mimari", 
-                     desc: "Gelecekte ölçeklenebilir, modern ve sürdürülebilir bir altyapı tasarımı." 
-                   },
-                   { 
-                     icon: BarChart3, 
-                     title: "Zaman & Maliyet", 
-                     desc: "Net teslim tarihleri ve bütçe planlamasıyla sürprizlere yer vermiyoruz." 
-                   },
-                   { 
-                     icon: ShieldCheck, 
-                     title: "Güvenlik Standartları", 
-                     desc: "Veri güvenliği ve KVKK uyumluluğu her projemizin temelindedir." 
-                   }
+                   { icon: Target, title: "Analiz & Planlama", desc: "İhtiyaçlarınızı dinliyor ve en uygun teknik mimariyi kurguluyoruz." },
+                   { icon: Cpu, title: "Teknik Mimari", desc: "Ölçeklenebilir, modern ve güvenli bir altyapı tasarlıyoruz." },
+                   { icon: BarChart3, title: "Performans Odaklı", desc: "SEO ve hız kriterlerine %100 uyumlu geliştirme yapıyoruz." },
+                   { icon: ShieldCheck, title: "Güvenlik & Destek", desc: "Proje yayına alındıktan sonra da SLA ile yanınızdayız." }
                  ].map((item, idx) => (
-                   <div key={idx} className="flex gap-4 items-start group/item">
-                     <div className="mt-1 w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-500 group-hover/item:bg-brand-500 group-hover/item:text-white transition-all shadow-sm">
-                       <item.icon size={20} />
+                   <div key={idx} className="flex gap-4 items-start">
+                     <div className="mt-1 w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-500 shadow-sm border border-slate-100">
+                       <item.icon size={18} />
                      </div>
                      <div>
                        <h4 className="font-bold text-slate-900 text-sm mb-1">{item.title}</h4>
@@ -213,43 +244,29 @@ export const GetQuote: React.FC = () => {
                <div className="mt-8 pt-6 border-t border-slate-100">
                   <div className="flex items-center gap-3 p-3 bg-brand-50 rounded-xl">
                     <Clock size={18} className="text-brand-600 shrink-0" />
-                    <p className="text-[11px] font-semibold text-brand-800 leading-tight">
+                    <p className="text-[11px] font-bold text-brand-800 leading-tight">
                       Ortalama teklif hazırlama süremiz 24 saattir.
                     </p>
                   </div>
                </div>
              </Card>
 
-             {/* Expertise Badges Card - Updated for readability */}
-             <Card className="p-6 bg-white border-slate-200 shadow-lg">
-                <h4 className="text-brand-600 text-xs font-bold uppercase tracking-widest mb-6">Bizimle Çalışmanın Avantajları</h4>
-                <div className="space-y-5">
+             <Card className="p-6 bg-slate-900 border-none shadow-xl text-white">
+                <h4 className="text-brand-500 text-xs font-bold uppercase tracking-widest mb-6">Neden Apricodi?</h4>
+                <div className="space-y-4">
                   {[
-                    "Ömür Boyu Kod Desteği",
-                    "7/24 Teknik İzleme",
-                    "SEO ve Performans Garantisi",
-                    "Modern UI/UX Yaklaşımı"
+                    "Kişiye Özel Yazılım Çözümleri",
+                    "7/24 Proaktif Sistem İzleme",
+                    "Modern UI/UX Standartları",
+                    "SEO Uyumlu Temiz Kodlama"
                   ].map((text, i) => (
-                    <div key={i} className="flex items-center gap-4">
-                      <div className="w-6 h-6 rounded-full bg-brand-500 flex items-center justify-center text-white shrink-0 shadow-sm">
-                        <CheckCircle2 size={16} />
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="w-5 h-5 rounded-full bg-brand-500 flex items-center justify-center text-white shrink-0">
+                        <CheckCircle2 size={12} />
                       </div>
-                      <span className="text-sm font-bold text-slate-700 leading-none">{text}</span>
+                      <span className="text-sm font-medium text-slate-300">{text}</span>
                     </div>
                   ))}
-                </div>
-                
-                <div className="mt-8 pt-6 border-t border-slate-100 flex items-center gap-4">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3].map(i => (
-                      <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-slate-200 overflow-hidden shadow-sm">
-                        <img src={`https://ui-avatars.com/api/?name=User+${i}&background=random&color=fff`} alt="user" />
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-[10px] text-slate-500 font-medium leading-tight">
-                    <strong className="text-slate-900">50+</strong> mutlu işletmeye teknoloji partnerliği yaptık.
-                  </p>
                 </div>
              </Card>
           </div>

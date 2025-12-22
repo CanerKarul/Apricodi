@@ -1,5 +1,6 @@
+
 import React, { useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { Services } from './pages/Services';
@@ -24,14 +25,6 @@ const ScrollToTop = () => {
   return null;
 };
 
-// Placeholder for missing pages
-const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => (
-  <div className="min-h-[60vh] flex flex-col items-center justify-center p-4 text-center">
-    <h1 className="text-4xl font-bold text-slate-900 mb-4">{title}</h1>
-    <p className="text-slate-600">Bu sayfa yapım aşamasındadır.</p>
-  </div>
-);
-
 const App: React.FC = () => {
   return (
     <Router>
@@ -52,8 +45,8 @@ const App: React.FC = () => {
           <Route path="/gonulluluk" element={<Volunteering />} />
           <Route path="/cms" element={<CMS />} />
           
-          {/* Placeholders */}
-          <Route path="/kariyer" element={<Careers />} /> {/* Redirect duplicate to same comp */}
+          {/* Aliases */}
+          <Route path="/kariyer" element={<Careers />} />
         </Routes>
       </Layout>
     </Router>
