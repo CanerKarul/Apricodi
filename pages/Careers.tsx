@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { SectionHeader, Card, Button, Badge, Input, TextArea } from '../components/ui';
 import { jobPositions } from '../data';
@@ -102,25 +103,25 @@ export const Careers: React.FC = () => {
           <h1 className="text-4xl md:text-6xl font-extrabold mt-6 mb-6 tracking-tight">
             APRICODI'de <span className="text-brand-500">Geleceğini Tasarla</span>
           </h1>
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light mb-8">
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light mb-10">
             Yeni mezunlar ve üniversite öğrencileri için öğrenme odaklı, sorumluluk aldıran ve gelişimi destekleyen bir ekip kültürü.
             <br/><span className="text-sm font-medium opacity-80 mt-2 block">Önceliğimiz: Öğrenmeye açık, üretmeyi seven takım arkadaşları.</span>
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-5 justify-center">
              <Button 
                size="lg" 
-               variant="ghost"
+               variant="primary"
                onClick={handleScrollToList} 
-               className="bg-white text-slate-900 hover:bg-slate-100 hover:text-slate-900 border-none shadow-lg shadow-white/10"
+               className="px-10 shadow-xl shadow-brand-500/20"
              >
                Açık Pozisyonlar
              </Button>
              <Button 
                size="lg" 
-               variant="ghost" 
+               variant="outline" 
                onClick={handleScrollToForm} 
-               className="text-white border-2 border-slate-500 hover:bg-slate-800 hover:text-white hover:border-slate-400"
+               className="bg-transparent border-slate-500 text-white hover:bg-slate-800 hover:border-slate-400 px-10"
              >
                Genel Başvuru
              </Button>

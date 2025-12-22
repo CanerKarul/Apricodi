@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronRight, MapPin, Mail, Phone, ExternalLink } from 'lucide-react';
+import { Menu, X, ChevronRight, MapPin, Mail, Phone, ExternalLink, Instagram, Linkedin, Twitter } from 'lucide-react';
 import { Button, Badge } from './ui';
 import { CookieBanner } from './CookieBanner';
 import { ChatBot } from './ChatBot';
@@ -187,10 +188,20 @@ export const Footer: React.FC = () => {
               Kurumsal dijital dönüşüm, yüksek performanslı web sistemleri ve marka odaklı tasarım çözümleri. İşinizi geleceğe güvenle taşıyın.
             </p>
             <div className="flex space-x-4">
-              {['Twitter', 'LinkedIn', 'Instagram'].map((social) => (
-                <a key={social} href="#" className="w-10 h-10 rounded-md bg-slate-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition-all text-slate-400">
-                  <span className="sr-only">{social}</span>
-                  <ExternalLink size={18} />
+              {[
+                { name: 'Twitter', icon: Twitter, url: '#' },
+                { name: 'LinkedIn', icon: Linkedin, url: '#' },
+                { name: 'Instagram', icon: Instagram, url: '#' }
+              ].map((social) => (
+                <a 
+                  key={social.name} 
+                  href={social.url} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-md bg-slate-800 flex items-center justify-center hover:bg-brand-500 transition-all text-brand-500 hover:text-white border border-slate-700 hover:border-brand-500 group"
+                >
+                  <span className="sr-only">{social.name}</span>
+                  <social.icon size={18} className="transition-transform group-hover:scale-110" />
                 </a>
               ))}
             </div>

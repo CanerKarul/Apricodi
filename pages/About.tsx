@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { SectionHeader, Card, Badge, Button } from '../components/ui';
 import { Link } from 'react-router-dom';
@@ -24,7 +25,12 @@ export const About: React.FC = () => {
       role: "Yazılım Geliştirici & Kurucu",
       bio: "Malatya Turgut Özal Üniversitesi Bilgisayar Mühendisliği mezunu. Front-end mimarisi, n8n otomasyonları ve yapay zekâ entegrasyonları üzerinde uzmanlaşmıştır. APRICODI'nin teknik altyapısını ve ürün stratejisini yönetmektedir.",
       imageUrl: "https://ui-avatars.com/api/?name=Caner+Karul&background=0f172a&color=fff&size=256",
-      tags: ["Frontend", "AI & Automation", "Product Strategy"]
+      tags: ["Frontend", "AI & Automation", "Product Strategy"],
+      socials: {
+        linkedin: "https://www.linkedin.com/in/canerkarul/",
+        github: "https://github.com/CanerKarul",
+        mail: "mailto:cnnrkrrl@gmail.com"
+      }
     },
     {
       id: 2,
@@ -32,7 +38,12 @@ export const About: React.FC = () => {
       role: "Yazılım Geliştirici & Kurumsal İletişim",
       bio: "Malatya Turgut Özal Üniversitesi Yazılım Mühendisliği son sınıf öğrencisi. Büyük Dil Modelleri (LLM) ve full-stack geliştirme projelerinde deneyim sahibidir. Kurumda hem teknik geliştirme hem de kurumsal iletişim süreçlerini yürütmektedir.",
       imageUrl: "https://ui-avatars.com/api/?name=Nisa+Ustundag&background=f97316&color=fff&size=256",
-      tags: ["Fullstack", "LLM", "Communication"]
+      tags: ["Fullstack", "LLM", "Communication"],
+      socials: {
+        linkedin: "https://www.linkedin.com/in/nisaustundag/",
+        github: "https://github.com/NisaUstundag",
+        mail: "mailto:nisaustundag070@gmail.com"
+      }
     },
     {
       id: 3,
@@ -40,7 +51,12 @@ export const About: React.FC = () => {
       role: "Yazılım Geliştirici",
       bio: "Malatya Turgut Özal Üniversitesi Yazılım Mühendisliği son sınıf öğrencisi. Siber güvenlik ve güvenli kod geliştirme standartlarına odaklanmaktadır. APRICODI projelerinde güvenlik ve backend süreçlerine katkı sağlamaktadır.",
       imageUrl: "https://ui-avatars.com/api/?name=Hatice+Arslan&background=0f172a&color=fff&size=256",
-      tags: ["Cyber Security", "Backend", "Software Engineering"]
+      tags: ["Cyber Security", "Backend", "Software Engineering"],
+      socials: {
+        linkedin: "https://www.linkedin.com/in/hatice-arslan3/",
+        github: "https://github.com/htcArsln",
+        mail: "mailto:42.arslan.hatice@gmail.com"
+      }
     }
   ];
 
@@ -48,7 +64,7 @@ export const About: React.FC = () => {
     {
       icon: Scale,
       title: "Şeffaf Süreç Yönetimi",
-      desc: "Projenin her aşamasında açık iletişim kurar, sürpriz maliyetler veya gizli süreçler olmadan çalışırız."
+      desc: "Projeninin her aşamasında açık iletişim kurar, sürpriz maliyetler veya gizli süreçler olmadan çalışırız."
     },
     {
       icon: Cpu,
@@ -182,9 +198,15 @@ export const About: React.FC = () => {
                   </div>
 
                   <div className="flex justify-center gap-4 border-t border-slate-700 pt-6">
-                    <button className="text-slate-400 hover:text-white transition-colors"><Linkedin size={18} /></button>
-                    <button className="text-slate-400 hover:text-white transition-colors"><Github size={18} /></button>
-                    <button className="text-slate-400 hover:text-white transition-colors"><Mail size={18} /></button>
+                    <a href={member.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors" title="LinkedIn">
+                      <Linkedin size={18} />
+                    </a>
+                    <a href={member.socials.github} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors" title="GitHub">
+                      <Github size={18} />
+                    </a>
+                    <a href={member.socials.mail} className="text-slate-400 hover:text-white transition-colors" title="E-posta Gönder">
+                      <Mail size={18} />
+                    </a>
                   </div>
                 </div>
               </div>
