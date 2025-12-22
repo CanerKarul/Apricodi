@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShoppingBag, Shield, Smartphone, Globe, Coffee, Heart, Code, Search } from 'lucide-react';
+import { ShoppingBag, Shield, Smartphone, Globe, Coffee, Heart, Code, Search, Zap, Cpu, Bot } from 'lucide-react';
 
 interface ProjectIllustrationProps {
   projectId: string;
@@ -28,6 +28,17 @@ export const ProjectIllustration: React.FC<ProjectIllustrationProps> = ({ projec
   };
 
   switch (projectId) {
+    case 'automation-system':
+      return (
+        <div className={`${containerClass} bg-slate-900`}>
+           <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#fb923c 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
+           <motion.div className="relative z-10" initial={{ scale: 0.8 }} whileInView={{ scale: 1 }}>
+              <div className="w-24 h-24 bg-brand-500/20 rounded-full flex items-center justify-center border border-brand-500/30 animate-pulse">
+                 <Bot size={48} className="text-brand-500" />
+              </div>
+           </motion.div>
+        </div>
+      );
     case 'filiz-cekil-bridal':
       return (
         <div className={`${containerClass} bg-stone-50`}>

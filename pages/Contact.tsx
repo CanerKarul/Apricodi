@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { SectionHeader, Card, Input, TextArea, Button } from '../components/ui';
 import { Mail, Phone, MapPin, CheckCircle, Clock, AlertCircle } from 'lucide-react';
@@ -175,7 +176,7 @@ export const Contact: React.FC = () => {
                       className="mt-1 w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500" 
                     />
                     <label htmlFor="kvkkConsent" className="text-sm text-slate-500 leading-snug">
-                      <Link to="/kvkk" className="text-brand-600 hover:underline">KVKK Aydınlatma Metni</Link>'ni okudum ve kişisel verilerimin işlenmesini onaylıyorum.
+                      <Link to="/kvkk" target="_blank" className="text-brand-600 font-bold hover:underline">KVKK Aydınlatma Metni</Link>'ni okudum ve kişisel verilerimin işlenmesini onaylıyorum.
                     </label>
                   </div>
 

@@ -3,6 +3,14 @@ import { Service, Project, BlogPost, Testimonial, FAQItem, JobPosition, ContentI
 
 export const services: Service[] = [
   {
+    id: 'ai-automation',
+    title: 'Yapay Zeka ve İş Otomasyonu',
+    description: 'n8n ve ileri seviye yapay zeka entegrasyonları ile manuel iş süreçlerinizi %100 otonom hale getiriyoruz.',
+    iconName: 'Cpu',
+    details: ['n8n İş Akışı Tasarımı', 'Akıllı Chatbot ve Sesli Asistanlar', 'LLM (GPT/Gemini) Entegrasyonları'],
+    features: ['%90 Zaman Tasarrufu', '7/24 Kesintisiz Operasyon', 'Hatasız Veri İşleme']
+  },
+  {
     id: 'web-dev',
     title: 'Kurumsal Web Yazılım',
     description: 'İşletmenizin ihtiyaçlarına özel olarak tasarlanan, yüksek performanslı ve güvenli web tabanlı iş çözümleri.',

@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, Input, TextArea, Button } from '../components/ui';
 import { CheckCircle2, AlertCircle, Zap, ShieldCheck, Clock, BarChart3, Target, Cpu, User, Building2 } from 'lucide-react';
 import { submitForm } from '../lib/submitToSheets';
@@ -16,7 +17,7 @@ export const GetQuote: React.FC = () => {
     company: '',
     email: '',
     phone: '',
-    serviceType: 'Web Geliştirme',
+    serviceType: 'Yapay Zeka ve Otomasyon',
     budget: '₺15.000 - ₺30.000',
     message: '',
     kvkkConsent: false,
@@ -166,6 +167,7 @@ export const GetQuote: React.FC = () => {
                       <div>
                         <label className="block text-sm font-bold text-slate-900 mb-2">Hizmet Türü</label>
                         <select name="serviceType" value={formData.serviceType} onChange={handleChange} className="w-full px-4 py-3.5 rounded-lg border border-slate-200 outline-none bg-slate-50 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all">
+                          <option>Yapay Zeka ve Otomasyon</option>
                           <option>Web Geliştirme</option>
                           <option>Mobil Uygulama</option>
                           <option>E-ticaret Sistemi</option>
@@ -179,6 +181,7 @@ export const GetQuote: React.FC = () => {
                         <select name="budget" value={formData.budget} onChange={handleChange} className="w-full px-4 py-3.5 rounded-lg border border-slate-200 outline-none bg-slate-50 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all">
                           <option>₺15.000 - ₺30.000</option>
                           <option>₺30.000 - ₺50.000</option>
+                          <option>₺30.000 - ₺50.000</option>
                           <option>₺50.000 - ₺100.000</option>
                           <option>₺100.000 - ₺250.000</option>
                           <option>₺250.000+</option>
@@ -190,7 +193,7 @@ export const GetQuote: React.FC = () => {
 
                     <TextArea name="message" label="Proje Özeti" placeholder="Projenizden, hedeflerinizden ve varsa referans aldığınız örneklerden kısaca bahsedin." value={formData.message} onChange={handleChange} required />
                     
-                    <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-lg border border-slate-100">
+                    <div className="flex items-start gap-3 pt-2">
                       <input 
                         type="checkbox" 
                         id="kvkkConsent" 
@@ -199,8 +202,8 @@ export const GetQuote: React.FC = () => {
                         className="mt-1 w-4 h-4 rounded text-brand-600 focus:ring-brand-500" 
                         required 
                       />
-                      <label htmlFor="kvkkConsent" className="text-sm text-slate-600 leading-snug">
-                        Kişisel verilerimin işlenmesine dair <a href="/kvkk" target="_blank" className="text-brand-600 font-bold hover:underline">Aydınlatma Metni</a>'ni okudum ve onaylıyorum.
+                      <label htmlFor="kvkkConsent" className="text-sm text-slate-500 leading-snug">
+                        <Link to="/kvkk" target="_blank" className="text-brand-600 font-bold hover:underline">KVKK Aydınlatma Metni</Link>'ni okudum ve kişisel verilerimin işlenmesini onaylıyorum.
                       </label>
                     </div>
 

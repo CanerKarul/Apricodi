@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronRight, MapPin, Mail, Phone, ExternalLink, Instagram, Linkedin, Twitter } from 'lucide-react';
+import { Menu, X, ChevronRight, MapPin, Mail, Phone, ExternalLink, Instagram, Linkedin } from 'lucide-react';
 import { Button, Badge } from './ui';
 import { CookieBanner } from './CookieBanner';
 import { ChatBot } from './ChatBot';
@@ -41,6 +41,19 @@ const ApricodiLogo = ({ className = "h-10 w-auto" }: { className?: string }) => 
       <path d="M64 55 L72 62 L64 69" stroke="#334155" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
       <path d="M46 72 L54 52" stroke="#334155" strokeWidth="5" strokeLinecap="round"/>
     </g>
+  </svg>
+);
+
+// Modern X Brand Logo Component
+const XLogo = ({ size = 18, className = "" }: { size?: number, className?: string }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    className={className}
+  >
+    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932 6.064-6.932zm-1.294 19.497h2.039L6.486 3.24H4.298l13.309 17.41z" />
   </svg>
 );
 
@@ -189,7 +202,7 @@ export const Footer: React.FC = () => {
             </p>
             <div className="flex space-x-4">
               {[
-                { name: 'Twitter', icon: Twitter, url: '#' },
+                { name: 'X', icon: XLogo, url: '#' },
                 { name: 'LinkedIn', icon: Linkedin, url: '#' },
                 { name: 'Instagram', icon: Instagram, url: '#' }
               ].map((social) => (

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { SectionHeader, Button, Badge } from '../components/ui';
@@ -25,7 +26,10 @@ import {
   Zap,
   CreditCard,
   BarChart3,
-  Search
+  Search,
+  MessageSquare,
+  Bot,
+  Mic
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -34,6 +38,59 @@ const ServiceIllustration: React.FC<{ id: string }> = ({ id }) => {
   const floating = { floating: { y: [0, -10, 0], transition: { duration: 4, repeat: Infinity, ease: "easeInOut" as const } } };
 
   switch (id) {
+    case 'ai-automation':
+      return (
+        <div className={containerClass}>
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#0f172a 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
+          
+          <div className="relative w-full h-full flex items-center justify-center">
+             {/* n8n Style Nodes */}
+             <motion.div 
+               className="relative flex items-center gap-12"
+               initial={{ opacity: 0 }}
+               whileInView={{ opacity: 1 }}
+             >
+                {/* Node 1: Trigger */}
+                <motion.div className="w-16 h-16 bg-white rounded-2xl shadow-xl border border-slate-200 flex items-center justify-center text-brand-600 relative z-10" variants={floating} animate="floating">
+                   <Mic size={24} />
+                   <div className="absolute -bottom-6 text-[8px] font-bold text-slate-400 uppercase">Input</div>
+                </motion.div>
+
+                {/* Connection Line 1 */}
+                <motion.div className="w-12 h-0.5 bg-brand-500/20 relative" initial={{ width: 0 }} whileInView={{ width: 48 }} transition={{ duration: 1 }}>
+                   <motion.div className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-brand-500 rounded-full" animate={{ left: ['0%', '100%'] }} transition={{ duration: 2, repeat: Infinity }} />
+                </motion.div>
+
+                {/* Node 2: AI Processor */}
+                <motion.div className="w-24 h-24 bg-slate-900 rounded-3xl shadow-2xl flex items-center justify-center text-brand-500 relative z-10 group" animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 4, repeat: Infinity }}>
+                   <div className="absolute inset-0 bg-brand-500/10 rounded-3xl animate-pulse"></div>
+                   <Bot size={40} className="relative z-10" />
+                   <div className="absolute -bottom-8 text-[10px] font-bold text-slate-900 uppercase">AI Core</div>
+                </motion.div>
+
+                {/* Connection Line 2 */}
+                <motion.div className="w-12 h-0.5 bg-brand-500/20 relative" initial={{ width: 0 }} whileInView={{ width: 48 }} transition={{ duration: 1, delay: 0.5 }}>
+                   <motion.div className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-brand-500 rounded-full" animate={{ left: ['0%', '100%'] }} transition={{ duration: 2, repeat: Infinity, delay: 0.5 }} />
+                </motion.div>
+
+                {/* Node 3: Output */}
+                <motion.div className="w-16 h-16 bg-white rounded-2xl shadow-xl border border-slate-200 flex items-center justify-center text-blue-600 relative z-10" variants={floating} animate="floating" transition={{ delay: 0.3 }}>
+                   <MessageSquare size={24} />
+                   <div className="absolute -bottom-6 text-[8px] font-bold text-slate-400 uppercase">Chatbot</div>
+                </motion.div>
+             </motion.div>
+
+             {/* Floating Automation Tags */}
+             <motion.div 
+               className="absolute top-12 left-12 bg-white/80 backdrop-blur-md border border-slate-100 p-3 rounded-xl shadow-lg flex items-center gap-2"
+               initial={{ x: -20, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }}
+             >
+                <Zap size={14} className="text-amber-500" />
+                <span className="text-[10px] font-bold text-slate-800">Autonomous Flow</span>
+             </motion.div>
+          </div>
+        </div>
+      );
     case 'web-dev':
       return (
         <div className={containerClass}>
