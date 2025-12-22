@@ -113,7 +113,7 @@ export const Careers: React.FC = () => {
                size="lg" 
                variant="primary"
                onClick={handleScrollToList} 
-               className="px-10 shadow-xl shadow-brand-500/20"
+               className="px-10 shadow-xl shadow-brand-500/20 font-bold"
              >
                Açık Pozisyonlar
              </Button>
@@ -121,7 +121,7 @@ export const Careers: React.FC = () => {
                size="lg" 
                variant="outline" 
                onClick={handleScrollToForm} 
-               className="bg-transparent border-slate-500 text-white hover:bg-slate-800 hover:border-slate-400 px-10"
+               className="!bg-transparent !border-slate-500 !text-white hover:!bg-slate-800 hover:!border-slate-400 px-10 transition-all font-bold"
              >
                Genel Başvuru
              </Button>
@@ -179,7 +179,7 @@ export const Careers: React.FC = () => {
                <input 
                  type="text" 
                  placeholder="Pozisyon ara..." 
-                 className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none text-sm"
+                 className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none text-sm bg-white text-slate-900 placeholder:text-slate-400"
                  value={searchQuery}
                  onChange={(e) => setSearchQuery(e.target.value)}
                />

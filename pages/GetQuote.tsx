@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { Card, Input, TextArea, Button, SectionHeader } from '../components/ui';
-import { CheckCircle2, Star, AlertCircle } from 'lucide-react';
-import { testimonials } from '../data';
+// Added missing Cpu icon import to fix line 185 error
+import { CheckCircle2, Star, AlertCircle, Zap, ShieldCheck, Clock, BarChart3, MessageSquare, Target, Cpu } from 'lucide-react';
 import { submitForm } from '../lib/submitToSheets';
 
 export const GetQuote: React.FC = () => {
@@ -52,7 +53,7 @@ export const GetQuote: React.FC = () => {
       company: formData.company,
       email: formData.email,
       phone: formData.phone,
-      serviceType: formData.serviceType, // UPDATED: Key changed from 'service' to 'serviceType' to become 'service_type'
+      serviceType: formData.serviceType,
       budget: formData.budget,
       message: formData.message,
       kvkkConsent: formData.kvkkConsent
@@ -164,31 +165,93 @@ export const GetQuote: React.FC = () => {
             </Card>
           </div>
 
-          {/* Benefits Side */}
+          {/* Benefits Side - Enhanced & Redesigned */}
           <div className="lg:col-span-1 space-y-6">
-             <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-               <h3 className="font-bold text-lg mb-4">Neler Kazanacaksınız?</h3>
-               <ul className="space-y-3">
+             <Card className="p-8 bg-white border-slate-200 shadow-lg relative overflow-hidden group">
+               <div className="absolute top-0 right-0 w-24 h-24 bg-brand-50 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+               
+               <h3 className="font-extrabold text-xl text-slate-900 mb-6 flex items-center gap-2">
+                 <Zap size={24} className="text-brand-500" />
+                 Neler Kazanacaksınız?
+               </h3>
+               
+               <div className="space-y-6">
                  {[
-                   'Detaylı İhtiyaç Analizi',
-                   'Teknik Mimari Önerisi',
-                   'Zaman & Maliyet Planı',
-                   'Rakip Analizi Özeti'
-                 ].map(i => (
-                   <li key={i} className="flex items-center gap-2 text-slate-700 text-sm">
-                     <CheckCircle2 className="text-green-500 w-5 h-5 shrink-0" /> {i}
-                   </li>
+                   { 
+                     icon: Target, 
+                     title: "İhtiyaç Analizi", 
+                     desc: "İş modelinizi inceleyerek size en uygun teknoloji setini belirliyoruz." 
+                   },
+                   { 
+                     icon: Cpu, 
+                     title: "Teknik Mimari", 
+                     desc: "Gelecekte ölçeklenebilir, modern ve sürdürülebilir bir altyapı tasarımı." 
+                   },
+                   { 
+                     icon: BarChart3, 
+                     title: "Zaman & Maliyet", 
+                     desc: "Net teslim tarihleri ve bütçe planlamasıyla sürprizlere yer vermiyoruz." 
+                   },
+                   { 
+                     icon: ShieldCheck, 
+                     title: "Güvenlik Standartları", 
+                     desc: "Veri güvenliği ve KVKK uyumluluğu her projemizin temelindedir." 
+                   }
+                 ].map((item, idx) => (
+                   <div key={idx} className="flex gap-4 items-start group/item">
+                     <div className="mt-1 w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-500 group-hover/item:bg-brand-500 group-hover/item:text-white transition-all shadow-sm">
+                       <item.icon size={20} />
+                     </div>
+                     <div>
+                       <h4 className="font-bold text-slate-900 text-sm mb-1">{item.title}</h4>
+                       <p className="text-slate-500 text-xs leading-relaxed">{item.desc}</p>
+                     </div>
+                   </div>
                  ))}
-               </ul>
-             </div>
+               </div>
 
-             <div className="bg-brand-50 p-6 rounded-2xl border border-brand-100">
-                <div className="flex gap-1 mb-2">
-                   {[1,2,3,4,5].map(s => <Star key={s} size={16} className="text-orange-400 fill-orange-400" />)}
+               <div className="mt-8 pt-6 border-t border-slate-100">
+                  <div className="flex items-center gap-3 p-3 bg-brand-50 rounded-xl">
+                    <Clock size={18} className="text-brand-600 shrink-0" />
+                    <p className="text-[11px] font-semibold text-brand-800 leading-tight">
+                      Ortalama teklif hazırlama süremiz 24 saattir.
+                    </p>
+                  </div>
+               </div>
+             </Card>
+
+             {/* Expertise Badges Card - Updated for readability */}
+             <Card className="p-6 bg-white border-slate-200 shadow-lg">
+                <h4 className="text-brand-600 text-xs font-bold uppercase tracking-widest mb-6">Bizimle Çalışmanın Avantajları</h4>
+                <div className="space-y-5">
+                  {[
+                    "Ömür Boyu Kod Desteği",
+                    "7/24 Teknik İzleme",
+                    "SEO ve Performans Garantisi",
+                    "Modern UI/UX Yaklaşımı"
+                  ].map((text, i) => (
+                    <div key={i} className="flex items-center gap-4">
+                      <div className="w-6 h-6 rounded-full bg-brand-500 flex items-center justify-center text-white shrink-0 shadow-sm">
+                        <CheckCircle2 size={16} />
+                      </div>
+                      <span className="text-sm font-bold text-slate-700 leading-none">{text}</span>
+                    </div>
+                  ))}
                 </div>
-                <p className="text-sm text-slate-700 italic mb-3">"{testimonials[0].quote}"</p>
-                <p className="text-xs font-bold text-slate-900">- {testimonials[0].name}</p>
-             </div>
+                
+                <div className="mt-8 pt-6 border-t border-slate-100 flex items-center gap-4">
+                  <div className="flex -space-x-2">
+                    {[1, 2, 3].map(i => (
+                      <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-slate-200 overflow-hidden shadow-sm">
+                        <img src={`https://ui-avatars.com/api/?name=User+${i}&background=random&color=fff`} alt="user" />
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[10px] text-slate-500 font-medium leading-tight">
+                    <strong className="text-slate-900">50+</strong> mutlu işletmeye teknoloji partnerliği yaptık.
+                  </p>
+                </div>
+             </Card>
           </div>
 
         </div>
