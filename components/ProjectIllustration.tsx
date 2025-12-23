@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShoppingBag, Shield, Smartphone, Globe, Coffee, Heart, Code, Search, Zap, Cpu, Bot } from 'lucide-react';
+import { ShoppingBag, Shield, Smartphone, Globe, Coffee, Heart, Code, Search, Zap, Cpu, Bot, Layers, Palette, BarChart3, Lock } from 'lucide-react';
 
 interface ProjectIllustrationProps {
   projectId: string;
@@ -11,76 +11,84 @@ interface ProjectIllustrationProps {
 export const ProjectIllustration: React.FC<ProjectIllustrationProps> = ({ projectId, className = '' }) => {
   const containerClass = `w-full h-full relative overflow-hidden flex items-center justify-center ${className}`;
 
-  // Common animation variants - fixed ease type and key names
-  const float = {
-    floating: {
-      y: [0, -8, 0],
-      transition: { duration: 4, repeat: Infinity, ease: "easeInOut" as const }
+  // Premium Animation Variants
+  const floating = {
+    animate: {
+      y: [0, -12, 0],
+      transition: { duration: 5, repeat: Infinity, ease: "easeInOut" }
     }
   };
 
-  const pulse = {
-    pulsing: {
+  const rotating = {
+    animate: {
+      rotate: 360,
+      transition: { duration: 20, repeat: Infinity, ease: "linear" }
+    }
+  };
+
+  const pulsing = {
+    animate: {
       scale: [1, 1.05, 1],
-      opacity: [0.8, 1, 0.8],
-      transition: { duration: 3, repeat: Infinity, ease: "easeInOut" as const }
+      opacity: [0.6, 1, 0.6],
+      transition: { duration: 3, repeat: Infinity, ease: "easeInOut" }
     }
   };
 
   switch (projectId) {
-    case 'automation-system':
-      return (
-        <div className={`${containerClass} bg-slate-900`}>
-           <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#fb923c 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
-           <motion.div className="relative z-10" initial={{ scale: 0.8 }} whileInView={{ scale: 1 }}>
-              <div className="w-24 h-24 bg-brand-500/20 rounded-full flex items-center justify-center border border-brand-500/30 animate-pulse">
-                 <Bot size={48} className="text-brand-500" />
-              </div>
-           </motion.div>
-        </div>
-      );
     case 'filiz-cekil-bridal':
       return (
         <div className={`${containerClass} bg-stone-50`}>
-          {/* Decorative Pattern */}
-          <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#78716c 1px, transparent 1px)', backgroundSize: '16px 16px' }}></div>
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#78716c 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
           
-          <div className="relative z-10 w-full h-full flex items-center justify-center">
-             {/* Main Card - Minimalist UI */}
+          <div className="relative w-full h-full flex items-center justify-center p-12">
+             {/* Background Silk Flow */}
              <motion.div 
-               className="w-48 h-64 bg-white shadow-xl border border-stone-100 rounded-t-full flex flex-col items-center pt-8 relative"
-               initial={{ y: 20, opacity: 0 }}
+               className="absolute w-72 h-72 bg-brand-100/30 blur-[60px] rounded-full"
+               animate={{ scale: [1, 1.2, 1], x: [0, 20, 0] }}
+               transition={{ duration: 8, repeat: Infinity }}
+             />
+
+             {/* UI Mockup - Fashion focus */}
+             <motion.div 
+               className="w-56 h-80 bg-white rounded-[2rem] shadow-2xl border border-stone-100 overflow-hidden flex flex-col relative z-10"
+               initial={{ y: 30, opacity: 0 }}
                whileInView={{ y: 0, opacity: 1 }}
                transition={{ duration: 0.8 }}
              >
-                <div className="w-24 h-24 rounded-full bg-stone-100 mb-4 flex items-center justify-center relative overflow-hidden">
-                   <motion.div 
-                     className="absolute inset-0 bg-stone-200"
-                     animate={{ rotate: 360 }}
-                     transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                     style={{ borderRadius: '40%', scale: 1.5, opacity: 0.3 }}
-                   />
-                   <ShoppingBag size={32} className="text-stone-600 relative z-10" />
+                <div className="h-40 bg-stone-50 relative overflow-hidden">
+                   <div className="absolute inset-0 flex items-center justify-center">
+                      <motion.div variants={rotating} animate="animate">
+                         <div className="w-32 h-32 border-2 border-stone-200/50 rounded-full border-dashed" />
+                      </motion.div>
+                      <ShoppingBag size={48} className="text-stone-300 absolute" />
+                   </div>
+                   <div className="absolute bottom-4 left-4">
+                      <div className="w-20 h-3 bg-stone-200 rounded-full mb-1"></div>
+                      <div className="w-12 h-2 bg-stone-100 rounded-full"></div>
+                   </div>
                 </div>
-                <div className="w-24 h-2 bg-stone-100 rounded-full mb-2"></div>
-                <div className="w-16 h-2 bg-stone-100 rounded-full"></div>
-                
-                {/* Floating Elements - updated animate prop */}
-                <motion.div 
-                  className="absolute -right-6 top-12 bg-white p-3 rounded-lg shadow-lg border border-stone-50"
-                  variants={float} animate="floating"
-                >
-                   <Heart size={16} className="text-rose-400 fill-rose-400" />
-                </motion.div>
-                
-                <motion.div 
-                  className="absolute -left-4 bottom-12 bg-stone-800 text-white text-[10px] px-3 py-1.5 rounded-full shadow-lg"
-                  initial={{ x: -10, opacity: 0 }}
-                  whileInView={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                >
-                   Randevu Oluştur
-                </motion.div>
+                <div className="p-6 space-y-4">
+                   <div className="flex gap-2">
+                      <div className="w-10 h-10 bg-stone-50 rounded-xl" />
+                      <div className="w-10 h-10 bg-stone-50 rounded-xl" />
+                      <div className="w-10 h-10 bg-stone-50 rounded-xl" />
+                   </div>
+                   <div className="h-10 bg-stone-900 rounded-xl flex items-center justify-center text-white text-[10px] font-black uppercase tracking-widest">Koleksiyonu Gör</div>
+                </div>
+             </motion.div>
+
+             {/* Floating Premium Badge */}
+             <motion.div 
+               className="absolute top-10 right-10 bg-white p-4 rounded-2xl shadow-xl z-20 flex items-center gap-3 border border-stone-50"
+               variants={floating} animate="animate"
+             >
+                <div className="w-10 h-10 bg-stone-50 rounded-full flex items-center justify-center text-stone-800">
+                   <Palette size={20} />
+                </div>
+                <div>
+                   <div className="text-[10px] font-black text-stone-900">HAUTE COUTURE</div>
+                   <div className="text-[8px] text-stone-400">Digital Experience</div>
+                </div>
              </motion.div>
           </div>
         </div>
@@ -89,140 +97,186 @@ export const ProjectIllustration: React.FC<ProjectIllustrationProps> = ({ projec
     case 'farkindayiz-platform':
       return (
         <div className={`${containerClass} bg-slate-900`}>
-           {/* Cyber Grid Background */}
-           <div className="absolute inset-0 opacity-20" 
-                style={{ 
-                  backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', 
-                  backgroundSize: '40px 40px' 
-                }}>
-           </div>
+          <div className="absolute inset-0 opacity-10" 
+               style={{ backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
+          </div>
 
-           {/* Central Shield Hub */}
-           <motion.div 
-             className="relative z-10"
-             initial={{ scale: 0.8, opacity: 0 }}
-             whileInView={{ scale: 1, opacity: 1 }}
-             transition={{ duration: 0.5 }}
-           >
-              {/* Spinning Rings */}
-              <motion.div 
-                className="absolute inset-0 -m-8 border border-brand-500/30 rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-              />
-              <motion.div 
-                className="absolute inset-0 -m-4 border border-blue-500/30 rounded-full"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-              />
-              
-              <div className="w-20 h-20 bg-slate-800 rounded-2xl flex items-center justify-center border border-slate-700 shadow-2xl shadow-brand-900/50 relative overflow-hidden">
-                 <div className="absolute inset-0 bg-gradient-to-tr from-brand-500/20 to-blue-500/20"></div>
-                 <Shield size={40} className="text-white relative z-10" />
-              </div>
-           </motion.div>
+          <div className="relative w-full h-full flex items-center justify-center p-12">
+             {/* Security Core Node */}
+             <motion.div 
+               className="relative z-10"
+               initial={{ scale: 0.8, opacity: 0 }}
+               whileInView={{ scale: 1, opacity: 1 }}
+             >
+                {/* Orbital Rings */}
+                {[1, 2, 3].map(i => (
+                  <motion.div 
+                    key={i}
+                    className="absolute inset-0 -m-8 border border-brand-500/20 rounded-full"
+                    animate={{ rotate: i % 2 === 0 ? 360 : -360, scale: [1, 1.1, 1] }}
+                    style={{ width: 120 + i * 40, height: 120 + i * 40, left: -(i * 20), top: -(i * 20) }}
+                    transition={{ duration: 10 + i * 5, repeat: Infinity, ease: "linear" }}
+                  />
+                ))}
 
-           {/* Connected Nodes - updated animate prop */}
-           {[1, 2, 3, 4].map((i) => (
-             <motion.div
-               key={i}
-               className="absolute w-2 h-2 bg-brand-500 rounded-full shadow-[0_0_10px_rgba(249,115,22,0.8)]"
-               style={{
-                 top: `${50 + Math.sin(i * 1.5) * 35}%`,
-                 left: `${50 + Math.cos(i * 1.5) * 35}%`,
-               }}
-               variants={pulse}
-               animate="pulsing"
-             />
-           ))}
-           
-           {/* Connection Lines (Static SVG overlay) */}
-           <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
-              <line x1="50%" y1="50%" x2="20%" y2="20%" stroke="white" strokeWidth="1" />
-              <line x1="50%" y1="50%" x2="80%" y2="30%" stroke="white" strokeWidth="1" />
-              <line x1="50%" y1="50%" x2="70%" y2="80%" stroke="white" strokeWidth="1" />
-           </svg>
+                <div className="w-32 h-32 bg-slate-800 rounded-[2.5rem] border-2 border-brand-500/50 flex items-center justify-center shadow-[0_0_50px_rgba(249,115,22,0.3)] relative overflow-hidden group">
+                   <div className="absolute inset-0 bg-gradient-to-tr from-brand-500/10 to-transparent animate-pulse" />
+                   <Shield size={64} className="text-white relative z-10 group-hover:scale-110 transition-transform duration-500" />
+                </div>
+             </motion.div>
+
+             {/* Floating Info Cards */}
+             <motion.div 
+               className="absolute top-10 left-10 bg-slate-800/80 backdrop-blur-md p-3 rounded-xl border border-slate-700 flex items-center gap-3"
+               variants={floating} animate="animate"
+             >
+                <Lock size={16} className="text-brand-500" />
+                <span className="text-[10px] font-black text-white uppercase tracking-widest">Siber Güvenlik</span>
+             </motion.div>
+
+             <motion.div 
+               className="absolute bottom-10 right-10 bg-brand-500 p-4 rounded-xl shadow-2xl flex items-center gap-3"
+               animate={{ scale: [1, 1.1, 1] }}
+               transition={{ duration: 4, repeat: Infinity }}
+             >
+                <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center text-white">
+                   <Bot size={18} />
+                </div>
+                <div className="text-[10px] font-black text-white uppercase">Farkındalık Platformu</div>
+             </motion.div>
+
+             {/* Pulse Nodes */}
+             {[1, 2, 3, 4, 5].map(i => (
+               <motion.div
+                 key={i}
+                 className="absolute w-2 h-2 bg-brand-500 rounded-full"
+                 style={{ 
+                   top: `${20 + Math.random() * 60}%`, 
+                   left: `${20 + Math.random() * 60}%`,
+                   boxShadow: '0 0 15px #f97316'
+                 }}
+                 variants={pulsing}
+                 animate="animate"
+               />
+             ))}
+          </div>
         </div>
       );
 
     case 'pergamon-cafe':
       return (
         <div className={`${containerClass} bg-orange-50`}>
-          <div className="relative z-10 flex items-center justify-center">
-             {/* Mobile App View */}
+          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#f97316 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+          
+          <div className="relative w-full h-full flex items-center justify-center p-8 gap-12">
+             {/* Mobile Mockup - Food focus */}
              <motion.div 
-               className="w-32 h-56 bg-white rounded-3xl border-4 border-slate-800 shadow-2xl relative overflow-hidden flex flex-col"
-               initial={{ rotate: -10, y: 20 }}
-               whileInView={{ rotate: -5, y: 0 }}
+               className="w-44 h-72 bg-slate-900 rounded-[2.5rem] p-2 shadow-2xl border-4 border-slate-800 relative z-10"
+               initial={{ rotate: -5, opacity: 0 }}
+               whileInView={{ rotate: 0, opacity: 1 }}
                transition={{ duration: 0.8 }}
              >
-                {/* Header */}
-                <div className="h-16 bg-brand-500 flex items-center justify-center">
-                   <div className="w-8 h-8 bg-white/20 rounded-full"></div>
+                <div className="w-full h-full bg-white rounded-[2rem] overflow-hidden flex flex-col">
+                   <div className="h-24 bg-orange-100 flex items-center justify-center relative">
+                      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-orange-100/50" />
+                      <Coffee size={32} className="text-orange-600" />
+                   </div>
+                   <div className="p-4 space-y-3">
+                      <div className="w-full h-2 bg-slate-100 rounded" />
+                      <div className="grid grid-cols-2 gap-2">
+                         <div className="aspect-square bg-orange-50 rounded-lg" />
+                         <div className="aspect-square bg-orange-50 rounded-lg" />
+                      </div>
+                      <div className="w-full h-8 bg-orange-500 rounded-xl mt-4" />
+                   </div>
                 </div>
-                
-                {/* Menu Items */}
-                <div className="p-3 space-y-2">
-                   {[1,2,3].map(i => (
-                     <div key={i} className="flex gap-2 items-center">
-                        <div className="w-8 h-8 bg-orange-100 rounded-lg shrink-0"></div>
-                        <div className="flex-1 space-y-1">
-                           <div className="w-full h-1.5 bg-slate-200 rounded"></div>
-                           <div className="w-1/2 h-1.5 bg-slate-200 rounded"></div>
-                        </div>
-                     </div>
-                   ))}
-                </div>
-                
-                {/* Bottom Button */}
-                <div className="mt-auto m-3 h-8 bg-slate-800 rounded-lg"></div>
              </motion.div>
 
-             {/* Floating Coffee Cup - updated animate prop */}
-             <motion.div 
-               className="absolute -right-10 bottom-8 w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center border border-orange-100"
-               variants={float} animate="floating"
-             >
-                <Coffee size={32} className="text-brand-600" />
-                {/* Steam */}
+             {/* Floating Stats / Info */}
+             <div className="flex flex-col gap-6">
                 <motion.div 
-                  className="absolute -top-4 left-1/2 -translate-x-1/2 w-4 h-8 border-l-2 border-slate-300 rounded-full opacity-50"
-                  animate={{ y: -5, opacity: 0 }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                />
-             </motion.div>
+                  className="bg-white p-4 rounded-2xl shadow-xl border border-orange-100 flex items-center gap-3"
+                  variants={floating} animate="animate"
+                >
+                   <div className="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600">
+                      <BarChart3 size={20} />
+                   </div>
+                   <div>
+                      <div className="text-[10px] font-black text-slate-900">QR MENÜ</div>
+                      <div className="text-[8px] text-slate-400">Digital Catalog</div>
+                   </div>
+                </motion.div>
+
+                <motion.div 
+                  className="bg-slate-900 text-white p-4 rounded-2xl shadow-xl flex items-center gap-3"
+                  initial={{ x: 20, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
+                   <Globe size={16} className="text-orange-500" />
+                   <div className="text-[10px] font-black uppercase">Mobil Uyumlu</div>
+                </motion.div>
+             </div>
+
+             {/* Abstract Coffee Beans */}
+             {[1, 2, 3].map(i => (
+               <motion.div
+                 key={i}
+                 className="absolute w-4 h-6 bg-orange-200/40 rounded-full"
+                 style={{ 
+                   top: `${10 + i * 20}%`, 
+                   left: `${15 + i * 5}%`,
+                   rotate: i * 45
+                 }}
+                 animate={{ y: [0, -10, 0], rotate: [i*45, i*45 + 10, i*45] }}
+                 transition={{ duration: 4, repeat: Infinity, delay: i * 0.5 }}
+               />
+             ))}
           </div>
         </div>
       );
 
     default:
-      // Generic Tech Illustration
       return (
         <div className={`${containerClass} bg-slate-50`}>
-           <div className="relative w-4/5 aspect-video bg-white rounded-lg shadow-lg border border-slate-200 overflow-hidden flex flex-col">
-              <div className="h-6 bg-slate-100 border-b border-slate-200 flex items-center gap-1.5 px-3">
-                 <div className="w-2 h-2 rounded-full bg-slate-300"></div>
-                 <div className="w-2 h-2 rounded-full bg-slate-300"></div>
-                 <div className="w-2 h-2 rounded-full bg-slate-300"></div>
-              </div>
-              <div className="flex-1 p-4 flex gap-4">
-                 <div className="w-1/3 space-y-2">
-                    <div className="w-full h-2 bg-slate-100 rounded"></div>
-                    <div className="w-3/4 h-2 bg-slate-100 rounded"></div>
-                    <div className="w-full h-20 bg-brand-50 rounded mt-2 opacity-50"></div>
-                 </div>
-                 <div className="flex-1 bg-slate-50 rounded-lg flex items-center justify-center">
-                    <Code size={32} className="text-slate-300" />
-                 </div>
-              </div>
-              
-              {/* Scanning Line */}
-              <motion.div 
-                className="absolute top-0 left-0 w-full h-1 bg-brand-400 shadow-[0_0_10px_rgba(249,115,22,0.5)]"
-                animate={{ top: ['0%', '100%', '0%'] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-              />
-           </div>
+          <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'linear-gradient(#64748b 1px, transparent 1px), linear-gradient(90deg, #64748b 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+          
+          <div className="relative w-full h-full flex items-center justify-center p-12">
+             <motion.div 
+               className="w-64 h-44 bg-white rounded-2xl shadow-2xl border border-slate-200 p-4 relative overflow-hidden"
+               initial={{ scale: 0.9 }}
+               whileInView={{ scale: 1 }}
+             >
+                <div className="h-6 bg-slate-50 border-b border-slate-100 -mx-4 -mt-4 px-4 flex items-center gap-1">
+                   <div className="w-2 h-2 rounded-full bg-slate-200" />
+                   <div className="w-2 h-2 rounded-full bg-slate-200" />
+                   <div className="w-2 h-2 rounded-full bg-slate-200" />
+                </div>
+                <div className="mt-4 flex gap-4">
+                   <div className="w-24 h-24 bg-slate-50 rounded-xl flex items-center justify-center">
+                      <Code size={40} className="text-brand-200" />
+                   </div>
+                   <div className="flex-1 space-y-3">
+                      <div className="w-full h-3 bg-slate-100 rounded-full" />
+                      <div className="w-full h-3 bg-slate-100 rounded-full" />
+                      <div className="w-2/3 h-3 bg-brand-100 rounded-full" />
+                   </div>
+                </div>
+                {/* Scanning Light */}
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-500/10 to-transparent w-20"
+                  animate={{ left: ['-100%', '200%'] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                />
+             </motion.div>
+
+             <motion.div 
+               className="absolute top-8 right-8 bg-slate-900 text-white p-3 rounded-xl shadow-xl"
+               variants={floating} animate="animate"
+             >
+                <Zap size={20} className="text-brand-500" />
+             </motion.div>
+          </div>
         </div>
       );
   }

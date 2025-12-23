@@ -14,8 +14,18 @@ import {
   ArrowRight,
   Linkedin,
   Github,
-  Mail
+  Mail,
+  Lightbulb,
+  Rocket,
+  Sparkles,
+  Zap,
+  Clock,
+  CheckCircle2,
+  MessageCircle,
+  Gem,
+  Eye
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export const About: React.FC = () => {
   const teamMembers = [
@@ -57,6 +67,19 @@ export const About: React.FC = () => {
         github: "https://github.com/htcArsln",
         mail: "mailto:42.arslan.hatice@gmail.com"
       }
+    },
+    {
+      id: 4,
+      name: "Sarper Varol",
+      role: "Yazılım Geliştirici & Sosyal Medya Yöneticisi",
+      bio: "Malatya Turgut Özal Üniversitesi Bilgisayar Mühendisliği mezunu. Halihazırda bir savunma yazılım şirketinde görev almaktadır. APRICODI bünyesinde sosyal medya içerik üretim süreçlerini ve topluluk yönetimini yürütmektedir.",
+      imageUrl: "https://ui-avatars.com/api/?name=Sarper+Varol&background=f97316&color=fff&size=256",
+      tags: ["Defense Software", "Content Creation", "Social Media"],
+      socials: {
+        linkedin: "#",
+        github: "#",
+        mail: "#"
+      }
     }
   ];
 
@@ -93,6 +116,33 @@ export const About: React.FC = () => {
     }
   ];
 
+  const journeyMilestones = [
+    {
+      tag: "BAŞLANGIÇ",
+      title: "Fikrin Doğuşu",
+      description: "Malatya'da teknolojiye meraklı genç mühendislerin bir araya gelerek yerel potansiyeli dijital dünyaya taşıma hedefiyle yola çıkışı. İlk open-source projeler ve teknoloji topluluğu adımları.",
+      icon: Lightbulb,
+      color: "brand",
+      align: "right" // On the left side of timeline (points to right)
+    },
+    {
+      tag: "BUGÜN",
+      title: "Kurumsal Yapılanma",
+      description: "Kurumsal kimliğin oluşturulması, ekibin büyümesi ve Türkiye genelinde ilk büyük ölçekli kurumsal web ve mobil projelerin teslim edilmesi. n8n ve AI otomasyon süreçlerinin entegrasyonu.",
+      icon: Rocket,
+      color: "slate",
+      align: "left" // On the right side of timeline (points to left)
+    },
+    {
+      tag: "GELECEK",
+      title: "Global Vizyon",
+      description: "Yapay zeka odaklı SaaS ürünleri geliştirmek ve hizmet ihracatıyla global pazarda rekabet eden bir marka haline gelmek. Malatya'dan dünyaya teknoloji ihraç eden bir merkez olma hedefi.",
+      icon: Sparkles,
+      color: "brand",
+      align: "right" // On the left side of timeline (points to right)
+    }
+  ];
+
   return (
     <div className="bg-white min-h-screen pb-20">
       
@@ -112,51 +162,76 @@ export const About: React.FC = () => {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20 bg-slate-50 -mt-10 relative z-20 rounded-t-3xl border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <Card className="p-10 border-t-4 border-t-brand-500 hover:shadow-xl transition-shadow">
-              <div className="w-14 h-14 bg-brand-100 rounded-xl flex items-center justify-center text-brand-600 mb-6">
-                <Target size={32} />
+      <section className="py-24 bg-slate-50 -mt-12 relative z-20 rounded-t-[3rem] border-t border-slate-200 shadow-2xl overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#0f172a 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="group relative">
+              <div className="absolute inset-0 bg-brand-500/5 rounded-[2.5rem] -rotate-1 group-hover:rotate-0 transition-transform duration-500"></div>
+              <div className="relative bg-white p-10 md:p-14 rounded-[2.5rem] border border-slate-200/60 shadow-xl overflow-hidden group-hover:shadow-brand-500/10 transition-all duration-500">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-50 rounded-bl-[5rem] -z-10 transition-transform duration-700 group-hover:scale-110"></div>
+                <div className="w-20 h-20 bg-brand-500 rounded-3xl flex items-center justify-center text-white mb-8 shadow-lg shadow-brand-500/30 transform group-hover:rotate-6 transition-transform">
+                  <Target size={40} />
+                </div>
+                <Badge variant="brand" className="mb-4">HEDEF ODAKLI</Badge>
+                <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-6 tracking-tight">Misyonumuz</h2>
+                <p className="text-slate-600 text-lg leading-relaxed font-light">
+                  İşletmelerin dijital dönüşüm süreçlerinde <span className="text-slate-900 font-bold italic">ölçeklenebilir, yüksek performanslı ve güvenli</span> yazılım çözümleri sunarak büyümelerine doğrudan katkı sağlamak. APRICODI olarak karmaşık mühendislik problemlerini, kullanıcıyı merkeze alan yalın ve etkili teknolojilerle çözmeyi görev ediniyoruz.
+                </p>
+                <div className="mt-10 flex items-center gap-4 text-brand-600 font-bold group-hover:gap-6 transition-all">
+                  <span>Değer Üretmeye Devam Ediyoruz</span>
+                  <ArrowRight size={20} />
+                </div>
               </div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">Misyonumuz</h2>
-              <p className="text-slate-600 leading-relaxed">
-                İşletmelerin dijital dönüşüm süreçlerinde ölçeklenebilir, yüksek performanslı ve güvenli yazılım çözümleri sunarak büyümelerine doğrudan katkı sağlamak. Karmaşık problemleri sade ve etkili teknolojilerle çözmek.
-              </p>
-            </Card>
+            </motion.div>
 
-            <Card className="p-10 border-t-4 border-t-slate-800 hover:shadow-xl transition-shadow">
-              <div className="w-14 h-14 bg-slate-100 rounded-xl flex items-center justify-center text-slate-900 mb-6">
-                <Globe size={32} />
+            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="group relative">
+              <div className="absolute inset-0 bg-slate-900/5 rounded-[2.5rem] rotate-1 group-hover:rotate-0 transition-transform duration-500"></div>
+              <div className="relative bg-slate-900 p-10 md:p-14 rounded-[2.5rem] border border-slate-800 shadow-2xl overflow-hidden group-hover:shadow-slate-500/10 transition-all duration-500">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-slate-800 rounded-bl-[5rem] -z-10 transition-transform duration-700 group-hover:scale-110"></div>
+                <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center text-slate-900 mb-8 shadow-lg shadow-white/10 transform group-hover:-rotate-6 transition-transform">
+                  <Eye size={40} />
+                </div>
+                <Badge variant="slate" className="mb-4 !border-slate-700 !text-slate-400">GELECEK VİZYONU</Badge>
+                <h2 className="text-3xl md:text-4xl font-black text-white mb-6 tracking-tight">Vizyonumuz</h2>
+                <p className="text-slate-400 text-lg leading-relaxed font-light">
+                  Bölgesel bir girişim olarak başladığımız bu yolculukta, ürettiğimiz katma değerli projelerle <span className="text-white font-bold">ulusal ve uluslararası pazarda</span> tanınan, güvenilir bir teknoloji iş ortağına dönüşmek. Malatya'yı bir yazılım ihracat üssü haline getirerek küresel teknoloji haritasında kalıcı bir iz bırakmak.
+                </p>
+                <div className="mt-10 flex items-center gap-4 text-white font-bold group-hover:gap-6 transition-all">
+                  <span>Sınırları Aşıyoruz</span>
+                  <ArrowRight size={20} className="text-brand-500" />
+                </div>
               </div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">Vizyonumuz</h2>
-              <p className="text-slate-600 leading-relaxed">
-                Bölgesel bir girişim olarak başladığımız bu yolculukta, ürettiğimiz katma değerli projelerle ulusal ve uluslararası pazarda tanınan, güvenilir bir teknoloji iş ortağına dönüşmek.
-              </p>
-            </Card>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Core Values */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader 
-            title="Değerlerimiz" 
-            subtitle="Bizi biz yapan ve çalışma kültürümüzü şekillendiren prensipler." 
-          />
-          
+      <section className="py-32 bg-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-20">
+            <Badge variant="brand">PRENSİPLERİMİZ</Badge>
+            <h2 className="text-4xl md:text-5xl font-black text-slate-900 mt-6 mb-6">Değerlerimiz</h2>
+            <p className="text-slate-500 text-lg max-w-2xl mx-auto font-light">
+              Bizi biz yapan ve çalışma kültürümüzü şekillendiren sarsılmaz prensiplerimiz.
+            </p>
+            <div className="h-1.5 w-24 bg-brand-500 mx-auto mt-10 rounded-full" />
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {values.map((item, idx) => (
-              <div key={idx} className="p-6 rounded-xl bg-white border border-slate-100 hover:border-brand-200 hover:shadow-lg transition-all duration-300 group">
-                <div className="w-12 h-12 bg-slate-50 rounded-lg flex items-center justify-center text-slate-700 mb-4 group-hover:bg-brand-500 group-hover:text-white transition-colors">
-                  <item.icon size={24} />
+              <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }} viewport={{ once: true }} className="group p-8 rounded-[2rem] bg-white border border-slate-100 hover:border-brand-200 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden">
+                <div className="absolute bottom-0 right-0 w-32 h-32 bg-brand-50/50 rounded-tl-full translate-x-32 translate-y-32 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-700 -z-10"></div>
+                <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-700 mb-8 group-hover:bg-brand-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-sm">
+                  <item.icon size={28} />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
+                <h3 className="text-2xl font-black text-slate-900 mb-4 group-hover:text-brand-600 transition-colors">{item.title}</h3>
+                <p className="text-slate-500 leading-relaxed font-light group-hover:text-slate-600 transition-colors">{item.desc}</p>
+                <div className="mt-8 pt-6 border-t border-slate-50 flex items-center gap-2 text-xs font-bold text-slate-300 uppercase tracking-widest group-hover:text-brand-500 transition-colors">
+                  <Gem size={12} /> Apricodi Standard
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -165,48 +240,38 @@ export const About: React.FC = () => {
       {/* Team Section */}
       <section className="py-24 bg-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-20">
             <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6">Çekirdek Ekibimiz</h2>
             <p className="text-slate-400 text-lg max-w-2xl mx-auto">
               Tutkulu, meraklı ve sürekli öğrenen bir ekip. APRICODI'nin arkasındaki güç.
             </p>
             <div className="h-1 w-20 bg-brand-500 mx-auto mt-8" />
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             {teamMembers.map((member) => (
-              <div key={member.id} className="bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 hover:border-brand-500/50 transition-colors group">
-                <div className="p-8 pb-0 flex flex-col items-center">
-                  <div className="w-32 h-32 rounded-full border-4 border-slate-700 overflow-hidden mb-6 group-hover:border-brand-500 transition-colors">
-                    <img src={member.imageUrl} alt={member.name} className="w-full h-full object-cover" />
+              <div key={member.id} className="bg-slate-800/50 rounded-3xl overflow-hidden border border-slate-700/50 hover:border-brand-500/50 transition-all duration-300 group backdrop-blur-sm">
+                <div className="flex flex-col md:flex-row h-full">
+                  <div className="md:w-2/5 p-8 flex flex-col items-center justify-center bg-slate-800/30">
+                    <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl border-4 border-slate-700/50 overflow-hidden mb-6 group-hover:border-brand-500 transition-colors shadow-2xl">
+                      <img src={member.imageUrl} alt={member.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex justify-center gap-5 mt-auto">
+                      <a href={member.socials.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-slate-900/50 text-slate-400 hover:text-brand-500 hover:bg-brand-500/10 transition-all"><Linkedin size={20} /></a>
+                      <a href={member.socials.github} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-slate-900/50 text-slate-400 hover:text-white hover:bg-slate-700 transition-all"><Github size={20} /></a>
+                      <a href={member.socials.mail} className="p-2 rounded-lg bg-slate-900/50 text-slate-400 hover:text-brand-500 hover:bg-brand-500/10 transition-all"><Mail size={20} /></a>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
-                  <p className="text-brand-500 text-sm font-medium uppercase tracking-wider mb-6 text-center">{member.role}</p>
-                </div>
-                
-                <div className="px-8 pb-8">
-                  <p className="text-slate-300 text-sm text-center leading-relaxed mb-6">
-                    {member.bio}
-                  </p>
-                  
-                  <div className="flex flex-wrap justify-center gap-2 mb-6">
-                    {member.tags.map(tag => (
-                      <span key={tag} className="px-2 py-1 bg-slate-900 text-slate-400 text-[10px] rounded border border-slate-700">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex justify-center gap-4 border-t border-slate-700 pt-6">
-                    <a href={member.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors" title="LinkedIn">
-                      <Linkedin size={18} />
-                    </a>
-                    <a href={member.socials.github} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors" title="GitHub">
-                      <Github size={18} />
-                    </a>
-                    <a href={member.socials.mail} className="text-slate-400 hover:text-white transition-colors" title="E-posta Gönder">
-                      <Mail size={18} />
-                    </a>
+                  <div className="md:w-3/5 p-8 md:pl-0 flex flex-col">
+                    <div className="mb-6">
+                      <h3 className="text-2xl font-bold text-white mb-1 group-hover:text-brand-400 transition-colors">{member.name}</h3>
+                      <p className="text-brand-500 text-xs font-bold uppercase tracking-[0.2em] mb-4">{member.role}</p>
+                      <p className="text-slate-300 text-sm leading-relaxed text-justify">{member.bio}</p>
+                    </div>
+                    <div className="mt-auto">
+                      <div className="flex flex-wrap gap-2">
+                        {member.tags.map(tag => <span key={tag} className="px-2.5 py-1 bg-slate-900/50 text-slate-400 text-[10px] font-bold uppercase tracking-wider rounded-md border border-slate-700/50">{tag}</span>)}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -215,61 +280,96 @@ export const About: React.FC = () => {
         </div>
       </section>
 
-      {/* Story / Timeline */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-4xl mx-auto px-4 text-center">
+      {/* Story / Timeline - Optimized Spacing and Arrow Logic */}
+      <section className="py-32 bg-slate-50 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#0f172a 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+        
+        <div className="max-w-6xl mx-auto px-4 relative z-10">
           <SectionHeader title="Yolculuğumuz" subtitle="Bir fikirle başlayan, tutkuyla büyüyen hikayemiz." />
           
-          <div className="relative border-l-2 border-brand-200 ml-6 md:ml-0 md:pl-0 space-y-12 text-left">
-             <div className="relative pl-8 md:pl-0">
-                <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-brand-500 border-4 border-white shadow-sm md:left-1/2 md:-ml-2.5"></div>
-                <div className="md:w-1/2 md:pr-12 md:text-right md:ml-auto md:mr-auto md:absolute md:left-0 md:top-0">
-                  <span className="text-brand-600 font-bold text-sm tracking-wider">BAŞLANGIÇ</span>
-                  <h3 className="text-xl font-bold text-slate-900 mt-1">Fikrin Doğuşu</h3>
-                  <p className="text-slate-600 mt-2 text-sm">Malatya'da teknolojiye meraklı genç mühendislerin bir araya gelerek yerel potansiyeli dijital dünyaya taşıma hedefiyle yola çıkışı.</p>
-                </div>
-             </div>
-             
-             <div className="relative pl-8 md:pl-0 md:mt-24">
-                <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-slate-300 border-4 border-white shadow-sm md:left-1/2 md:-ml-2.5"></div>
-                <div className="md:w-1/2 md:pl-12 md:ml-auto">
-                   <span className="text-slate-500 font-bold text-sm tracking-wider">BUGÜN</span>
-                   <h3 className="text-xl font-bold text-slate-900 mt-1">Kurumsal Yapılanma</h3>
-                   <p className="text-slate-600 mt-2 text-sm">Kurumsal kimliğin oluşturulması, ekibin büyümesi ve Türkiye genelinde ilk büyük ölçekli projelerin teslim edilmesi.</p>
-                </div>
-             </div>
+          <div className="relative mt-20">
+            {/* Center Line (Desktop) */}
+            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-brand-500 via-slate-300 to-brand-400 md:-translate-x-1/2 rounded-full"></div>
+            
+            <div className="space-y-24">
+              {journeyMilestones.map((milestone, idx) => (
+                <div key={idx} className="relative">
+                  {/* Timeline Marker (Icon) */}
+                  <div className="absolute left-6 md:left-1/2 top-0 -translate-x-1/2 z-30">
+                     <motion.div 
+                       initial={{ scale: 0 }}
+                       whileInView={{ scale: 1 }}
+                       viewport={{ once: true }}
+                       className={`w-12 h-12 rounded-full border-4 border-white shadow-xl flex items-center justify-center ${milestone.color === 'brand' ? 'bg-brand-600 text-white' : 'bg-slate-900 text-white'}`}
+                     >
+                       <milestone.icon size={20} />
+                     </motion.div>
+                  </div>
 
-             <div className="relative pl-8 md:pl-0 md:pt-24">
-                <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-slate-200 border-4 border-white shadow-sm md:left-1/2 md:-ml-2.5"></div>
-                 <div className="md:w-1/2 md:pr-12 md:text-right md:ml-auto md:mr-auto md:absolute md:left-0">
-                   <span className="text-slate-400 font-bold text-sm tracking-wider">GELECEK</span>
-                   <h3 className="text-xl font-bold text-slate-900 mt-1">Global Vizyon</h3>
-                   <p className="text-slate-600 mt-2 text-sm">SaaS ürünleri geliştirmek ve hizmet ihracatıyla global pazarda rekabet eden bir marka haline gelmek.</p>
+                  {/* Content Layout */}
+                  <div className={`flex flex-col md:flex-row items-center ${milestone.align === 'left' ? 'md:flex-row-reverse' : ''}`}>
+                    {/* Card Container with increased spacing from line (md:px-20) */}
+                    <div className={`w-full md:w-1/2 pl-20 md:pl-0 ${milestone.align === 'right' ? 'md:pr-16' : 'md:pl-16'}`}>
+                      <motion.div 
+                        initial={{ opacity: 0, x: milestone.align === 'right' ? -30 : 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        className={`bg-white p-8 rounded-3xl border border-slate-100 shadow-lg hover:shadow-2xl transition-all duration-500 group relative ${milestone.align === 'right' ? 'md:text-right' : 'md:text-left'}`}
+                      >
+                         {/* Card Arrow (Triangle) - Logic fixed for both sides */}
+                         <div className={`absolute top-8 w-8 h-8 bg-white border-t border-l border-slate-100 rotate-45 hidden md:block ${milestone.align === 'right' ? '-right-4 border-b-0 border-l-0 border-t border-r' : '-left-4'}`}></div>
+                         
+                         <span className="text-brand-600 font-black text-xs tracking-widest uppercase mb-4 block group-hover:scale-105 transition-transform origin-left">
+                           {milestone.tag}
+                         </span>
+                         <h3 className="text-2xl font-bold text-slate-900 mb-4">{milestone.title}</h3>
+                         <p className="text-slate-600 text-sm md:text-base leading-relaxed">
+                           {milestone.description}
+                         </p>
+                         
+                         <div className={`w-12 h-1 bg-brand-500/20 mt-6 rounded-full ${milestone.align === 'right' ? 'md:ml-auto' : ''}`}></div>
+                      </motion.div>
+                    </div>
+                    {/* Spacer for non-card side on desktop */}
+                    <div className="hidden md:block md:w-1/2"></div>
+                  </div>
                 </div>
-             </div>
+              ))}
+            </div>
           </div>
-
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-white border-t border-slate-100 py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center bg-brand-50 rounded-3xl p-12 border border-brand-100">
-           <h2 className="text-3xl font-bold text-slate-900 mb-6">Ekibimizle Tanışın, Projenizi Konuşalım</h2>
-           <p className="text-slate-600 mb-8 max-w-xl mx-auto">
-             Dijital hedeflerinizi gerçeğe dönüştürmek için enerjimiz ve uzmanlığımızla yanınızdayız.
-           </p>
-           <div className="flex flex-col sm:flex-row justify-center gap-4">
-             <Link to="/iletisim">
-               <Button size="lg" className="shadow-brand-500/20">Bize Ulaşın</Button>
-             </Link>
-             <Link to="/teklif-al">
-               <Button variant="outline" size="lg" className="bg-white">Teklif Al</Button>
-             </Link>
-           </div>
+      <section className="py-24 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-slate-900 rounded-[3rem] p-10 md:p-20 relative overflow-hidden shadow-2xl">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-brand-500/10 blur-[100px] rounded-full translate-x-1/3 -translate-y-1/3"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 blur-[80px] rounded-full -translate-x-1/3 translate-y-1/3"></div>
+            <div className="relative z-10 flex flex-col lg:flex-row items-center gap-16">
+              <div className="flex-1 text-center lg:text-left">
+                <Badge variant="brand">Hemen Başlayalım</Badge>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mt-8 mb-8 tracking-tight leading-tight">
+                  Ekibimizle Tanışın, <br/> <span className="text-brand-500">Projenizi Konuşalım</span>
+                </h2>
+                <p className="text-slate-400 text-lg md:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0 font-light">Dijital hedeflerinizi gerçeğe dönüştürmek için enerjimiz ve uzmanlığımızla yanınızdayız.</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-12">
+                   {[{ icon: Clock, text: "24 Saat İçinde Dönüş" }, { icon: Zap, text: "Ücretsiz Ön Analiz" }, { icon: CheckCircle2, text: "SLA Garantili Destek" }, { icon: MessageCircle, text: "Şeffaf İletişim Hattı" }].map((item, idx) => (
+                     <div key={idx} className="flex items-center gap-3 text-slate-300">
+                        <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-brand-500"><item.icon size={16} /></div>
+                        <span className="text-sm font-bold">{item.text}</span>
+                     </div>
+                   ))}
+                </div>
+              </div>
+              <div className="shrink-0 flex flex-col gap-4 w-full sm:w-auto">
+                <Link to="/teklif-al" className="w-full"><Button size="lg" className="w-full sm:px-12 py-6 text-xl shadow-xl shadow-brand-500/40 transform hover:scale-105 transition-all">Ücretsiz Teklif Al <ArrowRight className="ml-3" size={24} /></Button></Link>
+                <Link to="/iletisim" className="w-full"><Button variant="outline" size="lg" className="w-full sm:px-12 py-6 text-xl !bg-transparent !border-slate-700 !text-white hover:!bg-slate-800 hover:!border-brand-500 transform hover:scale-105 transition-all">Bize Ulaşın</Button></Link>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
-
     </div>
   );
 };

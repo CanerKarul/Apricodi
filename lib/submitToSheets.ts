@@ -1,3 +1,4 @@
+
 import { supabase } from './supabase';
 
 export type FormType = "contact" | "quote" | "career" | "volunteer";
@@ -6,6 +7,16 @@ interface SubmitResponse {
   ok: boolean;
   message?: string;
 }
+
+// Helper: Get Turkey Local Time ISO String (UTC+3)
+const getTurkeyTimeISO = () => {
+  const now = new Date();
+  // Turkey is UTC+3. Offset is 3 hours in milliseconds.
+  const TR_OFFSET = 3 * 60 * 60000; 
+  const turkeyTime = new Date(now.getTime() + TR_OFFSET);
+  // toISOString always adds 'Z' (UTC). We replace it with the correct offset for Turkey.
+  return turkeyTime.toISOString().replace('Z', '+03:00');
+};
 
 // Helper: Convert camelCase string to snake_case
 const toSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
@@ -26,7 +37,7 @@ export async function submitForm(
   payload: Record<string, any>
 ): Promise<SubmitResponse> {
   
-  // Map form types to Supabase table names (UPDATED to match SQL Schema)
+  // Map form types to Supabase table names
   let tableName = '';
   
   switch (formType) {
@@ -34,13 +45,13 @@ export async function submitForm(
       tableName = 'contact_submissions';
       break;
     case 'quote':
-      tableName = 'quote_submissions'; // Matches SQL: quote_submissions
+      tableName = 'quote_submissions';
       break;
     case 'career':
-      tableName = 'career_submissions'; // Matches SQL: career_submissions
+      tableName = 'career_submissions';
       break;
     case 'volunteer':
-      tableName = 'volunteer_submissions'; // Matches SQL: volunteer_submissions
+      tableName = 'volunteer_submissions';
       break;
     default:
       console.error('Unknown form type:', formType);
@@ -49,13 +60,12 @@ export async function submitForm(
 
   try {
     // 1. Convert payload keys to snake_case to match Supabase/Postgres columns
-    // e.g., interestArea -> interest_area, cvLink -> cv_link
     const snakedPayload = mapKeysToSnakeCase(payload);
 
-    // 2. Add timestamp
+    // 2. Add timestamp in Turkey Timezone
     const dataToInsert = {
       ...snakedPayload,
-      created_at: new Date().toISOString()
+      created_at: getTurkeyTimeISO()
     };
 
     console.log(`Submitting to ${tableName}...`, dataToInsert);
@@ -65,7 +75,6 @@ export async function submitForm(
       .insert([dataToInsert]);
 
     if (error) {
-      // Log the full error object for debugging
       console.error('Supabase Error Details:', JSON.stringify(error, null, 2));
       return { ok: false, message: "Sunucu hatası: Veriler kaydedilemedi." };
     }
