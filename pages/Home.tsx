@@ -246,9 +246,9 @@ export const Home: React.FC = () => {
   return (
     <div className="overflow-hidden bg-white">
       <SEO 
-        title="Kurumsal Yazılım, Mobil Uygulama ve Web Tasarım" 
-        description="APRICODI: Malatya merkezli, global standartlarda kurumsal web yazılım, iOS & Android mobil uygulama ve kullanıcı dostu UI/UX tasarım hizmetleri sunar."
-        keywords="yazılım şirketi, mobil uygulama yaptırmak, kurumsal web sitesi fiyatları, malatya yazılım ajansı, seo uyumlu web tasarım, react mobil uygulama"
+        title="Apricodi Malatya | Web Geliştirme, Yapay Zeka ve Otomasyon" 
+        description="Apricodi, Apricody ve Apricode: Malatya merkezli, global standartlarda kurumsal web yazılım, iOS & Android mobil uygulama ve n8n yapay zeka otomasyon çözümleri sunar."
+        keywords="Apricodi, Apricody, Apricode, Malatya yazılım şirketi, mobil uygulama yaptırmak, kurumsal web sitesi fiyatları, n8n otomasyon malatya, seo uyumlu web tasarım, react mobil uygulama"
       />
 
       {/* Hero Section */}

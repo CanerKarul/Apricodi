@@ -212,8 +212,9 @@ export const Services: React.FC = () => {
   return (
     <div className="bg-white min-h-screen">
       <SEO 
-        title="Yazılım Hizmetlerimiz | Mobil Uygulama ve Web Yazılım" 
-        description="APRICODI'nin profesyonel hizmetlerini keşfedin: Kurumsal web yazılımı, iOS & Android mobil uygulama geliştirme, UI/UX tasarım ve e-ticaret çözümleri."
+        title="Yazılım Hizmetlerimiz | Web, Mobil ve Yapay Zeka Çözümleri" 
+        description="Apricodi Malatya yazılım hizmetleri: Kurumsal web yazılımı, iOS & Android uygulama geliştirme, n8n otomasyonu ve yapay zeka entegrasyonu. Dijital dönüşümde uzman ajans."
+        keywords="Apricodi, Apricody, n8n otomasyon, malatya yazılım hizmetleri, kurumsal web yazılımı, yapay zeka ajansı türkiye, mobil uygulama maliyeti"
       />
       
       {/* Premium Hero Section */}

@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 
 interface SEOProps {
@@ -11,52 +12,39 @@ interface SEOProps {
 export const SEO: React.FC<SEOProps> = ({ 
   title, 
   description, 
-  keywords = "yazılım geliştirme, mobil uygulama, web tasarım, malatya yazılım şirketi, kurumsal web sitesi, e-ticaret çözümleri, ui/ux tasarım",
-  image = "https://apricodi.com/og-image.jpg", // Placeholder
+  keywords = "Apricodi, Apricody, Apricode, yazılım geliştirme, mobil uygulama, web tasarım, malatya yazılım şirketi, kurumsal web sitesi, n8n otomasyon, yapay zeka, ui/ux tasarım",
+  image = "https://apricodi.com/og-image.jpg",
   url = "https://apricodi.com"
 }) => {
   useEffect(() => {
     // Başlığı güncelle
     document.title = `${title} | APRICODI`;
 
-    // Meta açıklamayı güncelle
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', description);
-    } else {
-      const meta = document.createElement('meta');
-      meta.name = "description";
-      meta.content = description;
-      document.head.appendChild(meta);
-    }
-
-    // Anahtar kelimeleri güncelle
-    const metaKeywords = document.querySelector('meta[name="keywords"]');
-    if (metaKeywords) {
-      metaKeywords.setAttribute('content', keywords);
-    } else {
-      const meta = document.createElement('meta');
-      meta.name = "keywords";
-      meta.content = keywords;
-      document.head.appendChild(meta);
-    }
-
-    // Open Graph etiketleri (Sosyal Medya için)
-    const updateOg = (property: string, content: string) => {
-      let meta = document.querySelector(`meta[property="${property}"]`);
+    // Meta yardımcı fonksiyonu
+    const setMeta = (attr: string, value: string, content: string, isProperty = false) => {
+      let meta = document.querySelector(`meta[${isProperty ? 'property' : 'name'}="${value}"]`);
       if (!meta) {
         meta = document.createElement('meta');
-        meta.setAttribute('property', property);
+        meta.setAttribute(isProperty ? 'property' : 'name', value);
         document.head.appendChild(meta);
       }
       meta.setAttribute('content', content);
     };
 
-    updateOg('og:title', title);
-    updateOg('og:description', description);
-    updateOg('og:image', image);
-    updateOg('og:url', url);
-    updateOg('og:type', 'website');
+    // Temel Metalar
+    setMeta('name', 'description', description);
+    setMeta('name', 'keywords', keywords);
+
+    // Open Graph
+    setMeta('property', 'og:title', title, true);
+    setMeta('property', 'og:description', description, true);
+    setMeta('property', 'og:image', image, true);
+    setMeta('property', 'og:url', url, true);
+
+    // Twitter
+    setMeta('name', 'twitter:title', title);
+    setMeta('name', 'twitter:description', description);
+    setMeta('name', 'twitter:image', image);
 
   }, [title, description, keywords, image, url]);
 
