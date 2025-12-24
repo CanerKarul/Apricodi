@@ -44,13 +44,18 @@ export const Button: React.FC<ButtonProps> = ({
 };
 
 // --- Badge ---
-export const Badge: React.FC<{ children: React.ReactNode; variant?: 'brand' | 'slate' }> = ({ children, variant = 'brand' }) => {
+// Fixed Badge component by adding optional className prop to interface and applying it to the span
+export const Badge: React.FC<{ children: React.ReactNode; variant?: 'brand' | 'slate'; className?: string }> = ({ 
+  children, 
+  variant = 'brand',
+  className = ''
+}) => {
   const styles = variant === 'brand' 
     ? "bg-brand-50 text-brand-700 border-brand-200"
     : "bg-slate-100 text-slate-700 border-slate-200";
     
   return (
-    <span className={`inline-flex items-center px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wide border ${styles}`}>
+    <span className={`inline-flex items-center px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wide border ${styles} ${className}`}>
       {children}
     </span>
   );

@@ -14,6 +14,13 @@ const ApricodiLogo = ({ className = "h-10 w-auto" }: { className?: string }) => 
   />
 );
 
+// Reusable Brand Name component with modern gradient and spacing
+const BrandName = ({ className = "" }: { className?: string }) => (
+  <span className={`font-brand font-black tracking-[0.15em] uppercase bg-clip-text text-transparent bg-gradient-to-r from-brand-600 via-brand-500 to-brand-400 select-none ${className}`}>
+    APRICODI
+  </span>
+);
+
 // Modern X Brand Logo Component
 const XLogo = ({ size = 18, className = "" }: { size?: number, className?: string }) => (
   <svg 
@@ -66,7 +73,6 @@ export const Navbar: React.FC = () => {
   ];
 
   // Determine navbar classes based on state
-  // When menu is open, force solid white background to blend with overlay
   const navClasses = isOpen
     ? 'bg-white border-b border-slate-100'
     : scrolled
@@ -82,10 +88,8 @@ export const Navbar: React.FC = () => {
           <div className="flex justify-between items-center h-12">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group relative z-50">
-              <ApricodiLogo className="h-10 w-auto" />
-              <span className="font-extrabold text-2xl tracking-tighter text-slate-900">
-                APRICODI
-              </span>
+              <ApricodiLogo className="h-10 w-auto group-hover:scale-105 transition-transform" />
+              <BrandName className="text-2xl" />
             </Link>
 
             {/* Desktop Nav */}
@@ -99,7 +103,6 @@ export const Navbar: React.FC = () => {
                   }`}
                 >
                   {link.name}
-                  {/* Optional: Add a subtle 'New' dot for Careers page */}
                   {link.path === '/bize-katil' && (
                     <span className="w-1.5 h-1.5 bg-brand-500 rounded-full"></span>
                   )}
@@ -165,7 +168,7 @@ export const Footer: React.FC = () => {
           <div className="lg:pr-8">
             <div className="flex items-center gap-4 mb-6">
               <ApricodiLogo className="h-10 w-auto" />
-              <span className="font-bold text-2xl text-white tracking-tight uppercase">APRICODI</span>
+              <BrandName className="text-2xl" />
             </div>
             <p className="text-slate-400 mb-8 leading-relaxed text-sm">
               Kurumsal dijital dönüşüm, yüksek performanslı web sistemleri ve marka odaklı tasarım çözümleri. İşinizi geleceğe güvenle taşıyın.

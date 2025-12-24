@@ -12,17 +12,18 @@ export const ProjectIllustration: React.FC<ProjectIllustrationProps> = ({ projec
   const containerClass = `w-full h-full relative overflow-hidden flex items-center justify-center ${className}`;
 
   // Premium Animation Variants
+  // Fixed variants by narrowing 'ease' strings to literal types to match Framer Motion expectations
   const floating = {
     animate: {
       y: [0, -12, 0],
-      transition: { duration: 5, repeat: Infinity, ease: "easeInOut" }
+      transition: { duration: 5, repeat: Infinity, ease: "easeInOut" as const }
     }
   };
 
   const rotating = {
     animate: {
       rotate: 360,
-      transition: { duration: 20, repeat: Infinity, ease: "linear" }
+      transition: { duration: 20, repeat: Infinity, ease: "linear" as const }
     }
   };
 
@@ -30,7 +31,7 @@ export const ProjectIllustration: React.FC<ProjectIllustrationProps> = ({ projec
     animate: {
       scale: [1, 1.05, 1],
       opacity: [0.6, 1, 0.6],
-      transition: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+      transition: { duration: 3, repeat: Infinity, ease: "easeInOut" as const }
     }
   };
 
@@ -270,6 +271,7 @@ export const ProjectIllustration: React.FC<ProjectIllustrationProps> = ({ projec
                 />
              </motion.div>
 
+             {/* Floating Badge */}
              <motion.div 
                className="absolute top-8 right-8 bg-slate-900 text-white p-3 rounded-xl shadow-xl"
                variants={floating} animate="animate"

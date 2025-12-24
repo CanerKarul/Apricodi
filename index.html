@@ -14,6 +14,13 @@
     <meta name="author" content="APRICODI" />
     <link rel="canonical" href="https://apricodi.com/" />
     
+    <!-- Google Favicon Requirements -->
+    <link rel="icon" href="https://uuiwyrjzbagvwoobbuor.supabase.co/storage/v1/object/public/apricody/apricodilogo.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="https://uuiwyrjzbagvwoobbuor.supabase.co/storage/v1/object/public/apricody/apricodilogo.png" sizes="48x48" type="image/png" />
+    <link rel="icon" href="https://uuiwyrjzbagvwoobbuor.supabase.co/storage/v1/object/public/apricody/apricodilogo.png" sizes="192x192" type="image/png" />
+    <link rel="shortcut icon" href="https://uuiwyrjzbagvwoobbuor.supabase.co/storage/v1/object/public/apricody/apricodilogo.png" type="image/png" />
+    <link rel="apple-touch-icon" href="https://uuiwyrjzbagvwoobbuor.supabase.co/storage/v1/object/public/apricody/apricodilogo.png" />
+    
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://apricodi.com/" />
@@ -29,17 +36,18 @@
     <meta property="twitter:description" content="Malatya merkezli yazılım ajansı Apricodi, web, yapay zeka ve dijital çözümler sunar. Apricody ve Apricode olarak da bilinir." />
     <meta property="twitter:image" content="https://uuiwyrjzbagvwoobbuor.supabase.co/storage/v1/object/public/apricody/apricodilogo.png" />
 
-    <link rel="icon" href="https://uuiwyrjzbagvwoobbuor.supabase.co/storage/v1/object/public/apricody/apricodilogo.png" type="image/png" />
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
-            fontFamily: { sans: ['Inter', 'sans-serif'] },
+            fontFamily: { 
+              sans: ['Inter', 'sans-serif'],
+              brand: ['Outfit', 'sans-serif']
+            },
             colors: {
               brand: {
                 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74',
@@ -53,6 +61,7 @@
     </script>
     <style>
       body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; background-color: #ffffff; color: #0f172a; }
+      .brand-text { font-family: 'Outfit', sans-serif; letter-spacing: 0.05em; }
       ::-webkit-scrollbar { width: 8px; }
       ::-webkit-scrollbar-track { background: #f1f1f1; }
       ::-webkit-scrollbar-thumb { background: #fb923c; border-radius: 4px; }
