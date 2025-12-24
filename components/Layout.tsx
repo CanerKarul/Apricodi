@@ -7,41 +7,11 @@ import { CookieBanner } from './CookieBanner';
 import { ChatBot } from './ChatBot';
 
 const ApricodiLogo = ({ className = "h-10 w-auto" }: { className?: string }) => (
-  <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <defs>
-      <linearGradient id="brandGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#fb923c" />
-        <stop offset="1" stopColor="#ea580c" />
-      </linearGradient>
-    </defs>
-    
-    {/* Leaves */}
-    <path d="M50 30 C35 10 35 2 50 2 C65 2 65 10 50 30" stroke="url(#brandGrad)" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="50" cy="2" r="3" fill="#ea580c" />
-
-    {/* Left Body Circuit */}
-    <path d="M42 30 C20 30 8 48 8 65 C8 88 30 98 48 98" stroke="url(#brandGrad)" strokeWidth="5" strokeLinecap="round"/>
-    <circle cx="48" cy="98" r="3" fill="#ea580c" />
-    <circle cx="42" cy="30" r="3" fill="#fb923c" />
-    {/* Circuit trace left */}
-    <path d="M8 65 H18" stroke="url(#brandGrad)" strokeWidth="3" />
-    <circle cx="18" cy="65" r="2" fill="#ea580c" />
-
-    {/* Right Body Circuit */}
-    <path d="M58 30 C80 30 92 48 92 65 C92 88 70 98 52 98" stroke="url(#brandGrad)" strokeWidth="5" strokeLinecap="round"/>
-    <circle cx="52" cy="98" r="3" fill="#ea580c" />
-    <circle cx="58" cy="30" r="3" fill="#fb923c" />
-    {/* Circuit trace right */}
-    <path d="M92 65 H82" stroke="url(#brandGrad)" strokeWidth="3" />
-    <circle cx="82" cy="65" r="2" fill="#ea580c" />
-
-    {/* Center Code Symbol */}
-    <g transform="translate(0, 5)">
-      <path d="M36 55 L28 62 L36 69" stroke="#334155" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M64 55 L72 62 L64 69" stroke="#334155" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M46 72 L54 52" stroke="#334155" strokeWidth="5" strokeLinecap="round"/>
-    </g>
-  </svg>
+  <img 
+    src="https://uuiwyrjzbagvwoobbuor.supabase.co/storage/v1/object/public/apricody/apricodilogo.png" 
+    alt="APRICODI Logo" 
+    className={className} 
+  />
 );
 
 // Modern X Brand Logo Component
@@ -112,7 +82,7 @@ export const Navbar: React.FC = () => {
           <div className="flex justify-between items-center h-12">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group relative z-50">
-              <ApricodiLogo className="h-10 w-auto text-slate-900" />
+              <ApricodiLogo className="h-10 w-auto" />
               <span className="font-extrabold text-2xl tracking-tighter text-slate-900">
                 APRICODI
               </span>
@@ -193,9 +163,9 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
           {/* Brand Column */}
           <div className="lg:pr-8">
-            <div className="flex items-center gap-2 mb-6">
-              <ApricodiLogo className="h-10 w-auto text-white" />
-              <span className="font-bold text-2xl text-white tracking-tight">APRICODI</span>
+            <div className="flex items-center gap-4 mb-6">
+              <ApricodiLogo className="h-10 w-auto" />
+              <span className="font-bold text-2xl text-white tracking-tight uppercase">APRICODI</span>
             </div>
             <p className="text-slate-400 mb-8 leading-relaxed text-sm">
               Kurumsal dijital dönüşüm, yüksek performanslı web sistemleri ve marka odaklı tasarım çözümleri. İşinizi geleceğe güvenle taşıyın.

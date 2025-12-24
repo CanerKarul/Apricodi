@@ -13,7 +13,7 @@ export const SEO: React.FC<SEOProps> = ({
   title, 
   description, 
   keywords = "Apricodi, Apricody, Apricode, yazılım geliştirme, mobil uygulama, web tasarım, malatya yazılım şirketi, kurumsal web sitesi, n8n otomasyon, yapay zeka, ui/ux tasarım",
-  image = "https://apricodi.com/og-image.jpg",
+  image = "https://uuiwyrjzbagvwoobbuor.supabase.co/storage/v1/object/public/apricody/apricodilogo.png",
   url = "https://apricodi.com"
 }) => {
   useEffect(() => {
