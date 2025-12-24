@@ -1,7 +1,7 @@
 
 import { supabase } from './supabase';
 
-export type FormType = "contact" | "quote" | "career" | "volunteer";
+export type FormType = "contact" | "quote" | "career" | "volunteer" | "newsletter";
 
 interface SubmitResponse {
   ok: boolean;
@@ -53,6 +53,9 @@ export async function submitForm(
     case 'volunteer':
       tableName = 'volunteer_submissions';
       break;
+    case 'newsletter':
+      tableName = 'newsletter_subscriptions';
+      break;
     default:
       console.error('Unknown form type:', formType);
       return { ok: false, message: 'Geçersiz form tipi.' };
@@ -75,6 +78,10 @@ export async function submitForm(
       .insert([dataToInsert]);
 
     if (error) {
+      // Handle unique constraint violation for newsletter
+      if (error.code === '23505') {
+        return { ok: false, message: "Bu e-posta zaten kayıtlı." };
+      }
       console.error('Supabase Error Details:', JSON.stringify(error, null, 2));
       return { ok: false, message: "Sunucu hatası: Veriler kaydedilemedi." };
     }

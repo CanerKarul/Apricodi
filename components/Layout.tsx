@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronRight, MapPin, Mail, Phone, ExternalLink, Instagram, Linkedin } from 'lucide-react';
+import { Menu, X, ChevronRight, MapPin, Mail, Phone, ExternalLink, Instagram, Linkedin, BookText } from 'lucide-react';
 import { Button, Badge } from './ui';
 import { CookieBanner } from './CookieBanner';
 import { ChatBot } from './ChatBot';
@@ -14,14 +14,12 @@ const ApricodiLogo = ({ className = "h-10 w-auto" }: { className?: string }) => 
   />
 );
 
-// Reusable Brand Name component with modern gradient and spacing
 const BrandName = ({ className = "" }: { className?: string }) => (
   <span className={`font-brand font-black tracking-[0.15em] uppercase bg-clip-text text-transparent bg-gradient-to-r from-brand-600 via-brand-500 to-brand-400 select-none ${className}`}>
     APRICODI
   </span>
 );
 
-// Modern X Brand Logo Component
 const XLogo = ({ size = 18, className = "" }: { size?: number, className?: string }) => (
   <svg 
     width={size} 
@@ -51,7 +49,6 @@ export const Navbar: React.FC = () => {
     setIsOpen(false);
   }, [location]);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -72,7 +69,6 @@ export const Navbar: React.FC = () => {
     { name: 'İletişim', path: '/iletisim' },
   ];
 
-  // Determine navbar classes based on state
   const navClasses = isOpen
     ? 'bg-white border-b border-slate-100'
     : scrolled
@@ -86,13 +82,11 @@ export const Navbar: React.FC = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-12">
-            {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group relative z-50">
               <ApricodiLogo className="h-10 w-auto group-hover:scale-105 transition-transform" />
               <BrandName className="text-2xl" />
             </Link>
 
-            {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-6 lg:gap-8">
               {navLinks.map((link) => (
                 <Link
@@ -117,7 +111,6 @@ export const Navbar: React.FC = () => {
               </div>
             </div>
 
-            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden p-2 rounded-md text-slate-900 hover:bg-slate-50 focus:outline-none relative z-50"
@@ -127,7 +120,6 @@ export const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Menu Overlay */}
         {isOpen && (
           <div className="fixed inset-0 z-40 bg-white pt-24 px-6 flex flex-col gap-6 animate-in slide-in-from-right-10 duration-200 h-[100dvh] overflow-y-auto">
             <Link to="/teklif-al" className="w-full">
@@ -164,7 +156,6 @@ export const Footer: React.FC = () => {
     <footer className="bg-slate-900 text-slate-300 pt-24 pb-12 border-t border-brand-500/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
-          {/* Brand Column */}
           <div className="lg:pr-8">
             <div className="flex items-center gap-4 mb-6">
               <ApricodiLogo className="h-10 w-auto" />
@@ -193,7 +184,6 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="text-white font-bold text-lg mb-6">Kurumsal</h3>
             <ul className="space-y-4 text-sm">
@@ -212,7 +202,6 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Services */}
           <div>
             <h3 className="text-white font-bold text-lg mb-6">Hizmetlerimiz</h3>
             <ul className="space-y-4 text-sm">
@@ -232,10 +221,14 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-6">İletişim</h3>
+            <h3 className="text-white font-bold text-lg mb-6">Bilgi Merkezi</h3>
             <ul className="space-y-4 text-sm">
+              <li>
+                <Link to="/blog" className="hover:text-brand-400 transition-colors flex items-center gap-2">
+                  <BookText size={16} className="text-brand-500" /> Blog & İçgörüler
+                </Link>
+              </li>
               <li className="flex items-start gap-3">
                 <MapPin className="text-brand-500 mt-0.5 shrink-0" size={18} />
                 <span className="text-slate-400 leading-relaxed">Yeşilyurt / Malatya</span>
@@ -243,10 +236,6 @@ export const Footer: React.FC = () => {
               <li className="flex items-center gap-3">
                 <Mail className="text-brand-500 shrink-0" size={18} />
                 <a href="mailto:info@apricodi.com" className="hover:text-brand-400">info@apricodi.com</a>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone className="text-brand-500 shrink-0" size={18} />
-                <a href="tel:+908500000000" className="hover:text-brand-400">+90 850 000 00 00</a>
               </li>
             </ul>
           </div>

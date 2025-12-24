@@ -7,6 +7,7 @@ import { Services } from './pages/Services';
 import { Projects } from './pages/Projects';
 import { ProjectDetail } from './pages/ProjectDetail';
 import { Blog } from './pages/Blog';
+import { BlogPostDetail } from './pages/BlogPostDetail';
 import { Contact } from './pages/Contact';
 import { GetQuote } from './pages/GetQuote';
 import { About } from './pages/About';
@@ -37,6 +38,7 @@ const App: React.FC = () => {
           <Route path="/projeler" element={<Projects />} />
           <Route path="/projeler/:slug" element={<ProjectDetail />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPostDetail />} />
           <Route path="/iletisim" element={<Contact />} />
           <Route path="/teklif-al" element={<GetQuote />} />
           <Route path="/hakkimizda" element={<About />} />
@@ -47,7 +49,6 @@ const App: React.FC = () => {
           <Route path="/gonulluluk" element={<Volunteering />} />
           <Route path="/cms" element={<CMS />} />
           
-          {/* Aliases */}
           <Route path="/kariyer" element={<Careers />} />
         </Routes>
       </Layout>

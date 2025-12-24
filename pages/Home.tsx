@@ -6,7 +6,8 @@ import {
   ArrowRight, Zap, ShieldCheck, Clock, Layers, ChevronLeft, 
   ChevronRight, Code, Cpu, Smartphone, Globe, BarChart3, 
   Sparkles, Rocket, Database, Terminal, CheckCircle2, Star,
-  Bot, MessageSquare, Gauge, Wind, Type, MousePointer2, Server
+  Bot, MessageSquare, Gauge, Wind, Type, MousePointer2, Server,
+  BookOpen
 } from 'lucide-react';
 import { Button, SectionHeader, Card, Badge } from '../components/ui';
 import { SEO } from '../components/SEO';
@@ -280,7 +281,7 @@ export const Home: React.FC = () => {
     <div className="bg-white w-full overflow-x-hidden">
       <SEO 
         title="Apricodi Malatya | Web Geliştirme, Yapay Zeka ve Otomasyon" 
-        description="Apricodi, Apricody ve Apricode: Malatya merkezli, global standartlarda kurumsal web yazılım, iOS & Android mobil uygulama ve n8n yapay zeka otomasyon çözümleri sunar."
+        description="Apricodi, Apricody ve Apricode: Malatya merkezli, global standartlarda kurumsal web yazılım, iOS & Android mobil uygulama and n8n yapay zeka otomasyon çözümleri sunar."
         keywords="Apricodi, Apricody, Apricode, Malatya yazılım şirketi, mobil uygulama yaptırmak, kurumsal web sitesi fiyatları, n8n otomasyon malatya, seo uyumlu web tasarım, react mobil uygulama"
       />
 
@@ -463,6 +464,36 @@ export const Home: React.FC = () => {
                  </Card>
               </div>
            </div>
+        </div>
+      </section>
+
+      {/* New Blog CTA Strip */}
+      <section className="py-12 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-brand-50 border border-brand-100 rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 group"
+          >
+            <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+              <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-brand-600 shadow-sm border border-brand-100 group-hover:scale-110 transition-transform duration-500">
+                <BookOpen size={32} />
+              </div>
+              <div>
+                <Badge variant="brand" className="mb-2">BİLGİ MERKEZİ</Badge>
+                <h3 className="text-2xl md:text-3xl font-brand font-black text-slate-900 tracking-tight">
+                  Teknoloji dünyasından <span className="text-brand-600">güncel içgörüler</span> alın.
+                </h3>
+                <p className="text-slate-500 font-light mt-1">Yazılım, SEO ve yapay zeka üzerine hazırladığımız rehberlerimizi keşfedin.</p>
+              </div>
+            </div>
+            <Link to="/blog" className="shrink-0 w-full md:w-auto">
+              <Button variant="secondary" size="lg" className="rounded-xl w-full px-10 font-black group/btn">
+                BLOGLARI OKU <ArrowRight className="ml-2 group-hover/btn:translate-x-2 transition-transform" />
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
