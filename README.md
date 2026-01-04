@@ -27,7 +27,7 @@ Apricodi projelerinde en güncel ve ölçeklenebilir teknolojileri tercih eder:
 | **Backend / API** | Node.js, Express |
 | **Otomasyon** | n8n, Low-code Solutions |
 | **AI / ML** | Google AI Studio, Gemini API |
-| **Deploy** | Vercel, Netlify |
+| **Deploy** | Vercel |
 
 ## 📅 Yol Haritası (Roadmap)
 
